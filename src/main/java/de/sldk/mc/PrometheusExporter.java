@@ -12,18 +12,19 @@ public class PrometheusExporter extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        config.addDefault("port", 9552);
+        config.addDefault("port", 9225);
         config.options().copyDefaults(true);
         saveConfig();
 
-        server = new Server(config.getInt("port"));
+        int port = config.getInt("port");
+        server = new Server(port);
 
         server.setHandler(new MetricsController());
 
         try {
             server.start();
 
-            getLogger().info("Started embedded Jetty for Prometheus metrics.");
+            getLogger().info("Started Prometheus metrics endpoint on port " + port);
 
         } catch (Exception e) {
             getLogger().severe("Could not start embedded Jetty server");
