@@ -83,7 +83,7 @@
               "legendFormat": "{{state}}",
               "metric": "mc_players_total",
               "refId": "A",
-              "step": 20
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -182,7 +182,7 @@
               "legendFormat": "",
               "metric": "mc_players_total",
               "refId": "A",
-              "step": 600
+              "step": 40
             }
           ],
           "thresholds": "0,1",
@@ -244,7 +244,7 @@
               "legendFormat": "{{world}}",
               "metric": "mc_loaded_chunks_total",
               "refId": "A",
-              "step": 20
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -328,7 +328,7 @@
               "legendFormat": "{{world}}_total",
               "metric": "mc_entities_total",
               "refId": "A",
-              "step": 20
+              "step": 2
             },
             {
               "expr": "mc_living_entities_total",
@@ -336,7 +336,7 @@
               "legendFormat": "{{world}}_living",
               "metric": "mc_living_entities_total",
               "refId": "B",
-              "step": 20
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -420,7 +420,7 @@
               "legendFormat": "mem{{type}}",
               "metric": "mc_jvm_memory",
               "refId": "A",
-              "step": 20
+              "step": 2
             }
           ],
           "thresholds": [],
@@ -441,7 +441,7 @@
           },
           "yaxes": [
             {
-              "format": "short",
+              "format": "bytes",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -519,7 +519,7 @@
               "legendFormat": "",
               "metric": "mc_jvm_memory",
               "refId": "A",
-              "step": 600
+              "step": 40
             }
           ],
           "thresholds": "7000000000",
@@ -551,7 +551,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
