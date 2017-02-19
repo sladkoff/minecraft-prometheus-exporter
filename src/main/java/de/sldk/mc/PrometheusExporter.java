@@ -19,7 +19,7 @@ public class PrometheusExporter extends JavaPlugin {
         int port = config.getInt("port");
         server = new Server(port);
 
-        server.setHandler(new MetricsController());
+        server.setHandler(new MetricsController(this));
 
         try {
             server.start();
