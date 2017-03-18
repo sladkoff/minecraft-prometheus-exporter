@@ -57,6 +57,7 @@ public class MetricsController extends AbstractHandler {
 
                 memory.labels("max").set(Runtime.getRuntime().maxMemory());
                 memory.labels("free").set(Runtime.getRuntime().freeMemory());
+                memory.labels("used").set(Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory());
 
                 return null;
             }
