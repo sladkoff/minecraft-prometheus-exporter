@@ -25,6 +25,7 @@ public class MetricsController extends AbstractHandler {
     private Gauge entities = Gauge.build().name("mc_entities_total").help("Entities loaded per world").labelNames("world").create().register();
     private Gauge livingEntities = Gauge.build().name("mc_living_entities_total").help("Living entities loaded per world").labelNames("world").create().register();
     private Gauge memory = Gauge.build().name("mc_jvm_memory").help("JVM memory usage").labelNames("type").create().register();
+    private Gauge tps = Gauge.build().name("mc_tps").help("Server TPS (ticks per second)").create().register();
 
     public MetricsController(PrometheusExporter exporter) {
         this.exporter = exporter;
@@ -38,13 +39,14 @@ public class MetricsController extends AbstractHandler {
             return;
         }
 
+        tps.set(exporter.getAverageTPS());
+
         /*
         * Bukkit API calls have to be made from the main thread.
         * That's why we use the BukkitScheduler to retrieve the server stats.
         * */
         Future<Object> future = exporter.getServer().getScheduler().callSyncMethod(exporter, new Callable<Object>() {
             public Object call() throws Exception {
-                players.clear();
                 players.labels("online").set(Bukkit.getOnlinePlayers().size());
                 players.labels("offline").set(Bukkit.getOfflinePlayers().length);
 

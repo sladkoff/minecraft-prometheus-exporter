@@ -1,5 +1,6 @@
 package de.sldk.mc;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jetty.server.Server;
@@ -8,9 +9,15 @@ public class PrometheusExporter extends JavaPlugin {
 
     FileConfiguration config = getConfig();
     private Server server;
+    private TpsPoller tpsPoller;
 
     @Override
     public void onEnable() {
+
+        tpsPoller = new TpsPoller(this);
+        Bukkit.getServer()
+                .getScheduler()
+                .scheduleSyncRepeatingTask(this, tpsPoller, 0, TpsPoller.POLL_INTERVAL);
 
         config.addDefault("port", 9225);
         config.options().copyDefaults(true);
@@ -18,7 +25,6 @@ public class PrometheusExporter extends JavaPlugin {
 
         int port = config.getInt("port");
         server = new Server(port);
-
         server.setHandler(new MetricsController(this));
 
         try {
@@ -41,4 +47,9 @@ public class PrometheusExporter extends JavaPlugin {
             }
         }
     }
+
+    float getAverageTPS() {
+        return tpsPoller.getAverageTPS();
+    }
+
 }
