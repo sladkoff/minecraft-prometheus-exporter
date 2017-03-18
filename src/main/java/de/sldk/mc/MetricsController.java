@@ -56,7 +56,7 @@ public class MetricsController extends AbstractHandler {
                     livingEntities.labels(world.getName()).set(world.getLivingEntities().size());
                 }
               
-                tps.labels("tps").set(Math.round((1.0D - Lag.getTPS() / 20.0D) * 100.0D));
+                tps.labels("tps").set(Lag.getTPS());
                 memory.labels("max").set(Runtime.getRuntime().maxMemory());
                 memory.labels("free").set(Runtime.getRuntime().freeMemory());
                 memory.labels("used").set(Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory());
