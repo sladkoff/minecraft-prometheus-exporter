@@ -20,6 +20,7 @@ public class MetricsController extends AbstractHandler {
     private final PrometheusExporter exporter;
 
     private Gauge players = Gauge.build().name("mc_players_total").help("Online and offline players").labelNames("state").create().register();
+    private Gauge tps = Gauge.build().name("mc_tps").help("Tickrate").labelNames("state").create().register();
     private Gauge loadedChunks = Gauge.build().name("mc_loaded_chunks_total").help("Chunks loaded per world").labelNames("world").create().register();
     private Gauge playersOnline = Gauge.build().name("mc_players_online_total").help("Players currently online per world").labelNames("world").create().register();
     private Gauge entities = Gauge.build().name("mc_entities_total").help("Entities loaded per world").labelNames("world").create().register();
@@ -54,7 +55,8 @@ public class MetricsController extends AbstractHandler {
                     entities.labels(world.getName()).set(world.getEntities().size());
                     livingEntities.labels(world.getName()).set(world.getLivingEntities().size());
                 }
-
+              
+                tps.labels("tps").set(Math.round((1.0D - Lag.getTPS() / 20.0D) * 100.0D));
                 memory.labels("max").set(Runtime.getRuntime().maxMemory());
                 memory.labels("free").set(Runtime.getRuntime().freeMemory());
                 memory.labels("used").set(Runtime.getRuntime().maxMemory() - Runtime.getRuntime().freeMemory());
