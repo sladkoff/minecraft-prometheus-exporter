@@ -39,3 +39,4 @@ mc_players_online_total | Online players per world
 mc_entities_total | Entities loaded per world
 mc_living_entities_total | Living entities loaded per world
 mc_jvm_memory | JVM memory usage
+mc_tps | Server tickrate (TPS)
