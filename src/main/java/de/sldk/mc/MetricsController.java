@@ -4,7 +4,9 @@ import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Gauge;
 import io.prometheus.client.exporter.common.TextFormat;
 import org.bukkit.Bukkit;
+import org.bukkit.Statistic;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -18,6 +20,7 @@ import java.util.concurrent.Future;
 public class MetricsController extends AbstractHandler {
 
     private final PrometheusExporter exporter;
+    private final boolean individualPlayerMetrics;
 
     private Gauge players = Gauge.build().name("mc_players_total").help("Online and offline players").labelNames("state").create().register();
     private Gauge loadedChunks = Gauge.build().name("mc_loaded_chunks_total").help("Chunks loaded per world").labelNames("world").create().register();
@@ -27,8 +30,11 @@ public class MetricsController extends AbstractHandler {
     private Gauge memory = Gauge.build().name("mc_jvm_memory").help("JVM memory usage").labelNames("type").create().register();
     private Gauge tps = Gauge.build().name("mc_tps").help("Server TPS (ticks per second)").create().register();
 
-    public MetricsController(PrometheusExporter exporter) {
+    private Gauge playerStats = Gauge.build().name("mc_player_statistic").labelNames("player_name", "statistic").create().register();
+
+    public MetricsController(PrometheusExporter exporter, boolean individualPlayerMetrics) {
         this.exporter = exporter;
+        this.individualPlayerMetrics = individualPlayerMetrics;
     }
 
     @Override
@@ -57,6 +63,10 @@ public class MetricsController extends AbstractHandler {
                     livingEntities.labels(world.getName()).set(world.getLivingEntities().size());
                 }
 
+                if (individualPlayerMetrics) {
+                    addIndividualPlayerMetrics(playerStats);
+                }
+
                 memory.labels("max").set(Runtime.getRuntime().maxMemory());
                 memory.labels("free").set(Runtime.getRuntime().freeMemory());
 
@@ -77,6 +87,15 @@ public class MetricsController extends AbstractHandler {
             exporter.getLogger().warning("Failed to read server statistics");
             e.printStackTrace();
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    private static void addIndividualPlayerMetrics(Gauge playerStats) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            for (Statistic statistic : Statistic.values()) {
+                final int playerStatValue = player.getStatistic(statistic);
+                playerStats.labels(player.getName(), statistic.name()).set(playerStatValue);
+            }
         }
     }
 }
