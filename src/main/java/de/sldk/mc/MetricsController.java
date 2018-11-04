@@ -31,6 +31,7 @@ public class MetricsController extends AbstractHandler {
     private Gauge tps = Gauge.build().name("mc_tps").help("Server TPS (ticks per second)").create().register();
 
     private Gauge playerStats = Gauge.build().name("mc_player_statistic").labelNames("player_name", "statistic").create().register();
+    private Gauge playersWithNames = Gauge.build().name("mc_player_online").help("Online state by player name").labelNames("name").create().register();
 
     public MetricsController(PrometheusExporter exporter, boolean individualPlayerMetrics) {
         this.exporter = exporter;
@@ -64,7 +65,7 @@ public class MetricsController extends AbstractHandler {
                 }
 
                 if (individualPlayerMetrics) {
-                    addIndividualPlayerMetrics(playerStats);
+                    addIndividualPlayerMetrics(playerStats, playersWithNames);
                 }
 
                 memory.labels("max").set(Runtime.getRuntime().maxMemory());
@@ -90,12 +91,13 @@ public class MetricsController extends AbstractHandler {
         }
     }
 
-    private static void addIndividualPlayerMetrics(Gauge playerStats) {
+    private static void addIndividualPlayerMetrics(Gauge playerStats, Gauge playersWithNames) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             for (Statistic statistic : Statistic.values()) {
                 final int playerStatValue = player.getStatistic(statistic);
                 playerStats.labels(player.getName(), statistic.name()).set(playerStatValue);
             }
+            playersWithNames.labels(player.getName()).set(player.isOnline() ? 1 : 0);
         }
     }
 }
