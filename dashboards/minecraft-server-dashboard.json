@@ -176,7 +176,7 @@
           "decimals": null,
           "format": "bytes",
           "gauge": {
-            "maxValue": 8000000000,
+            "maxValue": 1000000000,
             "minValue": 0,
             "show": true,
             "thresholdLabels": false,

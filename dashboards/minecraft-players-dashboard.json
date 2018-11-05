@@ -1,0 +1,640 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 5,
+  "iteration": 1541452715456,
+  "links": [],
+  "panels": [
+    {
+      "columns": [],
+      "datasource": "Prometheus",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "links": [],
+      "pageSize": null,
+      "scroll": true,
+      "showHeader": true,
+      "sort": {
+        "col": 2,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "Online",
+          "colorMode": "value",
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "#e24d42",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Value",
+          "thresholds": [
+            "0",
+            "1"
+          ],
+          "type": "string",
+          "unit": "short",
+          "valueMaps": [
+            {
+              "text": "false",
+              "value": "0"
+            },
+            {
+              "text": "true",
+              "value": "1"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "sum(mc_player_online{name=~\"$player\"}) by (name)",
+          "format": "table",
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Currently Online",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fill": 1,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "id": 4,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "mc_player_statistic{player_name=~\"$player\", statistic=~\"$statistic\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{player_name}}: {{statistic}}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "$statistic over time",
+      "tooltip": {
+        "shared": true,
+        "sort": 1,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "breakPoint": "50%",
+      "cacheTimeout": null,
+      "combine": {
+        "label": "Others",
+        "threshold": 0
+      },
+      "datasource": null,
+      "fontSize": "80%",
+      "format": "short",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "hideTimeOverride": false,
+      "id": 6,
+      "interval": null,
+      "legend": {
+        "show": true,
+        "values": true
+      },
+      "legendType": "Under graph",
+      "links": [],
+      "maxDataPoints": 3,
+      "nullPointMode": "connected",
+      "pieType": "pie",
+      "strokeWidth": 1,
+      "targets": [
+        {
+          "expr": "mc_player_statistic{player_name=~\"$player\", statistic=\"$statistic\"}",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "{{player_name}}: {{statistic}}",
+          "refId": "A"
+        }
+      ],
+      "title": "$statistic by player",
+      "type": "grafana-piechart-panel",
+      "valueName": "current"
+    }
+  ],
+  "schemaVersion": 16,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": ".*",
+        "current": {
+          "tags": [],
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "Prometheus",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Player",
+        "multi": true,
+        "name": "player",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "Geckosaure",
+            "value": "Geckosaure"
+          },
+          {
+            "selected": false,
+            "text": "TitiGaming",
+            "value": "TitiGaming"
+          },
+          {
+            "selected": false,
+            "text": "inkedsplat",
+            "value": "inkedsplat"
+          },
+          {
+            "selected": false,
+            "text": "sovcon",
+            "value": "sovcon"
+          }
+        ],
+        "query": "label_values(mc_player_online, name)",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "tags": [],
+          "text": "MOB_KILLS",
+          "value": "MOB_KILLS"
+        },
+        "datasource": "Prometheus",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Statistic",
+        "multi": false,
+        "name": "statistic",
+        "options": [
+          {
+            "selected": false,
+            "text": "ANIMALS_BRED",
+            "value": "ANIMALS_BRED"
+          },
+          {
+            "selected": false,
+            "text": "ARMOR_CLEANED",
+            "value": "ARMOR_CLEANED"
+          },
+          {
+            "selected": false,
+            "text": "AVIATE_ONE_CM",
+            "value": "AVIATE_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "BANNER_CLEANED",
+            "value": "BANNER_CLEANED"
+          },
+          {
+            "selected": false,
+            "text": "BEACON_INTERACTION",
+            "value": "BEACON_INTERACTION"
+          },
+          {
+            "selected": false,
+            "text": "BOAT_ONE_CM",
+            "value": "BOAT_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "BREAK_ITEM",
+            "value": "BREAK_ITEM"
+          },
+          {
+            "selected": false,
+            "text": "BREWINGSTAND_INTERACTION",
+            "value": "BREWINGSTAND_INTERACTION"
+          },
+          {
+            "selected": false,
+            "text": "CAKE_SLICES_EATEN",
+            "value": "CAKE_SLICES_EATEN"
+          },
+          {
+            "selected": false,
+            "text": "CAULDRON_FILLED",
+            "value": "CAULDRON_FILLED"
+          },
+          {
+            "selected": false,
+            "text": "CAULDRON_USED",
+            "value": "CAULDRON_USED"
+          },
+          {
+            "selected": false,
+            "text": "CHEST_OPENED",
+            "value": "CHEST_OPENED"
+          },
+          {
+            "selected": false,
+            "text": "CLIMB_ONE_CM",
+            "value": "CLIMB_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "CRAFTING_TABLE_INTERACTION",
+            "value": "CRAFTING_TABLE_INTERACTION"
+          },
+          {
+            "selected": false,
+            "text": "CRAFT_ITEM",
+            "value": "CRAFT_ITEM"
+          },
+          {
+            "selected": false,
+            "text": "CROUCH_ONE_CM",
+            "value": "CROUCH_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "DAMAGE_DEALT",
+            "value": "DAMAGE_DEALT"
+          },
+          {
+            "selected": false,
+            "text": "DAMAGE_TAKEN",
+            "value": "DAMAGE_TAKEN"
+          },
+          {
+            "selected": false,
+            "text": "DEATHS",
+            "value": "DEATHS"
+          },
+          {
+            "selected": false,
+            "text": "DISPENSER_INSPECTED",
+            "value": "DISPENSER_INSPECTED"
+          },
+          {
+            "selected": false,
+            "text": "DIVE_ONE_CM",
+            "value": "DIVE_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "DROP",
+            "value": "DROP"
+          },
+          {
+            "selected": false,
+            "text": "DROPPER_INSPECTED",
+            "value": "DROPPER_INSPECTED"
+          },
+          {
+            "selected": false,
+            "text": "ENDERCHEST_OPENED",
+            "value": "ENDERCHEST_OPENED"
+          },
+          {
+            "selected": false,
+            "text": "ENTITY_KILLED_BY",
+            "value": "ENTITY_KILLED_BY"
+          },
+          {
+            "selected": false,
+            "text": "FALL_ONE_CM",
+            "value": "FALL_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "FISH_CAUGHT",
+            "value": "FISH_CAUGHT"
+          },
+          {
+            "selected": false,
+            "text": "FLOWER_POTTED",
+            "value": "FLOWER_POTTED"
+          },
+          {
+            "selected": false,
+            "text": "FLY_ONE_CM",
+            "value": "FLY_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "FURNACE_INTERACTION",
+            "value": "FURNACE_INTERACTION"
+          },
+          {
+            "selected": false,
+            "text": "HOPPER_INSPECTED",
+            "value": "HOPPER_INSPECTED"
+          },
+          {
+            "selected": false,
+            "text": "HORSE_ONE_CM",
+            "value": "HORSE_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "ITEM_ENCHANTED",
+            "value": "ITEM_ENCHANTED"
+          },
+          {
+            "selected": true,
+            "text": "JUMP",
+            "value": "JUMP"
+          },
+          {
+            "selected": false,
+            "text": "KILL_ENTITY",
+            "value": "KILL_ENTITY"
+          },
+          {
+            "selected": false,
+            "text": "LEAVE_GAME",
+            "value": "LEAVE_GAME"
+          },
+          {
+            "selected": false,
+            "text": "MINECART_ONE_CM",
+            "value": "MINECART_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "MINE_BLOCK",
+            "value": "MINE_BLOCK"
+          },
+          {
+            "selected": false,
+            "text": "MOB_KILLS",
+            "value": "MOB_KILLS"
+          },
+          {
+            "selected": false,
+            "text": "NOTEBLOCK_PLAYED",
+            "value": "NOTEBLOCK_PLAYED"
+          },
+          {
+            "selected": false,
+            "text": "NOTEBLOCK_TUNED",
+            "value": "NOTEBLOCK_TUNED"
+          },
+          {
+            "selected": false,
+            "text": "PICKUP",
+            "value": "PICKUP"
+          },
+          {
+            "selected": false,
+            "text": "PIG_ONE_CM",
+            "value": "PIG_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "PLAYER_KILLS",
+            "value": "PLAYER_KILLS"
+          },
+          {
+            "selected": false,
+            "text": "PLAY_ONE_TICK",
+            "value": "PLAY_ONE_TICK"
+          },
+          {
+            "selected": false,
+            "text": "RECORD_PLAYED",
+            "value": "RECORD_PLAYED"
+          },
+          {
+            "selected": false,
+            "text": "SHULKER_BOX_OPENED",
+            "value": "SHULKER_BOX_OPENED"
+          },
+          {
+            "selected": false,
+            "text": "SLEEP_IN_BED",
+            "value": "SLEEP_IN_BED"
+          },
+          {
+            "selected": false,
+            "text": "SNEAK_TIME",
+            "value": "SNEAK_TIME"
+          },
+          {
+            "selected": false,
+            "text": "SPRINT_ONE_CM",
+            "value": "SPRINT_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "SWIM_ONE_CM",
+            "value": "SWIM_ONE_CM"
+          },
+          {
+            "selected": false,
+            "text": "TALKED_TO_VILLAGER",
+            "value": "TALKED_TO_VILLAGER"
+          },
+          {
+            "selected": false,
+            "text": "TIME_SINCE_DEATH",
+            "value": "TIME_SINCE_DEATH"
+          },
+          {
+            "selected": false,
+            "text": "TRADED_WITH_VILLAGER",
+            "value": "TRADED_WITH_VILLAGER"
+          },
+          {
+            "selected": false,
+            "text": "TRAPPED_CHEST_TRIGGERED",
+            "value": "TRAPPED_CHEST_TRIGGERED"
+          },
+          {
+            "selected": false,
+            "text": "USE_ITEM",
+            "value": "USE_ITEM"
+          },
+          {
+            "selected": false,
+            "text": "WALK_ONE_CM",
+            "value": "WALK_ONE_CM"
+          }
+        ],
+        "query": "label_values(mc_player_statistic,statistic)",
+        "refresh": 0,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "Players",
+  "uid": "of8FDYamk",
+  "version": 13
+}
