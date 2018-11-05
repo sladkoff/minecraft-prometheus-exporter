@@ -23,7 +23,7 @@ Add the following job to the ``scrape_configs`` section of your Prometheus confi
 ## Import Grafana Dashboard
 
 1. Navigate to Grafana -> Dashboards -> Import
-1. Paste in or upload minecraft-grafana.json
+1. Paste in or upload [minecraft-server-dashboard.json](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-server-dashboard.json)
 1. Update "JVM Memory Used" to reflect your server max memory (Default 8G)
 1. Edit (bottom right widget) -> Options -> Gauage -> Max
 
@@ -64,3 +64,6 @@ Label | Description
 ------------ | -------------
 mc_player_statistic | Player statistics
 mc_player_online | Online state by player name
+
+There's a sample [dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json) 
+available to get you started.
