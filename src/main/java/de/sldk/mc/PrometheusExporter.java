@@ -19,13 +19,21 @@ public class PrometheusExporter extends JavaPlugin {
                 .getScheduler()
                 .scheduleSyncRepeatingTask(this, tpsPoller, 0, TpsPoller.POLL_INTERVAL);
 
-        config.addDefault("port", 9225);
+        PluginConfig.PORT.setDefault(config);
+        PluginConfig.PLAYER_METRICS.setDefault(config);
+
         config.options().copyDefaults(true);
         saveConfig();
 
-        int port = config.getInt("port");
+        int port = PluginConfig.PORT.get(config);
+        boolean individualPlayerMetrics = PluginConfig.PLAYER_METRICS.get(config);
+
+        if (individualPlayerMetrics) {
+            getLogger().warning("Flag '" + PluginConfig.PLAYER_METRICS.getKey() + "' is enabled. This option is not recommended for public servers!");
+        }
+
         server = new Server(port);
-        server.setHandler(new MetricsController(this));
+        server.setHandler(new MetricsController(this, individualPlayerMetrics));
 
         try {
             server.start();
