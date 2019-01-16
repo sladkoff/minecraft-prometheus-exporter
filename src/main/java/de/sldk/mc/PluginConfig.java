@@ -4,7 +4,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 class PluginConfig<T> {
 
-    static final PluginConfig<String> HOST = new PluginConfig<>("host", "localhost");
+    static final PluginConfig<String> HOST = new PluginConfig<>("host", "0.0.0.0");
     static final PluginConfig<Integer> PORT = new PluginConfig<>("port", 9225);
     static final PluginConfig<Boolean> PLAYER_METRICS = new PluginConfig<>("individual-player-statistics", false);
 
