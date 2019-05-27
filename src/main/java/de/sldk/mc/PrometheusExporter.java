@@ -10,7 +10,7 @@ import java.util.logging.Level;
 
 public class PrometheusExporter extends JavaPlugin {
 
-    FileConfiguration config = getConfig();
+    private FileConfiguration config = getConfig();
     private Server server;
     private TpsPoller tpsPoller;
 
