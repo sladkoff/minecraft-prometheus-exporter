@@ -14,10 +14,27 @@ The metrics port can be customized in the plugin's config.yml (a default config 
 
 Add the following job to the ``scrape_configs`` section of your Prometheus configuration:
 
+### Single server
+
 ```yml
 - job_name: 'minecraft'
   static_configs:
     - targets: ['localhost:9225']
+```
+
+### Multiple servers
+
+You can use labels in your Prometheus scrape configuration to distinguish between multiple servers:
+
+```yml
+- job_name: 'minecraft'
+  static_configs:
+    - targets: ['localhost:9225']
+      labels:
+        server_name: 'server1'
+    - targets: ['localhost:9226']
+      labels:
+        server_name: 'server2'
 ```
 
 ## Import Grafana Dashboard
