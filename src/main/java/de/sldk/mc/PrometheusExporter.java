@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jetty.server.Server;
 
 import java.net.InetSocketAddress;
+import java.util.logging.Level;
 
 public class PrometheusExporter extends JavaPlugin {
 
@@ -55,7 +56,8 @@ public class PrometheusExporter extends JavaPlugin {
             try {
                 server.stop();
             } catch (Exception e) {
-                e.printStackTrace();
+                getLogger().log(Level.WARNING, "Failed to stop metrics server gracefully: " + e.getMessage());
+                getLogger().log(Level.FINE, "Failed to stop metrics server gracefully", e);
             }
         }
     }
