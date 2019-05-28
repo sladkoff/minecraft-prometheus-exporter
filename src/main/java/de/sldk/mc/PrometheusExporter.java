@@ -5,9 +5,12 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jetty.server.Server;
 
+import java.net.InetSocketAddress;
+import java.util.logging.Level;
+
 public class PrometheusExporter extends JavaPlugin {
 
-    FileConfiguration config = getConfig();
+    private FileConfiguration config = getConfig();
     private Server server;
     private TpsPoller tpsPoller;
 
@@ -19,6 +22,7 @@ public class PrometheusExporter extends JavaPlugin {
                 .getScheduler()
                 .scheduleSyncRepeatingTask(this, tpsPoller, 0, TpsPoller.POLL_INTERVAL);
 
+        PluginConfig.HOST.setDefault(config);
         PluginConfig.PORT.setDefault(config);
         PluginConfig.PLAYER_METRICS.setDefault(config);
 
@@ -26,19 +30,20 @@ public class PrometheusExporter extends JavaPlugin {
         saveConfig();
 
         int port = PluginConfig.PORT.get(config);
+        String host = PluginConfig.HOST.get(config);
         boolean individualPlayerMetrics = PluginConfig.PLAYER_METRICS.get(config);
 
         if (individualPlayerMetrics) {
             getLogger().warning("Flag '" + PluginConfig.PLAYER_METRICS.getKey() + "' is enabled. This option is not recommended for public servers!");
         }
 
-        server = new Server(port);
+        InetSocketAddress address = new InetSocketAddress(host, port);
+        server = new Server(address);
         server.setHandler(new MetricsController(this, individualPlayerMetrics));
 
         try {
             server.start();
-
-            getLogger().info("Started Prometheus metrics endpoint on port " + port);
+            getLogger().info("Started Prometheus metrics endpoint at: " + host + ":" + port);
 
         } catch (Exception e) {
             getLogger().severe("Could not start embedded Jetty server");
@@ -51,7 +56,8 @@ public class PrometheusExporter extends JavaPlugin {
             try {
                 server.stop();
             } catch (Exception e) {
-                e.printStackTrace();
+                getLogger().log(Level.WARNING, "Failed to stop metrics server gracefully: " + e.getMessage());
+                getLogger().log(Level.FINE, "Failed to stop metrics server gracefully", e);
             }
         }
     }

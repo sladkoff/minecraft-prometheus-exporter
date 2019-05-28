@@ -16,9 +16,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 public class MetricsController extends AbstractHandler {
@@ -87,8 +87,8 @@ public class MetricsController extends AbstractHandler {
 
             baseRequest.setHandled(true);
         } catch (InterruptedException | ExecutionException e) {
-            exporter.getLogger().warning("Failed to read server statistic: " + e.getMessage());
-            e.printStackTrace();
+            exporter.getLogger().log(Level.WARNING, "Failed to read server statistic: " + e.getMessage());
+            exporter.getLogger().log(Level.FINE, "Failed to read server statistic: ", e);
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
@@ -103,7 +103,8 @@ public class MetricsController extends AbstractHandler {
                 playersWithNames.labels(player.getName()).set(player.isOnline() ? 1 : 0);
             }
         } catch (Exception e) {
-            exporter.getLogger().warning("Failed to read player statistic: " + e.getMessage());
+            exporter.getLogger().log(Level.WARNING, "Failed to read player statistic: " + e.getMessage());
+            exporter.getLogger().log(Level.FINE, "Failed to read player statistic: ", e);
         }
     }
 
