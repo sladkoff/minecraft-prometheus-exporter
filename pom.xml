@@ -6,7 +6,7 @@
 
     <groupId>de.sldk.mc</groupId>
     <artifactId>minecraft-prometheus-exporter</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.0</version>
     <packaging>jar</packaging>
 
     <properties>
