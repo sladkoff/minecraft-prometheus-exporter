@@ -1,4 +1,4 @@
-package de.sldk.mc;
+package de.sldk.mc.tps;
 
 import java.util.LinkedList;
 
@@ -8,7 +8,7 @@ import java.util.LinkedList;
  *
  * @see <a href="https://github.com/TheLunarFrog/LagMeter">LagMeter</a>
  */
-public class TpsPoller implements Runnable {
+public class TpsCollector implements Runnable {
 
     /**
      * Max amount of ticks that should happen per second
@@ -17,20 +17,14 @@ public class TpsPoller implements Runnable {
     /**
      * Every 40 ticks (2s ideally) the server will be polled
      */
-    static final int POLL_INTERVAL = 40;
+    public static final int POLL_INTERVAL = 40;
     /**
      * The amount of TPS values to keep for calculating the average
      */
     static final int TPS_QUEUE_SIZE = 10;
 
-    private final PrometheusExporter exporter;
-
     private long lastPoll = System.currentTimeMillis();
     private LinkedList<Float> tpsQueue = new LinkedList<>();
-
-    TpsPoller(PrometheusExporter exporter) {
-        this.exporter = exporter;
-    }
 
     @Override
     public void run() {
@@ -52,7 +46,7 @@ public class TpsPoller implements Runnable {
         }
     }
 
-    float getAverageTPS() {
+    public float getAverageTPS() {
         if (tpsQueue.size() < TPS_QUEUE_SIZE) {
             return 20;
         }

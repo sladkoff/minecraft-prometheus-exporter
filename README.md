@@ -84,3 +84,44 @@ mc_player_online | Online state by player name
 
 There's a sample [dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json) 
 available to get you started.
+
+## Collect metrics about your own plugin
+
+You can easily collect metrics about your own plugin.
+
+### Include the Prometheus dependency
+
+```xml
+<dependency>
+    <groupId>io.prometheus</groupId>
+    <artifactId>simpleclient_common</artifactId>
+    <version>...</version>
+</dependency>
+```
+
+### Collect metrics
+
+This pseudo code shows how you would count invocations of a plugin command.
+
+```java
+public class MyPluginCommand extends PluginCommand {
+
+  // Register your counter
+  private Counter commandCounter = Counter.build()
+            .name("mc_my_plugin_command_invocations_total")
+            .help("Counter for my plugin command invocations")
+            .register();
+
+  @Override
+  public boolean execute​(CommandSender sender, String commandLabel, String[] args) {
+
+    // Increment your counter;
+    commandCounter.inc(); 
+
+    // Do other stuff
+
+    return true;
+  }
+
+}
+```

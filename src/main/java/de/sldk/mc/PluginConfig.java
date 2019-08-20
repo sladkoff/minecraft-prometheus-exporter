@@ -6,7 +6,6 @@ class PluginConfig<T> {
 
     static final PluginConfig<String> HOST = new PluginConfig<>("host", "localhost");
     static final PluginConfig<Integer> PORT = new PluginConfig<>("port", 9225);
-    static final PluginConfig<Boolean> PLAYER_METRICS = new PluginConfig<>("individual-player-statistics", false);
 
     private final String key;
     private final T defaultValue;
