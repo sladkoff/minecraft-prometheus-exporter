@@ -6,6 +6,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,6 +20,10 @@ public class PlayersStatistics extends PlayerMetric {
             .name(prefix("player_statistic"))
             .help("Player statistics")
             .labelNames("player_name", "statistic").create().register();
+
+    public PlayersStatistics(Plugin plugin) {
+        super(plugin);
+    }
 
     @Override
     public void collect(OfflinePlayer player) {

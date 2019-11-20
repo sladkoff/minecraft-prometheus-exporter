@@ -1,6 +1,7 @@
 package de.sldk.mc;
 
-import org.bukkit.configuration.file.FileConfiguration;
+import de.sldk.mc.config.PrometheusExporterConfig;
+import de.sldk.mc.metrics.Metric;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jetty.server.Server;
 
@@ -9,20 +10,22 @@ import java.util.logging.Level;
 
 public class PrometheusExporter extends JavaPlugin {
 
-    private FileConfiguration config = getConfig();
+    private final PrometheusExporterConfig config = new PrometheusExporterConfig(this);
     private Server server;
 
     @Override
     public void onEnable() {
 
-        PluginConfig.HOST.setDefault(config);
-        PluginConfig.PORT.setDefault(config);
+        config.loadDefaultsAndSave();
 
-        config.options().copyDefaults(true);
-        saveConfig();
+        config.enableConfiguredMetrics();
 
-        int port = PluginConfig.PORT.get(config);
-        String host = PluginConfig.HOST.get(config);
+        serveMetrics();
+    }
+
+    private void serveMetrics() {
+        int port = config.get(PrometheusExporterConfig.PORT);
+        String host = config.get(PrometheusExporterConfig.HOST);
 
         InetSocketAddress address = new InetSocketAddress(host, port);
         server = new Server(address);

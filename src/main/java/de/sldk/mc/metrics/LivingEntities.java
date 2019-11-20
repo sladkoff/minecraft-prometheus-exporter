@@ -2,6 +2,7 @@ package de.sldk.mc.metrics;
 
 import io.prometheus.client.Gauge;
 import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 
 public class LivingEntities extends WorldMetric {
 
@@ -10,6 +11,10 @@ public class LivingEntities extends WorldMetric {
             .help("Living entities loaded per world")
             .labelNames("world")
             .register();
+
+    public LivingEntities(Plugin plugin) {
+        super(plugin);
+    }
 
     @Override
     protected void collect(World world) {

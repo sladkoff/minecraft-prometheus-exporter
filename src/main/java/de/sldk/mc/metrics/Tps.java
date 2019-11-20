@@ -7,21 +7,38 @@ import org.bukkit.plugin.Plugin;
 
 public class Tps extends Metric {
 
+    private int taskId;
+
     private TpsCollector tpsCollector = new TpsCollector();
 
     private Gauge tps = Gauge.build()
-            .name(prefix("mc_tps"))
+            .name(prefix("tps"))
             .help("Server TPS (ticks per second)")
             .register();
 
-    public void register(Plugin plugin) {
-        Bukkit.getServer()
+    public Tps(Plugin plugin) {
+        super(plugin);
+    }
+
+    @Override
+    public void enable() {
+        super.enable();
+        this.taskId = startTask(getPlugin());
+    }
+
+    @Override
+    public void disable() {
+        Bukkit.getScheduler().cancelTask(taskId);
+    }
+
+    private int startTask(Plugin plugin) {
+        return Bukkit.getServer()
                 .getScheduler()
                 .scheduleSyncRepeatingTask(plugin, tpsCollector, 0, TpsCollector.POLL_INTERVAL);
     }
 
     @Override
-    public void collect() {
+    public void doCollect() {
         tps.set(tpsCollector.getAverageTPS());
     }
 }

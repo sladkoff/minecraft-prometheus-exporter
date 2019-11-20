@@ -1,8 +1,7 @@
 package de.sldk.mc.metrics;
 
 import io.prometheus.client.Gauge;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 
 public class Memory extends Metric {
 
@@ -12,8 +11,12 @@ public class Memory extends Metric {
             .labelNames("type")
             .register();
 
+    public Memory(Plugin plugin) {
+        super(plugin);
+    }
+
     @Override
-    public void collect() {
+    public void doCollect() {
         memory.labels("max").set(Runtime.getRuntime().maxMemory());
         memory.labels("free").set(Runtime.getRuntime().freeMemory());
     }

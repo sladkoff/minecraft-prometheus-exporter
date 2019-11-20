@@ -3,6 +3,7 @@ package de.sldk.mc.metrics;
 import io.prometheus.client.Gauge;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 
 public class LoadedChunks extends WorldMetric {
 
@@ -11,6 +12,10 @@ public class LoadedChunks extends WorldMetric {
             .help("Chunks loaded per world")
             .labelNames("world")
             .register();
+
+    public LoadedChunks(Plugin plugin) {
+        super(plugin);
+    }
 
     @Override
     public void collect(World world) {

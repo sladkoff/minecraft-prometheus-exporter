@@ -4,6 +4,7 @@ import io.prometheus.client.Gauge;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Map;
 
@@ -14,6 +15,10 @@ public class PlayersOnline extends PlayerMetric {
             .help("Online state by player name")
             .labelNames("name")
             .register();
+
+    public PlayersOnline(Plugin plugin) {
+        super(plugin);
+    }
 
     @Override
     public void collect(OfflinePlayer player) {

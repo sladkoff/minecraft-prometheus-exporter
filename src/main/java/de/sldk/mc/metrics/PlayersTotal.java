@@ -2,6 +2,7 @@ package de.sldk.mc.metrics;
 
 import io.prometheus.client.Gauge;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 
 public class PlayersTotal extends Metric {
 
@@ -11,8 +12,12 @@ public class PlayersTotal extends Metric {
             .labelNames("state")
             .register();
 
+    public PlayersTotal(Plugin plugin) {
+        super(plugin);
+    }
+
     @Override
-    public void collect() {
+    public void doCollect() {
         players.labels("online").set(Bukkit.getOnlinePlayers().size());
         players.labels("offline").set(Bukkit.getOfflinePlayers().length);
     }
