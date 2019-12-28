@@ -50,7 +50,7 @@ These are the stats that are currently exported by the plugin.
 
 Label | Description
 ------------ | -------------
-mc_players_total | Online and offline players
+mc_players_total | Unique players on server (online + offline)
 mc_loaded_chunks_total | Chunks loaded per world
 mc_players_online_total | Online players per world
 mc_entities_total | Entities loaded per world

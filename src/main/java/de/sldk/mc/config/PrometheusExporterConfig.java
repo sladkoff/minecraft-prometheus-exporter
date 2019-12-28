@@ -6,7 +6,6 @@ import de.sldk.mc.metrics.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -20,11 +19,11 @@ public class PrometheusExporterConfig {
             metricConfig("living_entities_total", true, LivingEntities::new),
             metricConfig("loaded_chunks_total", true, LoadedChunks::new),
             metricConfig("jvm_memory", true, Memory::new),
-            metricConfig("player_online", true, PlayersOnline::new),
+            metricConfig("player_online", true, PlayerOnline::new),
             metricConfig("players_online_total", true, PlayersOnlineTotal::new),
             metricConfig("players_total", true, PlayersTotal::new),
             metricConfig("tps", true, Tps::new),
-            metricConfig("player_statistic", false, PlayersStatistics::new));
+            metricConfig("player_statistic", false, PlayerStatistics::new));
 
     private final PrometheusExporter prometheusExporter;
 

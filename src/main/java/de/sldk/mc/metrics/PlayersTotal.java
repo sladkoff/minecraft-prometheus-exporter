@@ -8,8 +8,7 @@ public class PlayersTotal extends Metric {
 
     private Gauge players = Gauge.build()
             .name(prefix("players_total"))
-            .help("Online and offline players")
-            .labelNames("state")
+            .help("Unique players (online + offline)")
             .register();
 
     public PlayersTotal(Plugin plugin) {
@@ -18,7 +17,6 @@ public class PlayersTotal extends Metric {
 
     @Override
     public void doCollect() {
-        players.labels("online").set(Bukkit.getOnlinePlayers().size());
-        players.labels("offline").set(Bukkit.getOfflinePlayers().length);
+        players.set(Bukkit.getOfflinePlayers().length);
     }
 }

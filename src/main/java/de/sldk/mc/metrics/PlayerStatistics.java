@@ -14,14 +14,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class PlayersStatistics extends PlayerMetric {
+public class PlayerStatistics extends PlayerMetric {
 
     private Gauge playerStats = Gauge.build()
             .name(prefix("player_statistic"))
             .help("Player statistics")
             .labelNames("player_name", "statistic").create().register();
 
-    public PlayersStatistics(Plugin plugin) {
+    public PlayerStatistics(Plugin plugin) {
         super(plugin);
     }
 

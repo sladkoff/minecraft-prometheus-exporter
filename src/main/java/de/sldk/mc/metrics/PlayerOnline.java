@@ -8,7 +8,7 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.Map;
 
-public class PlayersOnline extends PlayerMetric {
+public class PlayerOnline extends PlayerMetric {
 
     private Gauge playersWithNames = Gauge.build()
             .name(prefix("player_online"))
@@ -16,7 +16,7 @@ public class PlayersOnline extends PlayerMetric {
             .labelNames("name")
             .register();
 
-    public PlayersOnline(Plugin plugin) {
+    public PlayerOnline(Plugin plugin) {
         super(plugin);
     }
 
