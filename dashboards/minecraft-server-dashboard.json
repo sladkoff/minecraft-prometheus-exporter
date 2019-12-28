@@ -11,6 +11,12 @@
   ],
   "__requires": [
     {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
@@ -52,6 +58,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
+  "iteration": 1577496234812,
   "links": [],
   "panels": [
     {
@@ -60,6 +67,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "${DS_PROMETHEUS}",
+      "decimals": 0,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -70,6 +78,7 @@
       },
       "id": 1,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
@@ -81,7 +90,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "options": {
         "dataLinks": []
       },
@@ -92,16 +101,22 @@
       "seriesOverrides": [
         {
           "alias": "Unique",
+          "color": "#C0D8FF",
           "dashes": true,
           "lines": false
+        },
+        {
+          "alias": "/Online/",
+          "stack": true
         }
       ],
       "spaceLength": 10,
       "stack": false,
-      "steppedLine": false,
+      "steppedLine": true,
       "targets": [
         {
-          "expr": "mc_players_total",
+          "expr": "mc_players_total{server_name=~\"$server_name\"}",
+          "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "Unique",
           "metric": "mc_players_total",
@@ -109,8 +124,8 @@
           "step": 4
         },
         {
-          "expr": "sum(mc_players_online_total)",
-          "legendFormat": "Online",
+          "expr": "sum(mc_players_online_total{server_name=~\"$server_name\"}) by (world)",
+          "legendFormat": "Online ({{world}})",
           "refId": "B"
         }
       ],
@@ -218,7 +233,8 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(mc_players_online_total)",
+          "expr": "sum(mc_players_online_total{server_name=~\"$server_name\"})",
+          "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -241,172 +257,115 @@
       "valueName": "current"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
       "datasource": "${DS_PROMETHEUS}",
-      "decimals": null,
-      "format": "bytes",
-      "gauge": {
-        "maxValue": 1000000000,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "description": "",
       "gridPos": {
         "h": 7,
         "w": 4,
         "x": 16,
         "y": 0
       },
-      "id": 6,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
+      "id": 9,
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "links": [],
+            "mappings": [],
+            "max": 4000000000,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 3000000000
+              }
+            ],
+            "title": "",
+            "unit": "bytes"
+          },
+          "override": {},
+          "values": false
         },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "",
+      "pluginVersion": "6.4.2",
       "targets": [
         {
-          "expr": "mc_jvm_memory{type='max'} - scalar(mc_jvm_memory{type='free'})",
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "metric": "mc_jvm_memory",
-          "refId": "A",
-          "step": 40
+          "expr": "mc_jvm_memory{type='max', server_name=~\"$server_name\"} - scalar(mc_jvm_memory{type='free', server_name=~\"$server_name\"})",
+          "instant": false,
+          "refId": "A"
         }
       ],
-      "thresholds": "800000000",
-      "title": "JVM Memory Used",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "JVM Memory",
+      "type": "gauge"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
       "datasource": "${DS_PROMETHEUS}",
-      "decimals": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 20,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "description": "",
       "gridPos": {
         "h": 7,
         "w": 4,
         "x": 20,
         "y": 0
       },
-      "id": 8,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
+      "id": 10,
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "defaults": {
+            "links": [],
+            "mappings": [],
+            "max": 20,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "light-orange",
+                "value": 15
+              },
+              {
+                "color": "green",
+                "value": 18
+              }
+            ],
+            "title": "",
+            "unit": "none"
+          },
+          "override": {},
+          "values": false
         },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "",
+      "pluginVersion": "6.4.2",
       "targets": [
         {
-          "expr": "mc_tps",
-          "intervalFactor": 2,
+          "expr": "mc_tps{server_name=~\"$server_name\"}",
+          "instant": true,
           "legendFormat": "",
-          "metric": "mc_tps",
-          "refId": "A",
-          "step": 40
+          "refId": "A"
         }
       ],
-      "thresholds": "10,17",
+      "timeFrom": null,
+      "timeShift": null,
       "title": "TPS",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "gauge"
     },
     {
       "aliasColors": {},
@@ -435,7 +394,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "options": {
         "dataLinks": []
       },
@@ -449,7 +408,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mc_loaded_chunks_total",
+          "expr": "mc_loaded_chunks_total{server_name=~\"$server_name\"}",
+          "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{world}}",
           "metric": "mc_loaded_chunks_total",
@@ -525,7 +485,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "options": {
         "dataLinks": []
       },
@@ -539,16 +499,19 @@
       "steppedLine": true,
       "targets": [
         {
-          "expr": "mc_jvm_memory{type='max'}",
-          "intervalFactor": 2,
+          "expr": "mc_jvm_memory{type='max', server_name=~\"$server_name\"}",
+          "format": "time_series",
+          "intervalFactor": 1,
           "legendFormat": "Allocated",
           "metric": "mc_jvm_memory",
           "refId": "A",
           "step": 4
         },
         {
-          "expr": "mc_jvm_memory{type='max'} - scalar(mc_jvm_memory{type='free'})",
-          "intervalFactor": 2,
+          "expr": "mc_jvm_memory{type='max', server_name=~\"$server_name\"} - scalar(mc_jvm_memory{type='free', server_name=~\"$server_name\"})",
+          "format": "time_series",
+          "instant": false,
+          "intervalFactor": 1,
           "legendFormat": "Used",
           "refId": "B",
           "step": 4
@@ -611,10 +574,12 @@
       },
       "id": 4,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": false,
         "show": true,
         "total": false,
         "values": false
@@ -622,7 +587,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "options": {
         "dataLinks": []
       },
@@ -636,7 +601,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mc_entities_total",
+          "expr": "mc_entities_total{server_name=~\"$server_name\"}",
+          "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{world}}_total",
           "metric": "mc_entities_total",
@@ -644,7 +610,8 @@
           "step": 4
         },
         {
-          "expr": "mc_living_entities_total",
+          "expr": "mc_living_entities_total{server_name=~\"$server_name\"}",
+          "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{world}}_living",
           "metric": "mc_living_entities_total",
@@ -724,7 +691,7 @@
       "lines": true,
       "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "options": {
         "dataLinks": []
       },
@@ -738,7 +705,8 @@
       "steppedLine": true,
       "targets": [
         {
-          "expr": "mc_tps",
+          "expr": "mc_tps{server_name=~\"$server_name\"}",
+          "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "TPS",
           "metric": "mc_tps",
@@ -788,12 +756,35 @@
       }
     }
   ],
-  "refresh": "10s",
+  "refresh": "30s",
   "schemaVersion": 20,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Server Name",
+        "multi": false,
+        "name": "server_name",
+        "options": [],
+        "query": "label_values(mc_players_total, server_name)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-30m",
