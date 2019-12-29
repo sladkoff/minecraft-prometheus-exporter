@@ -1,7 +1,7 @@
 package de.sldk.mc;
 
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.FileConfiguration;
+import de.sldk.mc.config.PrometheusExporterConfig;
+import de.sldk.mc.metrics.Metric;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jetty.server.Server;
 
@@ -10,36 +10,26 @@ import java.util.logging.Level;
 
 public class PrometheusExporter extends JavaPlugin {
 
-    private FileConfiguration config = getConfig();
+    private final PrometheusExporterConfig config = new PrometheusExporterConfig(this);
     private Server server;
-    private TpsPoller tpsPoller;
 
     @Override
     public void onEnable() {
 
-        tpsPoller = new TpsPoller(this);
-        Bukkit.getServer()
-                .getScheduler()
-                .scheduleSyncRepeatingTask(this, tpsPoller, 0, TpsPoller.POLL_INTERVAL);
+        config.loadDefaultsAndSave();
 
-        PluginConfig.HOST.setDefault(config);
-        PluginConfig.PORT.setDefault(config);
-        PluginConfig.PLAYER_METRICS.setDefault(config);
+        config.enableConfiguredMetrics();
 
-        config.options().copyDefaults(true);
-        saveConfig();
+        serveMetrics();
+    }
 
-        int port = PluginConfig.PORT.get(config);
-        String host = PluginConfig.HOST.get(config);
-        boolean individualPlayerMetrics = PluginConfig.PLAYER_METRICS.get(config);
-
-        if (individualPlayerMetrics) {
-            getLogger().warning("Flag '" + PluginConfig.PLAYER_METRICS.getKey() + "' is enabled. This option is not recommended for public servers!");
-        }
+    private void serveMetrics() {
+        int port = config.get(PrometheusExporterConfig.PORT);
+        String host = config.get(PrometheusExporterConfig.HOST);
 
         InetSocketAddress address = new InetSocketAddress(host, port);
         server = new Server(address);
-        server.setHandler(new MetricsController(this, individualPlayerMetrics));
+        server.setHandler(new MetricsController(this));
 
         try {
             server.start();
@@ -60,10 +50,6 @@ public class PrometheusExporter extends JavaPlugin {
                 getLogger().log(Level.FINE, "Failed to stop metrics server gracefully", e);
             }
         }
-    }
-
-    float getAverageTPS() {
-        return tpsPoller.getAverageTPS();
     }
 
 }
