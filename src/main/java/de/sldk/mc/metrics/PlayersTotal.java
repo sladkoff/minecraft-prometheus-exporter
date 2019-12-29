@@ -6,17 +6,17 @@ import org.bukkit.plugin.Plugin;
 
 public class PlayersTotal extends Metric {
 
-    private Gauge players = Gauge.build()
+    private static final Gauge PLAYERS = Gauge.build()
             .name(prefix("players_total"))
             .help("Unique players (online + offline)")
-            .register();
+            .create();
 
     public PlayersTotal(Plugin plugin) {
-        super(plugin);
+        super(plugin, PLAYERS);
     }
 
     @Override
     public void doCollect() {
-        players.set(Bukkit.getOfflinePlayers().length);
+        PLAYERS.set(Bukkit.getOfflinePlayers().length);
     }
 }

@@ -16,20 +16,21 @@ import java.util.stream.Collectors;
 
 public class PlayerStatistics extends PlayerMetric {
 
-    private Gauge playerStats = Gauge.build()
+    private static final Gauge PLAYER_STATS = Gauge.build()
             .name(prefix("player_statistic"))
             .help("Player statistics")
-            .labelNames("player_name", "statistic").create().register();
+            .labelNames("player_name", "statistic")
+            .create();
 
     public PlayerStatistics(Plugin plugin) {
-        super(plugin);
+        super(plugin, PLAYER_STATS);
     }
 
     @Override
     public void collect(OfflinePlayer player) {
         Map<String, Integer> statistics = getStatistics(player.getPlayer());
 
-        statistics.forEach((stat, value) -> playerStats.labels(player.getName(), stat).set(value));
+        statistics.forEach((stat, value) -> PLAYER_STATS.labels(player.getName(), stat).set(value));
     }
 
     private static Map<String, Integer> getStatistics(Player player) {

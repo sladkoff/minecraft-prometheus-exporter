@@ -5,19 +5,19 @@ import org.bukkit.plugin.Plugin;
 
 public class Memory extends Metric {
 
-    private Gauge memory = Gauge.build()
+    private static final Gauge MEMORY = Gauge.build()
             .name(prefix("jvm_memory"))
             .help("JVM memory usage")
             .labelNames("type")
-            .register();
+            .create();
 
     public Memory(Plugin plugin) {
-        super(plugin);
+        super(plugin, MEMORY);
     }
 
     @Override
     public void doCollect() {
-        memory.labels("max").set(Runtime.getRuntime().maxMemory());
-        memory.labels("free").set(Runtime.getRuntime().freeMemory());
+        MEMORY.labels("max").set(Runtime.getRuntime().maxMemory());
+        MEMORY.labels("free").set(Runtime.getRuntime().freeMemory());
     }
 }

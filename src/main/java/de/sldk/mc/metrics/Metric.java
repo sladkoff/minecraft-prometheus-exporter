@@ -1,16 +1,21 @@
 package de.sldk.mc.metrics;
 
+import io.prometheus.client.Collector;
+import io.prometheus.client.CollectorRegistry;
 import org.bukkit.plugin.Plugin;
 
 public abstract class Metric {
 
     private final static String COMMON_PREFIX = "mc_";
 
-    private boolean enabled = false;
     private final Plugin plugin;
+    private final Collector collector;
 
-    protected Metric(Plugin plugin) {
+    private boolean enabled = false;
+
+    protected Metric(Plugin plugin, Collector collector) {
         this.plugin = plugin;
+        this.collector = collector;
     }
 
     protected Plugin getPlugin() {
@@ -30,10 +35,12 @@ public abstract class Metric {
     }
 
     public void enable() {
+        CollectorRegistry.defaultRegistry.register(collector);
         enabled = true;
     }
 
     public void disable() {
+        CollectorRegistry.defaultRegistry.unregister(collector);
         enabled = false;
     }
 

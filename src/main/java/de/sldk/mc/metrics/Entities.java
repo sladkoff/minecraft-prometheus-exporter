@@ -6,18 +6,18 @@ import org.bukkit.plugin.Plugin;
 
 public class Entities extends WorldMetric {
 
-    private Gauge entities = Gauge.build()
+    private static final Gauge ENTITIES = Gauge.build()
             .name(prefix("entities_total"))
             .help("Entities loaded per world")
             .labelNames("world")
-            .register();
+            .create();
 
     public Entities(Plugin plugin) {
-        super(plugin);
+        super(plugin, ENTITIES);
     }
 
     @Override
     public void collect(World world) {
-        entities.labels(world.getName()).set(world.getEntities().size());
+        ENTITIES.labels(world.getName()).set(world.getEntities().size());
     }
 }

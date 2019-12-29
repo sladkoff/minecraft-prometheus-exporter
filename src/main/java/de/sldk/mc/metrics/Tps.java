@@ -1,23 +1,24 @@
 package de.sldk.mc.metrics;
 
 import de.sldk.mc.tps.TpsCollector;
+import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Gauge;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
 public class Tps extends Metric {
 
+    private static final Gauge TPS = Gauge.build()
+            .name(prefix("tps"))
+            .help("Server TPS (ticks per second)")
+            .create();
+
     private int taskId;
 
     private TpsCollector tpsCollector = new TpsCollector();
 
-    private Gauge tps = Gauge.build()
-            .name(prefix("tps"))
-            .help("Server TPS (ticks per second)")
-            .register();
-
     public Tps(Plugin plugin) {
-        super(plugin);
+        super(plugin, TPS);
     }
 
     @Override
@@ -28,6 +29,7 @@ public class Tps extends Metric {
 
     @Override
     public void disable() {
+        super.disable();
         Bukkit.getScheduler().cancelTask(taskId);
     }
 
@@ -39,6 +41,6 @@ public class Tps extends Metric {
 
     @Override
     public void doCollect() {
-        tps.set(tpsCollector.getAverageTPS());
+        TPS.set(tpsCollector.getAverageTPS());
     }
 }

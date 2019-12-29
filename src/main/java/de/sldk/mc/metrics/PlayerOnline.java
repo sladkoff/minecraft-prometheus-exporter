@@ -1,27 +1,23 @@
 package de.sldk.mc.metrics;
 
 import io.prometheus.client.Gauge;
-import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
-
-import java.util.Map;
 
 public class PlayerOnline extends PlayerMetric {
 
-    private Gauge playersWithNames = Gauge.build()
+    private static final Gauge PLAYERS_WITH_NAMES = Gauge.build()
             .name(prefix("player_online"))
             .help("Online state by player name")
             .labelNames("name")
-            .register();
+            .create();
 
     public PlayerOnline(Plugin plugin) {
-        super(plugin);
+        super(plugin, PLAYERS_WITH_NAMES);
     }
 
     @Override
     public void collect(OfflinePlayer player) {
-        playersWithNames.labels(player.getName()).set(player.isOnline() ? 1 : 0);
+        PLAYERS_WITH_NAMES.labels(player.getName()).set(player.isOnline() ? 1 : 0);
     }
 }

@@ -19,10 +19,11 @@ public class PrometheusExporterConfig {
             metricConfig("living_entities_total", true, LivingEntities::new),
             metricConfig("loaded_chunks_total", true, LoadedChunks::new),
             metricConfig("jvm_memory", true, Memory::new),
-            metricConfig("player_online", true, PlayerOnline::new),
             metricConfig("players_online_total", true, PlayersOnlineTotal::new),
             metricConfig("players_total", true, PlayersTotal::new),
             metricConfig("tps", true, Tps::new),
+
+            metricConfig("player_online", false, PlayerOnline::new),
             metricConfig("player_statistic", false, PlayerStatistics::new));
 
     private final PrometheusExporter prometheusExporter;
