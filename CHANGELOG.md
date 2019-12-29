@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased - 2019-07-15
 ### Changed
-- [Breaking] Metric `mc_players_total` exports unique players. Use `mc_players_online_total` for online player count.
+- :warning: [Breaking] Metric `mc_players_total` no longer has a `state` label. It exports only the number of unique players now. 
+  Use `mc_players_online_total` for online player count.
 
 ### Added
-- Metrics can be enabled individually via config `enable_metrics`
+- Metrics can be enabled individually via config `enable_metrics`. Since the format of the config.yml has changed it is advised to delete your existing file to 
+  generate a new clean one. 
 
 ## [v1.3.0] - 2019-05-28
 ### Added

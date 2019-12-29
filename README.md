@@ -20,6 +20,8 @@ Add the following job to the ``scrape_configs`` section of your Prometheus confi
 - job_name: 'minecraft'
   static_configs:
     - targets: ['localhost:9225']
+      labels:
+        server_name: 'my-awesome-server'
 ```
 
 ### Multiple servers
@@ -72,7 +74,9 @@ On the other hand this should be quite safe for small private servers with limit
 You can enable the experimental player export in the config.yaml.
 
 ```yaml
-individual-player-statistics: true
+enable_metrics:
+  jvm_memory: true
+  player_statistic: true
 ```
 
 This will enable the additional metrics.
