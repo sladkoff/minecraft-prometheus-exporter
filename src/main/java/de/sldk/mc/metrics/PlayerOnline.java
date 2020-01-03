@@ -9,7 +9,7 @@ public class PlayerOnline extends PlayerMetric {
     private static final Gauge PLAYERS_WITH_NAMES = Gauge.build()
             .name(prefix("player_online"))
             .help("Online state by player name")
-            .labelNames("name")
+            .labelNames("name", "uid")
             .create();
 
     public PlayerOnline(Plugin plugin) {
@@ -18,6 +18,6 @@ public class PlayerOnline extends PlayerMetric {
 
     @Override
     public void collect(OfflinePlayer player) {
-        PLAYERS_WITH_NAMES.labels(player.getName()).set(player.isOnline() ? 1 : 0);
+        PLAYERS_WITH_NAMES.labels(getNameOrUid(player), getUid(player)).set(player.isOnline() ? 1 : 0);
     }
 }
