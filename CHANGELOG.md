@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v2.0.1-SNAPSHOT] - Unreleased
+## [v2.0.1] - 2020-01-03
 ### Fixed
 - Error `Failed to read player statistic: Label cannot be null.` on metrics `player_online` and `player_statistic`. 
   If the server doesn't return a name for a player, the player's UID is used as label instead. (https://github.com/sladkoff/minecraft-prometheus-exporter/issues/17)
@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial exporter
 
+[v2.0.1]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.0.0...v2.0.1
 [v2.0.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v1.3.0...v2.0.0
 [v1.3.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v1.1.0...v1.2.0
