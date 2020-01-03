@@ -80,7 +80,7 @@ You can enable the experimental player export in the config.yaml.
 
 ```yaml
 enable_metrics:
-  jvm_memory: true
+  player_online: true
   player_statistic: true
 ```
 
