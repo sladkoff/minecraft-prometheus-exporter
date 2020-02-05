@@ -20,6 +20,7 @@ import static org.mockito.Mockito.when;
 class EntitiesTest {
 
     private static final String ENTITY_METRIC_NAME = "mc_entities_total";
+    private static final String[] METRIC_LABELS = new String[]{"world", "type", "alive"};
 
     @Test
     void givenTypedEntitiesExpectCorrectCount() {
@@ -49,32 +50,55 @@ class EntitiesTest {
         assertEquals(numOfPigs,
                 CollectorRegistry.defaultRegistry
                         .getSampleValue(ENTITY_METRIC_NAME,
-                                new String[]{"world", "type", "alive"},
+                                METRIC_LABELS,
                                 new String[]{worldName, "PIG", "true"}));
 
         assertEquals(numOfHorses,
                 CollectorRegistry.defaultRegistry
                         .getSampleValue(ENTITY_METRIC_NAME,
-                                new String[]{"world", "type", "alive"},
+                                METRIC_LABELS,
                                 new String[]{worldName, "HORSE", "true"}));
 
         assertEquals(numOfOrbs,
                 CollectorRegistry.defaultRegistry
                         .getSampleValue(ENTITY_METRIC_NAME,
-                                new String[]{"world", "type", "alive"},
+                                METRIC_LABELS,
                                 new String[]{worldName, "EXPERIENCE_ORB", "false"}));
 
         assertEquals(numOfChicken,
                 CollectorRegistry.defaultRegistry
                         .getSampleValue(ENTITY_METRIC_NAME,
-                                new String[]{"world", "type", "alive"},
+                                METRIC_LABELS,
                                 new String[]{worldName, "CHICKEN", "true"}));
 
         assertEquals(numOfMinecarts,
                 CollectorRegistry.defaultRegistry
                         .getSampleValue(ENTITY_METRIC_NAME,
-                                new String[]{"world", "type", "alive"},
+                                METRIC_LABELS,
                                 new String[]{worldName, "MINECART", "false"}));
+    }
+
+    @Test
+    void expectArmorStandAliveToBeFalse() {
+        final String worldName = "world_name";
+        final long numOfArmorStands = 11;
+        List<Entity> mockedEntities = new ArrayList<>(mockEntities(numOfArmorStands, EntityType.ARMOR_STAND));
+        Collections.shuffle(mockedEntities);
+
+        Entities entitiesMetric = new Entities(mock(Plugin.class));
+        entitiesMetric.enable();
+
+        World world = mock(World.class);
+        when(world.getName()).thenReturn(worldName);
+        when(world.getEntities()).thenReturn(mockedEntities);
+
+        entitiesMetric.collect(world);
+
+        assertEquals(numOfArmorStands,
+                CollectorRegistry.defaultRegistry
+                        .getSampleValue(ENTITY_METRIC_NAME,
+                                METRIC_LABELS,
+                                new String[]{worldName, "ARMOR_STAND", "false"}));
     }
 
     private List<Entity> mockEntities(long count, EntityType type) {

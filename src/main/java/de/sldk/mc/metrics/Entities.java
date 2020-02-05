@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,14 @@ public class Entities extends WorldMetric {
             .help("Entities loaded per world")
             .labelNames("world", "type", "alive")
             .create();
+
+    /**
+     * Override the value returned by {@link EntityType#isAlive()}.
+     */
+    private static final Map<EntityType, Boolean> aliveOverride = new HashMap<EntityType, Boolean>() {{
+        put(EntityType.ARMOR_STAND, false);
+    }};
+
 
     public Entities(Plugin plugin) {
         super(plugin, ENTITIES);
@@ -31,8 +40,12 @@ public class Entities extends WorldMetric {
                         ENTITIES
                                 .labels(world.getName(),
                                         entityType.name(),
-                                        Boolean.toString(entityType.isAlive()))
+                                        Boolean.toString(isEntityTypeAlive(entityType)))
                                 .set(mapEntityTypesToCounts.get(entityType))
                 );
+    }
+
+    private boolean isEntityTypeAlive(EntityType type) {
+        return aliveOverride.containsKey(type) ? aliveOverride.get(type) : type.isAlive();
     }
 }
