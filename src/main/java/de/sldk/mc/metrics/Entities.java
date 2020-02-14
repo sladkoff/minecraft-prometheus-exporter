@@ -6,25 +6,34 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.singletonMap;
+
+/**
+ * Get current count of all entities.
+ *
+ * Entities are labelled by
+ * <ol>
+ *     <li> world,
+ *     <li> type ({@link EntityType}),
+ *     <li> alive ({@link EntityType#isAlive()}),
+ *     <li> and spawnable ({@link EntityType#isSpawnable()})
+ * </ol>
+ */
 public class Entities extends WorldMetric {
 
     private static final Gauge ENTITIES = Gauge.build()
             .name(prefix("entities_total"))
             .help("Entities loaded per world")
-            .labelNames("world", "type", "alive")
+            .labelNames("world", "type", "alive", "spawnable")
             .create();
 
     /**
      * Override the value returned by {@link EntityType#isAlive()}.
      */
-    private static final Map<EntityType, Boolean> aliveOverride = new HashMap<EntityType, Boolean>() {{
-        put(EntityType.ARMOR_STAND, false);
-    }};
-
+    private static final Map<EntityType, Boolean> ALIVE_OVERRIDE = singletonMap(EntityType.ARMOR_STAND, false);
 
     public Entities(Plugin plugin) {
         super(plugin, ENTITIES);
@@ -39,13 +48,22 @@ public class Entities extends WorldMetric {
                 .forEach(entityType ->
                         ENTITIES
                                 .labels(world.getName(),
-                                        entityType.name(),
-                                        Boolean.toString(isEntityTypeAlive(entityType)))
+                                        getEntityName(entityType),
+                                        Boolean.toString(isEntityTypeAlive(entityType)),
+                                        Boolean.toString(entityType.isSpawnable()))
                                 .set(mapEntityTypesToCounts.get(entityType))
                 );
     }
 
+    private String getEntityName(EntityType type) {
+        try {
+            return type.getKey().getKey();
+        } catch (IllegalArgumentException e) {
+            return type.name();
+        }
+    }
+
     private boolean isEntityTypeAlive(EntityType type) {
-        return aliveOverride.containsKey(type) ? aliveOverride.get(type) : type.isAlive();
+        return ALIVE_OVERRIDE.containsKey(type) ? ALIVE_OVERRIDE.get(type) : type.isAlive();
     }
 }

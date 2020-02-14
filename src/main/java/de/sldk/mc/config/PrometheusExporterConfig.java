@@ -16,7 +16,6 @@ public class PrometheusExporterConfig {
     public static final PluginConfig<Integer> PORT = new PluginConfig<>("port", 9225);
     public static final List<MetricConfig> METRICS = Arrays.asList(
             metricConfig("entities_total", true, Entities::new),
-            metricConfig("living_entities_total", true, LivingEntities::new),
             metricConfig("loaded_chunks_total", true, LoadedChunks::new),
             metricConfig("jvm_memory", true, Memory::new),
             metricConfig("players_online_total", true, PlayersOnlineTotal::new),
