@@ -19,5 +19,6 @@ public class Memory extends Metric {
     public void doCollect() {
         MEMORY.labels("max").set(Runtime.getRuntime().maxMemory());
         MEMORY.labels("free").set(Runtime.getRuntime().freeMemory());
+        MEMORY.labels("allocated").set(Runtime.getRuntime().totalMemory());
     }
 }
