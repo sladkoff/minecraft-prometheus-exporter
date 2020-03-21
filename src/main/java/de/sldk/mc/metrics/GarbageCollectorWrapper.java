@@ -11,7 +11,7 @@ import io.prometheus.client.hotspot.GarbageCollectorExports;
 
 public class GarbageCollectorWrapper extends Metric {
     public GarbageCollectorWrapper(Plugin plugin) {
-        super(plugin, new GarbageCollectorWrapper.GarbageCollectorExportsCollector());
+        super(plugin, new GarbageCollectorExportsCollector());
     }
 
     @Override
