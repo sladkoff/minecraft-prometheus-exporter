@@ -97,6 +97,7 @@
                     <allowSnapshots>true</allowSnapshots>
                     <pushRemote>false</pushRemote>
                     <gitFlowConfig>
+                        <developmentBranch>master</developmentBranch>
                         <versionTagPrefix>v</versionTagPrefix>
                     </gitFlowConfig>
                 </configuration>
