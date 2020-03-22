@@ -1,14 +1,26 @@
 package de.sldk.mc.config;
 
-import de.sldk.mc.MetricRegistry;
-import de.sldk.mc.PrometheusExporter;
-import de.sldk.mc.metrics.*;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.Plugin;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
+
+import de.sldk.mc.MetricRegistry;
+import de.sldk.mc.PrometheusExporter;
+import de.sldk.mc.metrics.Entities;
+import de.sldk.mc.metrics.GarbageCollectorWrapper;
+import de.sldk.mc.metrics.LivingEntities;
+import de.sldk.mc.metrics.LoadedChunks;
+import de.sldk.mc.metrics.Memory;
+import de.sldk.mc.metrics.Metric;
+import de.sldk.mc.metrics.PlayerOnline;
+import de.sldk.mc.metrics.PlayerStatistics;
+import de.sldk.mc.metrics.PlayersOnlineTotal;
+import de.sldk.mc.metrics.PlayersTotal;
+import de.sldk.mc.metrics.ThreadsWrapper;
+import de.sldk.mc.metrics.Tps;
 
 public class PrometheusExporterConfig {
 
@@ -21,6 +33,9 @@ public class PrometheusExporterConfig {
             metricConfig("players_online_total", true, PlayersOnlineTotal::new),
             metricConfig("players_total", true, PlayersTotal::new),
             metricConfig("tps", true, Tps::new),
+
+            metricConfig("jvm_threads", true, ThreadsWrapper::new),
+            metricConfig("jvm_gc", true, GarbageCollectorWrapper::new),
 
             metricConfig("player_online", false, PlayerOnline::new),
             metricConfig("player_statistic", false, PlayerStatistics::new));
