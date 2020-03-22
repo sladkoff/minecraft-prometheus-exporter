@@ -1,26 +1,14 @@
 package de.sldk.mc.config;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Function;
-
+import de.sldk.mc.MetricRegistry;
+import de.sldk.mc.PrometheusExporter;
+import de.sldk.mc.metrics.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
-import de.sldk.mc.MetricRegistry;
-import de.sldk.mc.PrometheusExporter;
-import de.sldk.mc.metrics.Entities;
-import de.sldk.mc.metrics.GarbageCollectorWrapper;
-import de.sldk.mc.metrics.LivingEntities;
-import de.sldk.mc.metrics.LoadedChunks;
-import de.sldk.mc.metrics.Memory;
-import de.sldk.mc.metrics.Metric;
-import de.sldk.mc.metrics.PlayerOnline;
-import de.sldk.mc.metrics.PlayerStatistics;
-import de.sldk.mc.metrics.PlayersOnlineTotal;
-import de.sldk.mc.metrics.PlayersTotal;
-import de.sldk.mc.metrics.ThreadsWrapper;
-import de.sldk.mc.metrics.Tps;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
 
 public class PrometheusExporterConfig {
 
