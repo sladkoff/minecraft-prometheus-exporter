@@ -509,7 +509,7 @@
           "step": 4
         },
         {
-          "expr": "mc_jvm_memory{type='max', server_name=~\"$server_name\"} - scalar(mc_jvm_memory{type='free', server_name=~\"$server_name\"})",
+          "expr": "mc_jvm_memory{type='allocated', server_name=~\"$server_name\"} - scalar(mc_jvm_memory{type='free', server_name=~\"$server_name\"})",
           "format": "time_series",
           "instant": false,
           "intervalFactor": 1,
