@@ -501,6 +501,7 @@
         {
           "expr": "mc_jvm_memory{type='max', server_name=~\"$server_name\"}",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
           "legendFormat": "Allocated",
           "metric": "mc_jvm_memory",
@@ -515,6 +516,11 @@
           "legendFormat": "Used",
           "refId": "B",
           "step": 4
+        },
+        {
+          "expr": "mc_jvm_memory{type='allocated', server_name=~\"$server_name\"}",
+          "hide": true,
+          "refId": "C"
         }
       ],
       "thresholds": [],
@@ -601,21 +607,13 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "mc_entities_total{server_name=~\"$server_name\"}",
+          "expr": "sum (mc_entities_total{server_name=~\"$server_name\"}) by (world)",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 2,
           "legendFormat": "{{world}}_total",
           "metric": "mc_entities_total",
           "refId": "A",
-          "step": 4
-        },
-        {
-          "expr": "mc_living_entities_total{server_name=~\"$server_name\"}",
-          "format": "time_series",
-          "intervalFactor": 2,
-          "legendFormat": "{{world}}_living",
-          "metric": "mc_living_entities_total",
-          "refId": "B",
           "step": 4
         }
       ],
