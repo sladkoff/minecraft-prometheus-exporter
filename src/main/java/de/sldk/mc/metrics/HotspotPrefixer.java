@@ -10,7 +10,7 @@ import io.prometheus.client.Collector.MetricFamilySamples.Sample;
 public final class HotspotPrefixer {
     protected static List<MetricFamilySamples> prefixFromCollector(Collector collector) {
         List<MetricFamilySamples> collected = collector.collect();
-        List<MetricFamilySamples> mfs = new ArrayList<MetricFamilySamples>();
+        List<MetricFamilySamples> mfs = new ArrayList<>();
 
         for (MetricFamilySamples mSample : collected) {
             List<Sample> samples = new ArrayList<>(mSample.samples.size());
