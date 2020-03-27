@@ -44,24 +44,15 @@ public class Entities extends WorldMetric {
         Map<EntityType, Long> mapEntityTypesToCounts = world.getEntities().stream()
                 .collect(Collectors.groupingBy(Entity::getType, Collectors.counting()));
 
-        mapEntityTypesToCounts.keySet()
-                .forEach(entityType ->
+        mapEntityTypesToCounts
+                .forEach((entityType, count) ->
                         ENTITIES
                                 .labels(world.getName(),
                                         getEntityName(entityType),
                                         Boolean.toString(isEntityTypeAlive(entityType)),
                                         Boolean.toString(entityType.isSpawnable()))
-                                .set(mapEntityTypesToCounts.get(entityType))
+                                .set(count)
                 );
-    }
-
-    private String getEntityName(EntityType type) {
-        try {
-            return type.getKey().getKey();
-        } catch (Throwable t) {
-            // Note: The entity type key above was introduced in 1.14. Older implementations should fallback here.
-            return type.name();
-        }
     }
 
     private boolean isEntityTypeAlive(EntityType type) {
