@@ -15,6 +15,34 @@ After startup, the Prometheus metrics endpoint should be available at ``localhos
 
 The metrics port can be customized in the plugin's config.yml (a default config will be created after the first use).
 
+## Plugin config
+
+Here's a default config with annotations.
+
+```yml
+# Note that the HTTP server binds to localhost by default.
+# If your Prometheus runs on another host or inside a Kubernetes cluster 
+# set this to any reachable IP or 0.0.0.0 to listen on all interfaces.
+host: localhost
+# The port can be changed in case it conflicts with any other application.
+port: 9225
+# Metrics can be enabled individually. Metrics which are disabled 
+# by default may have a performance impact on your server. 
+# See the rest of the README for more information.
+enable_metrics:
+  jvm_threads: true
+  jvm_gc: true
+  players_total: true
+  entities_total: true
+  living_entities_total: true
+  loaded_chunks_total: true
+  jvm_memory: true
+  players_online_total: true
+  tps: true
+  player_online: false
+  player_statistic: false
+```
+
 ## Prometheus config
 
 Add the following job to the ``scrape_configs`` section of your Prometheus configuration:
