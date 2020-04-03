@@ -2,6 +2,9 @@
 [![](https://img.shields.io/github/issues-raw/sladkoff/minecraft-prometheus-exporter?style=flat-square)](https://github.com/sladkoff/minecraft-prometheus-exporter/issues)
 [![](https://img.shields.io/github/license/sladkoff/minecraft-prometheus-exporter?style=flat-square)](https://github.com/sladkoff/minecraft-prometheus-exporter/blob/master/LICENSE.md)
 [![](https://img.shields.io/badge/donate-Buy%20me%20a%20coffee-orange.svg?style=flat-square)](https://www.buymeacoffee.com/sldk)
+[![](https://img.shields.io/discord/695717895451181156?color=%20%237289da&label=discord&style=flat-square)](https://discordapp.com/invite/Bh2M2tM)
+[![](https://img.shields.io/gitter/room/sladkoff/minecraft-prometheus-exporter?style=flat-square)](https://gitter.im/minecraft-prometheus-exporter/community)
+
 
 # Minecraft Prometheus Exporter
 
