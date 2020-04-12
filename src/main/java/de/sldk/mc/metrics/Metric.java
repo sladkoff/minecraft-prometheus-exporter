@@ -4,6 +4,8 @@ import io.prometheus.client.Collector;
 import io.prometheus.client.CollectorRegistry;
 import org.bukkit.plugin.Plugin;
 
+import java.util.logging.Logger;
+
 public abstract class Metric {
 
     private final static String COMMON_PREFIX = "mc_";
@@ -23,12 +25,28 @@ public abstract class Metric {
     }
 
     public void collect() {
-        if (enabled) {
+
+        if (!enabled) {
+            return;
+        }
+
+        try {
             doCollect();
+        } catch (Exception e) {
+            logException(e);
         }
     }
 
     protected abstract void doCollect();
+
+    private void logException(Exception e) {
+        final Logger log = plugin.getLogger();
+        final String className = getClass().getSimpleName();
+
+        log.warning(String.format("Failed to collect metric '%s' (see FINER log for stacktrace): %s",
+                className, e.toString()));
+        log.throwing(className, "collect", e);
+    }
 
     protected static String prefix(String name) {
         return COMMON_PREFIX + name;
