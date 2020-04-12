@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.1.1] - 2020-04-12
+
+### Fixed
+- [#38](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/38): Exception `NoSuchMethodError` during metric collection on server versions < 1.14 
+
 ## [v2.1.0] - 2020-03-23
 
 ### Added
@@ -63,6 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial exporter
 
+[v2.1.1]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.1.0...v2.1.1
 [v2.1.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.0.1...v2.1.0
 [v2.0.1]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.0.0...v2.0.1
 [v2.0.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v1.3.0...v2.0.0
