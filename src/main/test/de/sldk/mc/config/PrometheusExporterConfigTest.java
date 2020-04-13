@@ -8,7 +8,7 @@ class PrometheusExporterConfigTest {
 
     @Test
     void test() {
-        Assertions.assertEquals(8, PrometheusExporterConfig.METRICS.size());
+        Assertions.assertEquals(9, PrometheusExporterConfig.METRICS.size());
     }
 
 }

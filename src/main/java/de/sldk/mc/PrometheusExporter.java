@@ -1,7 +1,6 @@
 package de.sldk.mc;
 
 import de.sldk.mc.config.PrometheusExporterConfig;
-import de.sldk.mc.metrics.Metric;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jetty.server.Server;
 
