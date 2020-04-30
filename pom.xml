@@ -14,7 +14,7 @@
         <jetty.version>9.4.25.v20191220</jetty.version>
         <prometheus-client.version>0.8.1</prometheus-client.version>
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
-        <org.mockito.version>1.10.19</org.mockito.version>
+        <org.mockito.version>3.3.3</org.mockito.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -62,7 +62,7 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
+            <artifactId>mockito-core</artifactId>
             <version>${org.mockito.version}</version>
             <scope>test</scope>
         </dependency>
