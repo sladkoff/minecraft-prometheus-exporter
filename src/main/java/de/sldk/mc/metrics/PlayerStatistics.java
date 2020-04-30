@@ -54,12 +54,12 @@ public class PlayerStatistics extends PlayerMetric {
             } else if (Statistic.Type.ENTITY == statistic.getType()) {
                 return Arrays.stream(entityTypes).map(type -> getSafeStatistic(player, statistic, type))
                         .filter(Objects::nonNull)
-                        .mapToInt(Integer::intValue).sum();
+                        .reduce(0,  Integer::sum);
             } else if (Statistic.Type.ITEM == statistic.getType()
                     || Statistic.Type.BLOCK == statistic.getType()) {
                 return Arrays.stream(materials).map(material -> getSafeStatistic(player, statistic, material))
                         .filter(Objects::nonNull)
-                        .mapToInt(Integer::intValue).sum();
+                        .reduce(0,  Integer::sum);
             }
 
             return 0;
