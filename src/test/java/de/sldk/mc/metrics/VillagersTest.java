@@ -2,20 +2,16 @@ package de.sldk.mc.metrics;
 
 import io.prometheus.client.CollectorRegistry;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Villager;
 import org.bukkit.plugin.Plugin;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -26,22 +22,17 @@ class VillagersTest {
     private static final String VILLAGERS_METRIC_NAME = "mc_villagers_total";
     private static final String[] METRIC_LABELS = new String[]{"world", "type", "profession", "level"};
 
+    private static final CollectorRegistry REGISTRY = CollectorRegistry.defaultRegistry;
     private Villagers villagersMetric;
-
-    @BeforeAll
-    static void beforeAllTests() {
-        CollectorRegistry.defaultRegistry.clear();
-    }
+    private World world;
 
     @BeforeEach
     void beforeEachTest() {
-        villagersMetric = new Villagers(mock(Plugin.class));
+        REGISTRY.clear();
+        Plugin plugin = mock(Plugin.class);
+        villagersMetric = new Villagers(plugin);
         villagersMetric.enable();
-    }
-
-    @AfterEach
-    void afterEachTest() {
-        CollectorRegistry.defaultRegistry.clear();
+        world = mock(World.class);
     }
 
     @Test
@@ -50,37 +41,32 @@ class VillagersTest {
         final long numOfDesertFarmersLevel1 = 2;
         final long numOfPlainsNoneLevel2 = 3;
 
-        List<Entity> mockedVillagers = new ArrayList<>();
-        mockedVillagers.addAll(mockVillagers(numOfDesertFarmersLevel1, Villager.Type.DESERT, Villager.Profession.FARMER, 1));
-        mockedVillagers.addAll(mockVillagers(numOfPlainsNoneLevel2, Villager.Type.PLAINS, Villager.Profession.NONE, 2));
-        Collections.shuffle(mockedVillagers);
+        List<Villager> mockedVillagers = Stream.concat(
+            mockVillagers(numOfDesertFarmersLevel1, Villager.Type.DESERT, Villager.Profession.FARMER, 1),
+            mockVillagers(numOfPlainsNoneLevel2, Villager.Type.PLAINS, Villager.Profession.NONE, 2)
+        ).collect(Collectors.toList());
 
-        World world = mock(World.class);
         when(world.getName()).thenReturn(worldName);
-        when(world.getEntities()).thenReturn(mockedVillagers);
-
+        when(world.getEntitiesByClass(Villager.class)).thenReturn(mockedVillagers);
         villagersMetric.collect(world);
 
         assertEquals(numOfDesertFarmersLevel1,
-                CollectorRegistry.defaultRegistry
-                        .getSampleValue(VILLAGERS_METRIC_NAME,
+                REGISTRY.getSampleValue(VILLAGERS_METRIC_NAME,
                                 METRIC_LABELS,
                                 new String[]{worldName, "desert", "farmer", "1"}));
 
         assertEquals(numOfPlainsNoneLevel2,
-                CollectorRegistry.defaultRegistry
-                        .getSampleValue(VILLAGERS_METRIC_NAME,
+                REGISTRY.getSampleValue(VILLAGERS_METRIC_NAME,
                                 METRIC_LABELS,
                                 new String[]{worldName, "plains", "none", "2"}));
     }
 
-    private List<Entity> mockVillagers(long count, Villager.Type type, Villager.Profession profession, int level) {
+    private Stream<Villager> mockVillagers(long count, Villager.Type type, Villager.Profession profession, int level) {
         return LongStream.range(0, count)
-                .mapToObj(i -> mockVillager(type, profession, level))
-                .collect(Collectors.toList());
+                .mapToObj(i -> mockVillager(type, profession, level));
     }
 
-    private Entity mockVillager(Villager.Type type, Villager.Profession profession, int level) {
+    private Villager mockVillager(Villager.Type type, Villager.Profession profession, int level) {
         Villager e = mock(Villager.class);
         when(e.getType()).thenReturn(EntityType.VILLAGER);
         when(e.getVillagerType()).thenReturn(type);
