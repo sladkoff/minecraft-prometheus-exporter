@@ -29,11 +29,14 @@ public class TpsCollector implements Runnable {
     @Override
     public void run() {
         final long now = System.currentTimeMillis();
-        long timeSpent = (now - this.lastPoll) / 1000;
-        timeSpent = timeSpent == 0 ? 1 : timeSpent;
+        final long timeSpent = now - this.lastPoll;
 
-        final float tps = (float) POLL_INTERVAL / (float) timeSpent;
+        if (timeSpent <= 0) {
+            // This would be caused by an invalid poll interval, skip it
+            return;
+        }
 
+        final float tps = (POLL_INTERVAL / (float) timeSpent) * 1000;
         log(tps > TICKS_PER_SECOND ? TICKS_PER_SECOND : tps);
 
         this.lastPoll = now;
@@ -47,7 +50,7 @@ public class TpsCollector implements Runnable {
     }
 
     public float getAverageTPS() {
-        if (tpsQueue.size() < TPS_QUEUE_SIZE) {
+        if (tpsQueue.isEmpty()) {
             return 20;
         }
 
