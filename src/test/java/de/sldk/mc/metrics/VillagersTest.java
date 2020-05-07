@@ -1,5 +1,9 @@
 package de.sldk.mc.metrics;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import io.prometheus.client.CollectorRegistry;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
@@ -12,10 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class VillagersTest {
 
@@ -50,15 +50,11 @@ class VillagersTest {
         when(world.getEntitiesByClass(Villager.class)).thenReturn(mockedVillagers);
         villagersMetric.collect(world);
 
-        assertEquals(numOfDesertFarmersLevel1,
-                REGISTRY.getSampleValue(VILLAGERS_METRIC_NAME,
-                                METRIC_LABELS,
-                                new String[]{worldName, "desert", "farmer", "1"}));
+        assertThat(REGISTRY.getSampleValue(VILLAGERS_METRIC_NAME, METRIC_LABELS,
+                new String[] {worldName, "desert", "farmer", "1"})).isEqualTo(numOfDesertFarmersLevel1);
 
-        assertEquals(numOfPlainsNoneLevel2,
-                REGISTRY.getSampleValue(VILLAGERS_METRIC_NAME,
-                                METRIC_LABELS,
-                                new String[]{worldName, "plains", "none", "2"}));
+        assertThat(REGISTRY.getSampleValue(VILLAGERS_METRIC_NAME, METRIC_LABELS,
+                new String[] {worldName, "plains", "none", "2"})).isEqualTo(numOfPlainsNoneLevel2);
     }
 
     private Stream<Villager> mockVillagers(long count, Villager.Type type, Villager.Profession profession, int level) {

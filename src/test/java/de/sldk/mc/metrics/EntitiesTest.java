@@ -1,5 +1,9 @@
 package de.sldk.mc.metrics;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import io.prometheus.client.CollectorRegistry;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -15,10 +19,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class EntitiesTest {
 
@@ -65,35 +65,21 @@ class EntitiesTest {
 
         entitiesMetric.collect(world);
 
-        assertEquals(numOfPigs,
-                CollectorRegistry.defaultRegistry
-                        .getSampleValue(ENTITY_METRIC_NAME,
-                                METRIC_LABELS,
-                                new String[]{worldName, "pig", "true", "true"}));
+        assertThat(CollectorRegistry.defaultRegistry.getSampleValue(ENTITY_METRIC_NAME, METRIC_LABELS,
+                new String[] {worldName, "pig", "true", "true"})).isEqualTo(numOfPigs);
 
-        assertEquals(numOfHorses,
-                CollectorRegistry.defaultRegistry
-                        .getSampleValue(ENTITY_METRIC_NAME,
-                                METRIC_LABELS,
-                                new String[]{worldName, "horse", "true", "true"}));
 
-        assertEquals(numOfOrbs,
-                CollectorRegistry.defaultRegistry
-                        .getSampleValue(ENTITY_METRIC_NAME,
-                                METRIC_LABELS,
-                                new String[]{worldName, "experience_orb", "false", "true"}));
+        assertThat(CollectorRegistry.defaultRegistry.getSampleValue(ENTITY_METRIC_NAME, METRIC_LABELS,
+                new String[] {worldName, "horse", "true", "true"})).isEqualTo(numOfHorses);
 
-        assertEquals(numOfChicken,
-                CollectorRegistry.defaultRegistry
-                        .getSampleValue(ENTITY_METRIC_NAME,
-                                METRIC_LABELS,
-                                new String[]{worldName, "chicken", "true", "true"}));
+        assertThat(CollectorRegistry.defaultRegistry.getSampleValue(ENTITY_METRIC_NAME, METRIC_LABELS,
+                new String[] {worldName, "experience_orb", "false", "true"})).isEqualTo(numOfOrbs);
 
-        assertEquals(numOfMinecarts,
-                CollectorRegistry.defaultRegistry
-                        .getSampleValue(ENTITY_METRIC_NAME,
-                                METRIC_LABELS,
-                                new String[]{worldName, "minecart", "false", "true"}));
+        assertThat(CollectorRegistry.defaultRegistry.getSampleValue(ENTITY_METRIC_NAME, METRIC_LABELS,
+                new String[] {worldName, "chicken", "true", "true"})).isEqualTo(numOfChicken);
+
+        assertThat(CollectorRegistry.defaultRegistry.getSampleValue(ENTITY_METRIC_NAME, METRIC_LABELS,
+                new String[] {worldName, "minecart", "false", "true"})).isEqualTo(numOfMinecarts);
     }
 
     @Test
@@ -108,11 +94,8 @@ class EntitiesTest {
 
         entitiesMetric.collect(world);
 
-        assertEquals(numOfArmorStands,
-                CollectorRegistry.defaultRegistry
-                        .getSampleValue(ENTITY_METRIC_NAME,
-                                METRIC_LABELS,
-                                new String[]{worldName, "armor_stand", "false", "true"}));
+        assertThat(CollectorRegistry.defaultRegistry.getSampleValue(ENTITY_METRIC_NAME, METRIC_LABELS,
+                new String[] {worldName, "armor_stand", "false", "true"})).isEqualTo(numOfArmorStands);
     }
 
     @Test
@@ -127,11 +110,8 @@ class EntitiesTest {
 
         entitiesMetric.collect(world);
 
-        assertEquals(numOfUnknowns,
-                CollectorRegistry.defaultRegistry
-                        .getSampleValue(ENTITY_METRIC_NAME,
-                                METRIC_LABELS,
-                                new String[]{worldName, "UNKNOWN", "false", "false"}));
+        assertThat(CollectorRegistry.defaultRegistry.getSampleValue(ENTITY_METRIC_NAME, METRIC_LABELS,
+                new String[] {worldName, "UNKNOWN", "false", "false"})).isEqualTo(numOfUnknowns);
     }
 
     private List<Entity> mockEntities(long count, EntityType type) {
