@@ -1,6 +1,7 @@
 package de.sldk.mc.tps;
 
 import java.util.LinkedList;
+import java.util.function.Supplier;
 
 /**
  * Polls the server and maintains a queue of recent TPS values.
@@ -23,17 +24,30 @@ public class TpsCollector implements Runnable {
      */
     static final int TPS_QUEUE_SIZE = 10;
 
-    private long lastPoll = System.currentTimeMillis();
+    final private Supplier<Long> systemTimeSupplier;
     private LinkedList<Float> tpsQueue = new LinkedList<>();
+    private long lastPoll;
+
+    public TpsCollector() {
+        this(System::currentTimeMillis);
+    }
+
+    public TpsCollector(Supplier<Long> systemTimeSupplier) {
+        this.systemTimeSupplier = systemTimeSupplier;
+        this.lastPoll = systemTimeSupplier.get();
+    }
 
     @Override
     public void run() {
-        final long now = System.currentTimeMillis();
-        long timeSpent = (now - this.lastPoll) / 1000;
-        timeSpent = timeSpent == 0 ? 1 : timeSpent;
+        final long now = systemTimeSupplier.get();
+        final long timeSpent = now - this.lastPoll;
 
-        final float tps = (float) POLL_INTERVAL / (float) timeSpent;
+        if (timeSpent <= 0) {
+            // This would be caused by an invalid poll interval, skip it
+            return;
+        }
 
+        final float tps = (POLL_INTERVAL / (float) timeSpent) * 1000;
         log(tps > TICKS_PER_SECOND ? TICKS_PER_SECOND : tps);
 
         this.lastPoll = now;
@@ -47,7 +61,7 @@ public class TpsCollector implements Runnable {
     }
 
     public float getAverageTPS() {
-        if (tpsQueue.size() < TPS_QUEUE_SIZE) {
+        if (tpsQueue.isEmpty()) {
             return 20;
         }
 
