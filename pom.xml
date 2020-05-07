@@ -15,6 +15,7 @@
         <prometheus-client.version>0.8.1</prometheus-client.version>
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <org.mockito.version>3.3.3</org.mockito.version>
+        <assertj.version>3.16.0</assertj.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
@@ -71,6 +72,19 @@
             <version>${org.mockito.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${org.mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

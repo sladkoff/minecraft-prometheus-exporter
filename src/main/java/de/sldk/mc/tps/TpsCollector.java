@@ -1,6 +1,7 @@
 package de.sldk.mc.tps;
 
 import java.util.LinkedList;
+import java.util.function.Supplier;
 
 /**
  * Polls the server and maintains a queue of recent TPS values.
@@ -23,12 +24,22 @@ public class TpsCollector implements Runnable {
      */
     static final int TPS_QUEUE_SIZE = 10;
 
-    private long lastPoll = System.currentTimeMillis();
+    final private Supplier<Long> systemTimeSupplier;
     private LinkedList<Float> tpsQueue = new LinkedList<>();
+    private long lastPoll;
+
+    public TpsCollector() {
+        this(System::currentTimeMillis);
+    }
+
+    public TpsCollector(Supplier<Long> systemTimeSupplier) {
+        this.systemTimeSupplier = systemTimeSupplier;
+        this.lastPoll = systemTimeSupplier.get();
+    }
 
     @Override
     public void run() {
-        final long now = System.currentTimeMillis();
+        final long now = systemTimeSupplier.get();
         final long timeSpent = now - this.lastPoll;
 
         if (timeSpent <= 0) {
