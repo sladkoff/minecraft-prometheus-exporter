@@ -20,5 +20,10 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
-    - name: Build and test with Maven
-      run: mvn -B verify --file pom.xml
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:	
+        name: target
+        path: ${{ github.workspace }}/target/**/*
