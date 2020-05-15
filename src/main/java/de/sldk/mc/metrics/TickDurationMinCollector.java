@@ -17,16 +17,13 @@ public class TickDurationMinCollector extends TickDurationCollector {
     }
 
     private long getTickDurationMin() {
-        if (getTickDurations() != null) {
-            long min = Long.MAX_VALUE;
-            for (Long val : getTickDurations()) {
-                if (val < min) {
-                    min = val;
-                }
+        long min = Long.MAX_VALUE;
+        for (Long val : getTickDurations()) {
+            if (val < min) {
+                min = val;
             }
-            return min;
         }
-        return 0;
+        return min;
     }
 
     @Override

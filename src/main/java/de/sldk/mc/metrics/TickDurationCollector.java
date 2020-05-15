@@ -28,6 +28,8 @@ public abstract class TickDurationCollector extends Metric {
          * work across many versions of Spigot/Paper and various obfuscation mappings
          */
         if (tickDurationReference == null) {
+            long[] longestArray = null;
+
             try {
                 /* Get the actual minecraft server class */
                 Server server = Bukkit.getServer();
@@ -37,17 +39,34 @@ public abstract class TickDurationCollector extends Metric {
                 /* Look for the only array of longs in that class, which is tick duration */
                 for (Field field : minecraftServer.getClass().getSuperclass().getDeclaredFields()) {
                     if (field.getType().isArray() && field.getType().getComponentType().equals(long.class)) {
-                        tickDurationReference = (long[]) field.get(minecraftServer);
-                        return;
+                        /* Check all the long[] items in this class, and remember the one with the most elements */
+                        long[] array = (long[]) field.get(minecraftServer);
+                        if (longestArray == null || array.length > longestArray.length) {
+                            longestArray = array;
+                        }
                     }
                 }
             } catch (Exception e) {
                 plugin.getLogger().log(Level.FINE, "Caught exception looking for tick times array: ", e);
             }
-            plugin.getLogger().log(Level.WARNING, "Failed to find tick times buffer via reflection; " + name + " data not available");
+
+            if (longestArray != null) {
+                tickDurationReference = longestArray;
+            } else {
+                /* No array was found, use an placeholder */
+                tickDurationReference = new long[1];
+                tickDurationReference[0] = -1;
+
+                plugin.getLogger().log(Level.WARNING, "Failed to find tick times buffer via reflection. Tick duration metrics will not be available.");
+            }
         }
     }
 
+    /**
+     * Returns either the internal minecraft long array for tick times in ns,
+     * or a long array containing just one element of value -1 if reflection
+     * was unable to locate the minecraft tick times buffer
+     */
     protected static long[] getTickDurations() {
         return tickDurationReference;
     }

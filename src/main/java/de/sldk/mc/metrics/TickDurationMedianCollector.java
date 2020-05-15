@@ -19,15 +19,10 @@ public class TickDurationMedianCollector extends TickDurationCollector {
     }
 
     private long getTickDurationMedian() {
-        if (getTickDurations() != null) {
-            /* Copy the original array - don't want to sort it! */
-            long[] tickTimes = getTickDurations().clone();
-            if (tickTimes.length > 0) {
-                Arrays.sort(tickTimes);
-                return tickTimes[tickTimes.length / 2];
-            }
-        }
-        return 0;
+        /* Copy the original array - don't want to sort it! */
+        long[] tickTimes = getTickDurations().clone();
+        Arrays.sort(tickTimes);
+        return tickTimes[tickTimes.length / 2];
     }
 
     @Override

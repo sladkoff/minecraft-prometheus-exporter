@@ -17,15 +17,12 @@ public class TickDurationAverageCollector extends TickDurationCollector {
     }
 
     private long getTickDurationAverage() {
-        if (getTickDurations() != null) {
-            long sum = 0;
-            long[] durations = getTickDurations();
-            for (Long val : durations) {
-                sum += val;
-            }
-            return sum / durations.length;
+        long sum = 0;
+        long[] durations = getTickDurations();
+        for (Long val : durations) {
+            sum += val;
         }
-        return 0;
+        return sum / durations.length;
     }
 
     @Override
