@@ -24,13 +24,13 @@ Here's a default config with annotations.
 
 ```yml
 # Note that the HTTP server binds to localhost by default.
-# If your Prometheus runs on another host or inside a Kubernetes cluster 
+# If your Prometheus runs on another host or inside a Kubernetes cluster
 # set this to any reachable IP or 0.0.0.0 to listen on all interfaces.
 host: localhost
 # The port can be changed in case it conflicts with any other application.
 port: 9225
-# Metrics can be enabled individually. Metrics which are disabled 
-# by default may have a performance impact on your server. 
+# Metrics can be enabled individually. Metrics which are disabled
+# by default may have a performance impact on your server.
 # See the rest of the README for more information.
 enable_metrics:
   jvm_threads: true
@@ -42,6 +42,10 @@ enable_metrics:
   jvm_memory: true
   players_online_total: true
   tps: true
+  tick_duration_average: true
+  tick_duration_median: true
+  tick_duration_min: false
+  tick_duration_max: true
   player_online: false
   player_statistic: false
 ```
@@ -96,13 +100,17 @@ mc_villagers_total | Villagers
 mc_jvm_memory | JVM memory usage
 mc_jvm_threads | JVM threads info
 mc_tps | Server tickrate (TPS)
+mc_tick_duration_median | Median Tick Duration (ns, usually last 100 ticks)
+mc_tick_duration_average | Average Tick Duration (ns, usually last 100 ticks)
+mc_tick_duration_min | Min Tick Duration (ns, usually last 100 ticks)
+mc_tick_duration_max | Max Tick Duration (ns, usually last 100 ticks)
 
 ## Player metrics (experimental!)
 
 :warning: **The following feature is against Prometheus best-practices and is not recommended for production servers!**
 
-There is an option to export per-player statistics like the number of blocks mined, mobs killed, items used, etc. 
-The amount of data stored in Prometheus can dramatically increase when this is enabled as individual time-series 
+There is an option to export per-player statistics like the number of blocks mined, mobs killed, items used, etc.
+The amount of data stored in Prometheus can dramatically increase when this is enabled as individual time-series
 will be generated for each player that has ever been seen on the server. The statistic collection may also have an
 impact on the Minecraft server performance for bigger servers but it has not been measured or tested.
 
@@ -123,7 +131,7 @@ Label | Description
 mc_player_statistic | Player statistics
 mc_player_online | Online state by player name
 
-There's a sample [dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json) 
+There's a sample [dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json)
 available to get you started.
 
 ## Collect metrics about your own plugin
@@ -157,7 +165,7 @@ public class MyPluginCommand extends PluginCommand {
   public boolean execute​(CommandSender sender, String commandLabel, String[] args) {
 
     // Increment your counter;
-    commandCounter.inc(); 
+    commandCounter.inc();
 
     // Do other stuff
 
