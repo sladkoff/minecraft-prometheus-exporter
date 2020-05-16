@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.2.0] - 2020-05-16
+
+Special thanks to all new and old contributors :star:
+
+### Added
+- [#33](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/33): New villager metric `mc_villagers_total`
+- [#41](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/39): New server tick duration metrics `mc_tick_duration_*`
+- [#42](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/42): gzip transport support
+
+### Fixed
+- [#23](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/23): TPS inaccuracy in `mc_tps` 
+
 ## [v2.1.1] - 2020-04-12
 
 ### Fixed
@@ -68,6 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial exporter
 
+[v2.2.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.1.1...v2.2.0
 [v2.1.1]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.1.0...v2.1.1
 [v2.1.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.0.1...v2.1.0
 [v2.0.1]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.0.0...v2.0.1
