@@ -41,7 +41,7 @@ public abstract class TickDurationCollector extends Metric {
                     if (field.getType().isArray() && field.getType().getComponentType().equals(long.class)) {
                         /* Check all the long[] items in this class, and remember the one with the most elements */
                         long[] array = (long[]) field.get(minecraftServer);
-                        if (longestArray == null || array.length > longestArray.length) {
+                        if (array != null && (longestArray == null || array.length > longestArray.length)) {
                             longestArray = array;
                         }
                     }
