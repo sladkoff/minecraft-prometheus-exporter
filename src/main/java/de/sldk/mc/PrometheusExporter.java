@@ -3,6 +3,7 @@ package de.sldk.mc;
 import de.sldk.mc.config.PrometheusExporterConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 
 import java.net.InetSocketAddress;
 import java.util.logging.Level;
@@ -26,9 +27,12 @@ public class PrometheusExporter extends JavaPlugin {
         int port = config.get(PrometheusExporterConfig.PORT);
         String host = config.get(PrometheusExporterConfig.HOST);
 
+        GzipHandler gzipHandler = new GzipHandler();
+        gzipHandler.setHandler(new MetricsController(this));
+
         InetSocketAddress address = new InetSocketAddress(host, port);
         server = new Server(address);
-        server.setHandler(new MetricsController(this));
+        server.setHandler(gzipHandler);
 
         try {
             server.start();
