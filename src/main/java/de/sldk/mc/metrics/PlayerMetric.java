@@ -1,6 +1,9 @@
 package de.sldk.mc.metrics;
 
 import io.prometheus.client.Collector;
+
+import java.util.Arrays;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
@@ -13,7 +16,13 @@ public abstract class PlayerMetric extends Metric {
 
     @Override
     public final void doCollect() {
+
+        getPlugin().getLogger().info(
+                "Offline Players: " + Arrays.toString(Bukkit.getOfflinePlayers())
+        );
+
         for (OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+            getPlugin().getLogger().info("Getting stats for player: " + player.getName());
             collect(player);
         }
     }

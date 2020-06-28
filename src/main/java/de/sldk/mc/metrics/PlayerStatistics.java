@@ -1,19 +1,20 @@
 package de.sldk.mc.metrics;
 
+import de.sldk.mc.metrics.player.PlayerStatsFetcher;
+import de.sldk.mc.metrics.player.StatsFileReader;
 import io.prometheus.client.Gauge;
-import org.bukkit.Material;
+
+import java.util.Map;
+import java.util.logging.Logger;
+
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Statistic;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
+/**
+ * Offline player -> fetch data from files
+ * <p>
+ * Online player -> fetch data from Minecraft API
+ */
 public class PlayerStatistics extends PlayerMetric {
 
     private static final Gauge PLAYER_STATS = Gauge.build()
@@ -22,63 +23,38 @@ public class PlayerStatistics extends PlayerMetric {
             .labelNames("player_name", "player_uid", "statistic")
             .create();
 
+    private static Logger logger;
+
+    private final StatsFileReader statsFileReader;
+    private final PlayerStatsFetcher playerStatsFetcher;
+
     public PlayerStatistics(Plugin plugin) {
         super(plugin, PLAYER_STATS);
+        logger = plugin.getLogger();
+
+        statsFileReader = new StatsFileReader(plugin);
+        playerStatsFetcher = new PlayerStatsFetcher(plugin);
     }
 
     @Override
     public void collect(OfflinePlayer player) {
+        logger.info("Collect running for PlayerStatistics");
 
-        Map<String, Integer> statistics = getStatistics(player.getPlayer());
+        Map<Enum<?>, Integer> statistics;
+        if (player.getPlayer() == null) {
+            statistics = statsFileReader.getPlayersStats(player.getUniqueId());
+        } else {
+            logger.info("OfflinePlayer is null");
+            statistics = playerStatsFetcher.getPlayerStats(player.getPlayer());
+        }
+
         final String playerNameLabel = getNameOrUid(player);
         final String playerUidLabel = getUid(player);
 
-        statistics.forEach((stat, value) -> PLAYER_STATS.labels(playerNameLabel, playerUidLabel, stat).set(value));
-    }
-
-    private static Map<String, Integer> getStatistics(Player player) {
-
-        if (player == null) {
-            return Collections.emptyMap();
-        }
-
-        EntityType[] entityTypes = EntityType.values();
-        Material[] materials = Material.values();
-
-        Statistic[] statistics = Statistic.values();
-
-        return Arrays.stream(statistics).collect(Collectors.toMap(Enum::name, statistic -> {
-
-            if (Statistic.Type.UNTYPED == statistic.getType()) {
-                return player.getStatistic(statistic);
-            } else if (Statistic.Type.ENTITY == statistic.getType()) {
-                return Arrays.stream(entityTypes).map(type -> getSafeStatistic(player, statistic, type))
-                        .filter(Objects::nonNull)
-                        .reduce(0,  Integer::sum);
-            } else if (Statistic.Type.ITEM == statistic.getType()
-                    || Statistic.Type.BLOCK == statistic.getType()) {
-                return Arrays.stream(materials).map(material -> getSafeStatistic(player, statistic, material))
-                        .filter(Objects::nonNull)
-                        .reduce(0,  Integer::sum);
-            }
-
-            return 0;
-        }));
-    }
-
-    private static Integer getSafeStatistic(Player player, Statistic statistic, Material material) {
-        try {
-            return player.getStatistic(statistic, material);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private static Integer getSafeStatistic(Player player, Statistic statistic, EntityType type) {
-        try {
-            return player.getStatistic(statistic, type);
-        } catch (Exception e) {
-            return null;
-        }
+        statistics.forEach((stat, value) -> {
+                    logger.info("pushing stat: " + stat + ", val: " + value);
+                    PLAYER_STATS.labels(playerNameLabel, playerUidLabel, stat.name()).set(value);
+                }
+        );
     }
 }
