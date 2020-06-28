@@ -3,6 +3,7 @@ package de.sldk.mc.config;
 import de.sldk.mc.MetricRegistry;
 import de.sldk.mc.PrometheusExporter;
 import de.sldk.mc.metrics.*;
+import de.sldk.mc.metrics.statistics.PlayerStatistics;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
