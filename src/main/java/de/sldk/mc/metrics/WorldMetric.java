@@ -14,11 +14,13 @@ public abstract class WorldMetric extends Metric {
 
     @Override
     public final void doCollect() {
+        clear();
         for (World world : Bukkit.getWorlds()) {
             collect(world);
         }
     }
 
+    protected abstract void clear();
     protected abstract void collect(World world);
 
     protected String getEntityName(EntityType type) {

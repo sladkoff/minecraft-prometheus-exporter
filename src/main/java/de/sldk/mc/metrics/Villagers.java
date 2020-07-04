@@ -33,6 +33,11 @@ public class Villagers extends WorldMetric {
     }
 
     @Override
+    protected void clear() {
+        VILLAGERS.clear();
+    }
+
+    @Override
     public void collect(World world) {
         Map<VillagerGrouping, Long> mapVillagerGroupingToCount = world
                 .getEntitiesByClass(Villager.class).stream()
