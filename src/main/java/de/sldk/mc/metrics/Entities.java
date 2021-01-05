@@ -40,6 +40,11 @@ public class Entities extends WorldMetric {
     }
 
     @Override
+    protected void clear() {
+        ENTITIES.clear();
+    }
+
+    @Override
     public void collect(World world) {
         Map<EntityType, Long> mapEntityTypesToCounts = world.getEntities().stream()
                 .collect(Collectors.groupingBy(Entity::getType, Collectors.counting()));

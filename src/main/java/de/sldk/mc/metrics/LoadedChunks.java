@@ -17,6 +17,10 @@ public class LoadedChunks extends WorldMetric {
     }
 
     @Override
+    protected void clear() {
+    }
+
+    @Override
     public void collect(World world) {
         LOADED_CHUNKS.labels(world.getName()).set(world.getLoadedChunks().length);
     }

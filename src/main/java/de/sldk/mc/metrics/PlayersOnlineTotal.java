@@ -17,6 +17,10 @@ public class PlayersOnlineTotal extends WorldMetric {
     }
 
     @Override
+    protected void clear() {
+    }
+
+    @Override
     protected void collect(World world) {
         PLAYERS_ONLINE.labels(world.getName()).set(world.getPlayers().size());
     }
