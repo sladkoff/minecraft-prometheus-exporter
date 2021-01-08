@@ -38,13 +38,11 @@ public class PlayerStatistics extends PlayerMetric {
 
     @Override
     public void collect(OfflinePlayer player) {
-        logger.info("Collect running for PlayerStatistics");
 
         Map<Enum<?>, Integer> statistics;
         if (player.getPlayer() == null) {
             statistics = statsFileReader.getPlayersStats(player.getUniqueId());
         } else {
-            logger.info("OfflinePlayer is null");
             statistics = playerStatsFetcher.getPlayerStats(player.getPlayer());
         }
 
@@ -52,7 +50,6 @@ public class PlayerStatistics extends PlayerMetric {
         final String playerUidLabel = getUid(player);
 
         statistics.forEach((stat, value) -> {
-                    logger.info("pushing stat: " + stat + ", val: " + value);
                     PLAYER_STATS.labels(playerNameLabel, playerUidLabel, stat.name()).set(value);
                 }
         );
