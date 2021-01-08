@@ -25,10 +25,7 @@ public class PlayerStatsFetcher {
      */
     public static final Statistic[] STATISTICS = Statistic.values();
     private static final EntityType[] ENTITY_TYPES = EntityType.values();
-    private static final Material[] MATERIALS = Arrays
-            .stream(Material.values())
-            .filter(PlayerStatsFetcher::isMaterialLegacy)
-            .toArray(Material[]::new);
+    private static final Material[] MATERIALS = Material.values();
 
     public PlayerStatsFetcher(Plugin plugin) {
         this.logger = plugin.getLogger();
@@ -91,18 +88,4 @@ public class PlayerStatsFetcher {
         return stat != null ? stat : 0;
     }
 
-    /**
-     * Annoying method. Used to filter out legacy {@link Material}s.
-     * <p>
-     * I want to use {@link Material#isLegacy()}, but it's deprecated for no reason.
-     */
-    @SuppressWarnings("deprecation")
-    public static boolean isMaterialLegacy(Material material) {
-        try {
-            return material.getKey().hashCode() != 0;
-        } catch (
-                IllegalArgumentException e) {
-            return false;
-        }
-    }
 }
