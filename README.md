@@ -12,7 +12,7 @@ A **Bukkit plugin** which exports Minecraft server stats for Prometheus.
 
 ## Quick Start
 
-Drop the the prometheus-exporter.jar into your Bukkit plugins directory and start your Minecraft server.
+Drop the prometheus-exporter.jar into your Bukkit plugins directory and start your Minecraft server.
 
 After startup, the Prometheus metrics endpoint should be available at ``localhost:9225/metrics`` (assuming localhost is the server hostname).
 
