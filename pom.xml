@@ -15,7 +15,7 @@
         <prometheus-client.version>0.8.1</prometheus-client.version>
         <junit.jupiter.version>5.5.2</junit.jupiter.version>
         <org.mockito.version>3.3.3</org.mockito.version>
-        <assertj.version>3.16.0</assertj.version>
+        <assertj.version>3.19.0</assertj.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-assembly-plugin.version>3.2.0</maven-assembly-plugin.version>
