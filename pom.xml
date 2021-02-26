@@ -13,7 +13,7 @@
         <bukkit.version>1.15.1-R0.1-SNAPSHOT</bukkit.version>
         <jetty.version>9.4.35.v20201120</jetty.version>
         <prometheus-client.version>0.8.1</prometheus-client.version>
-        <junit.jupiter.version>5.5.2</junit.jupiter.version>
+        <junit.jupiter.version>5.7.1</junit.jupiter.version>
         <org.mockito.version>3.3.3</org.mockito.version>
         <assertj.version>3.16.0</assertj.version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
