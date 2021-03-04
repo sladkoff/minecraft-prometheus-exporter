@@ -1,0 +1,2 @@
+# We need this to mock final methods in the Bukkit API
+mock-maker-inline
