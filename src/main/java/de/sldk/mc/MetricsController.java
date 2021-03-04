@@ -4,6 +4,7 @@ import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.common.TextFormat;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.eclipse.jetty.http.HttpStatus;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -42,7 +43,7 @@ public class MetricsController extends AbstractHandler {
         try {
             future.get();
 
-            response.setStatus(HttpServletResponse.SC_OK);
+            response.setStatus(HttpStatus.OK_200);
             response.setContentType(TextFormat.CONTENT_TYPE_004);
 
             TextFormat.write004(response.getWriter(), CollectorRegistry.defaultRegistry.metricFamilySamples());
@@ -51,7 +52,7 @@ public class MetricsController extends AbstractHandler {
         } catch (InterruptedException | ExecutionException e) {
             exporter.getLogger().log(Level.WARNING, "Failed to read server statistic: " + e.getMessage());
             exporter.getLogger().log(Level.FINE, "Failed to read server statistic: ", e);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.sendError(HttpStatus.INTERNAL_SERVER_ERROR_500);
         }
     }
 }
