@@ -2,11 +2,11 @@ package de.sldk.mc;
 
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.exporter.common.TextFormat;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -22,7 +22,8 @@ public class MetricsController extends AbstractHandler {
     }
 
     @Override
-    public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void handle(String target, Request request, HttpServletRequest httpServletRequest,
+            HttpServletResponse response) throws IOException {
 
         if (!target.equals("/metrics")) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -46,7 +47,7 @@ public class MetricsController extends AbstractHandler {
 
             TextFormat.write004(response.getWriter(), CollectorRegistry.defaultRegistry.metricFamilySamples());
 
-            baseRequest.setHandled(true);
+            request.setHandled(true);
         } catch (InterruptedException | ExecutionException e) {
             exporter.getLogger().log(Level.WARNING, "Failed to read server statistic: " + e.getMessage());
             exporter.getLogger().log(Level.FINE, "Failed to read server statistic: ", e);
