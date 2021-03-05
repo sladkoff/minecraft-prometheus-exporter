@@ -1,0 +1,40 @@
+name: Maven Build and Release
+
+on:
+  push:
+    tags: [ 'v*' ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:	
+        name: target
+        path: ${{ github.workspace }}/target/**/*
+    - name: Extract changelog content
+      run: |
+        sed -n "/^## \[$VERSION]/,/^## /p" CHANGELOG.md | sed '1d;$d' > changelog_body.md
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        body_path: changelog_body.md
+        draft: true
+        prerelease: false
+        files: |
+          target/minecraft-prometheus-exporter-*.jar
+          README.md
+          CHANGELOG.md
+        fail_on_unmatched_files: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
