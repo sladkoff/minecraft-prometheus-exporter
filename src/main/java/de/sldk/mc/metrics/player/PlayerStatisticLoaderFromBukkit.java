@@ -2,11 +2,13 @@ package de.sldk.mc.metrics.player;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
 import org.bukkit.Statistic.Type;
 import org.bukkit.entity.EntityType;
@@ -16,7 +18,7 @@ import org.bukkit.plugin.Plugin;
 /**
  * Fetches player stats from the Minecraft API
  */
-public class PlayerStatsFetcher {
+public class PlayerStatisticLoaderFromBukkit implements PlayerStatisticLoader {
 
     public static final Statistic[] STATISTICS = Statistic.values();
     private static final EntityType[] ENTITY_TYPES = EntityType.values();
@@ -24,14 +26,25 @@ public class PlayerStatsFetcher {
 
     private final Logger logger;
 
-    public PlayerStatsFetcher(Plugin plugin) {
+    public PlayerStatisticLoaderFromBukkit(Plugin plugin) {
         this.logger = plugin.getLogger();
     }
 
     /**
      * For an online player, map each stat to a value
      */
-    public Map<Enum<?>, Integer> getPlayerStats(Player player) {
+    @Override
+    public Map<Enum<?>, Integer> getPlayerStatistics(OfflinePlayer offlinePlayer) {
+
+        final Player player = offlinePlayer.getPlayer();
+
+        if (player == null) {
+            logger.warning(String.format(
+                    "Can not load player statistics for '%s' from Bukkit API. The player has probably not been online" +
+                            " since reboot.", offlinePlayer.getUniqueId()));
+            return null;
+        }
+
         return Arrays.stream(STATISTICS).collect(Collectors.toMap(e -> e, statistic -> {
             if (Statistic.Type.UNTYPED == statistic.getType()) {
                 return getUntypedStatistic(player, statistic);
@@ -46,7 +59,7 @@ public class PlayerStatsFetcher {
         try {
             return player.getStatistic(statistic);
         } catch (IllegalArgumentException e) {
-            logger.info("Exception fetching statistic " + statistic + " from player");
+            logger.log(Level.WARNING, "Exception fetching statistic " + statistic + " from player", e);
             return 0;
         }
     }
@@ -71,7 +84,7 @@ public class PlayerStatsFetcher {
                 return 0;
             }
         } catch (Exception e) {
-            logger.info("Exception fetching statistic " + statistic + " from player");
+            logger.log(Level.WARNING, "Exception fetching statistic " + statistic + " from player", e);
             return 0;
         }
     }

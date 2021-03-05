@@ -1,10 +1,14 @@
 package de.sldk.mc.metrics;
 
-import de.sldk.mc.metrics.player.PlayerStatsFetcher;
-import de.sldk.mc.metrics.player.StatsFileReader;
+import de.sldk.mc.metrics.player.PlayerStatisticLoaderFromBukkit;
+import de.sldk.mc.metrics.player.EmptyStatisticLoader;
+import de.sldk.mc.metrics.player.PlayerStatisticLoaderFromFile;
+import de.sldk.mc.metrics.player.PlayerStatisticLoader;
 import io.prometheus.client.Gauge;
 
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bukkit.OfflinePlayer;
@@ -23,35 +27,51 @@ public class PlayerStatistics extends PlayerMetric {
             .labelNames("player_name", "player_uid", "statistic")
             .create();
 
-    private static Logger logger;
+	private static Logger logger;
 
-    private final StatsFileReader statsFileReader;
-    private final PlayerStatsFetcher playerStatsFetcher;
+	private final LinkedHashSet<PlayerStatisticLoader> statisticLoaderChain = new LinkedHashSet<>();
 
     public PlayerStatistics(Plugin plugin) {
         super(plugin, PLAYER_STATS);
+
         logger = plugin.getLogger();
 
-        statsFileReader = new StatsFileReader(plugin);
-        playerStatsFetcher = new PlayerStatsFetcher(plugin);
+		statisticLoaderChain.add(new PlayerStatisticLoaderFromBukkit(plugin));
+		statisticLoaderChain.add(new PlayerStatisticLoaderFromFile(plugin));
+		statisticLoaderChain.add(new EmptyStatisticLoader());
     }
 
     @Override
     public void collect(OfflinePlayer player) {
 
-        Map<Enum<?>, Integer> statistics;
-        if (player.getPlayer() == null) {
-            statistics = statsFileReader.getPlayersStats(player.getUniqueId());
-        } else {
-            statistics = playerStatsFetcher.getPlayerStats(player.getPlayer());
-        }
-
-        final String playerNameLabel = getNameOrUid(player);
-        final String playerUidLabel = getUid(player);
-
-        statistics.forEach((stat, value) -> {
-                    PLAYER_STATS.labels(playerNameLabel, playerUidLabel, stat.name()).set(value);
-                }
-        );
+		for (PlayerStatisticLoader playerStatisticLoader : statisticLoaderChain) {
+			if (collectSuccessful(playerStatisticLoader, player)) {
+				return;
+			}
+		}
     }
+
+    private boolean collectSuccessful(PlayerStatisticLoader loader, OfflinePlayer player) {
+		final String playerNameLabel = getNameOrUid(player);
+		final String playerUidLabel = getUid(player);
+
+		try {
+			Map<Enum<?>, Integer> statistics = loader.getPlayerStatistics(player);
+
+			if (statistics == null || statistics.isEmpty()) {
+				return false;
+			}
+
+			statistics.forEach(
+					(stat, value) -> PLAYER_STATS.labels(playerNameLabel, playerUidLabel, stat.name()).set(value));
+
+			return true;
+		} catch (Exception e) {
+			String message =
+					String.format("%s: Could not load statistics for player '%s'", loader.getClass().getSimpleName(),
+							player.getUniqueId());
+			logger.log(Level.WARNING, message, e);
+			return false;
+		}
+	}
 }

@@ -16,12 +16,13 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
 
 /**
  * Fetches player stats stored in <code>data/world/stats/&lt;UUID&gt;.json</code> files.
  */
-public class StatsFileReader {
+public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
 
     private final Plugin plugin;
     private final Logger logger;
@@ -29,20 +30,24 @@ public class StatsFileReader {
     private final Map<UUID, Map<Enum<?>, Integer>> fileData;
 
     private static final Map<String, Enum<?>> mapStatNameToStat =
-            Arrays.stream(PlayerStatsFetcher.STATISTICS)
+            Arrays.stream(PlayerStatisticLoaderFromBukkit.STATISTICS)
                     .collect(Collectors.toMap(
                             e -> e.getKey().toString(),
                             e -> e
                     ));
 
-    public StatsFileReader(Plugin plugin) {
+    public PlayerStatisticLoaderFromFile(Plugin plugin) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
 
         fileData = readPlayerStatsFiles();
     }
 
-    public Map<Enum<?>, Integer> getPlayersStats(UUID uuid) {
+    @Override
+    public Map<Enum<?>, Integer> getPlayerStatistics(OfflinePlayer offlinePlayer) {
+
+        final UUID uuid = offlinePlayer.getUniqueId();
+
         if (fileData.containsKey(uuid)) {
             return fileData.get(uuid);
         } else {
