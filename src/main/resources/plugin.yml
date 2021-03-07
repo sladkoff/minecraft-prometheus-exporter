@@ -1,6 +1,6 @@
 name: PrometheusExporter
-version: 2.4.0-SNAPSHOT
+version: 2.4.0
 author: sldk
 main: de.sldk.mc.PrometheusExporter
 website: sldk.de
-api-version: 1.13
+api-version: 1.16
