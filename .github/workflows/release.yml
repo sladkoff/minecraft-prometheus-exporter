@@ -15,6 +15,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
+    - name: Extract version string
+      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Upload artifact
@@ -24,6 +26,7 @@ jobs:
         path: ${{ github.workspace }}/target/**/*
     - name: Extract changelog content
       run: |
+        VERSION=${steps.get_version.outputs.VERSION}
         sed -n "/^## \[$VERSION]/,/^## /p" CHANGELOG.md | sed '1d;$d' > changelog_body.md
     - name: Release
       uses: softprops/action-gh-release@v1
