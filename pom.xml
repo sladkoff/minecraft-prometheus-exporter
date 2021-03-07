@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <bukkit.version>1.15.1-R0.1-SNAPSHOT</bukkit.version>
+        <spigot-api.version>1.16.5-R0.1-SNAPSHOT</spigot-api.version>
         <jetty.version>11.0.1</jetty.version>
         <prometheus-client.version>0.10.0</prometheus-client.version>
         <json-path.version>2.5.0</json-path.version>
@@ -37,13 +37,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>${bukkit.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>bukkit</artifactId>
-            <version>${bukkit.version}</version>
+            <version>${spigot-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
