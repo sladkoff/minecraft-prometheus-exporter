@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import de.sldk.mc.MetricsServer;
 import de.sldk.mc.PrometheusExporter;
+import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
 import io.prometheus.client.exporter.common.TextFormat;
 import io.restassured.RestAssured;
@@ -40,6 +41,7 @@ public class PrometheusExporterTest {
 
 	@BeforeEach
 	void setup() throws Exception {
+		CollectorRegistry.defaultRegistry.clear();
 		metricsServerPort = getRandomFreePort();
 		metricsServer = new MetricsServer("localhost", metricsServerPort, exporterMock);
 		metricsServer.start();
