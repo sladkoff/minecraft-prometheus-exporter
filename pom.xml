@@ -11,7 +11,7 @@
 
     <properties>
         <spigot-api.version>1.16.5-R0.1-SNAPSHOT</spigot-api.version>
-        <jetty.version>11.0.1</jetty.version>
+        <jetty.version>11.0.2</jetty.version>
         <prometheus-client.version>0.10.0</prometheus-client.version>
         <json-path.version>2.5.0</json-path.version>
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
