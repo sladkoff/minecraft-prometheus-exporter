@@ -10,6 +10,8 @@
 
 A **Bukkit plugin** which exports Minecraft server stats for Prometheus.
 
+If you're running multiple Minecraft servers behind a BungeeCord proxy, you might also be interested in [Bungeecord Prometheus Exporter](https://github.com/weihao/bungeecord-prometheus-exporter) for additional metrics!
+
 ## Quick Start
 
 Drop the prometheus-exporter.jar into your Bukkit plugins directory and start your Minecraft server.
