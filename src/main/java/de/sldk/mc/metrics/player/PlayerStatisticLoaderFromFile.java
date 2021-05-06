@@ -63,6 +63,9 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
             File minecraftDataFolder = plugin.getServer().getWorldContainer().getCanonicalFile();
 
             Path statsFolder = Paths.get(minecraftDataFolder.getAbsolutePath(), "world", "stats");
+            if (!Files.exists(statsFolder)) {
+                return new HashMap<>();
+            }
 
             logger.info("Reading player stats from folder  " + statsFolder.toString());
 
