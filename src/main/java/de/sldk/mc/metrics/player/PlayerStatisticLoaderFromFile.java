@@ -75,7 +75,7 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
                         .collect(Collectors.toMap(this::fileNameToUuid, path -> {
                             try {
                                 return getPlayersStats(path);
-                            } catch (IOException e) {
+                            } catch (Exception e) {
                                 return new HashMap<>();
                             }
                         }));
