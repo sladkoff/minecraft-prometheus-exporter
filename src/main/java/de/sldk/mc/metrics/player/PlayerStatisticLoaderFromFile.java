@@ -2,6 +2,8 @@ package de.sldk.mc.metrics.player;
 
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,12 +14,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import org.bukkit.OfflinePlayer;
-import org.bukkit.plugin.Plugin;
 
 /**
  * Fetches player stats stored in
@@ -66,12 +66,12 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
                 return new HashMap<>();
             }
 
-            logger.info("Reading player stats from folder  " + statsFolder.toString());
+            logger.fine("Reading player stats from folder " + statsFolder.toString());
 
-            Stream<Path> statFiles = Files.walk(statsFolder);
-            try {
-                return statFiles.filter(Files::isRegularFile).filter(this::isFileNameUuid)
-                        .peek(e -> logger.info("Found player stats file: " + e.getFileName().toString()))
+            try (Stream<Path> statFiles = Files.walk(statsFolder)) {
+                return statFiles.filter(Files::isRegularFile)
+                        .filter(this::isFileNameUuid)
+                        .peek(e -> logger.fine("Found player stats file: " + e.getFileName().toString()))
                         .collect(Collectors.toMap(this::fileNameToUuid, path -> {
                             try {
                                 return getPlayersStats(path);
@@ -79,12 +79,9 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
                                 return new HashMap<>();
                             }
                         }));
-            } finally {
-                statFiles.close();
             }
-        } catch (IOException e) {
-            logger.info("Error - abandoning file reading");
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.log(Level.FINE, "Failed to read player stats from file. ", e);
             return new HashMap<>();
         }
     }
@@ -106,7 +103,7 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
             return uuid.hashCode() != 0;
         } catch (IllegalArgumentException e) {
             if (e.getMessage().contains("Invalid UUID string")) {
-                logger.info("File '" + path.getFileName().toString()
+                logger.fine("File '" + path.getFileName().toString()
                         + "' found in stats folder, but UUID was invalid - ignoring");
                 return false;
             } else {
