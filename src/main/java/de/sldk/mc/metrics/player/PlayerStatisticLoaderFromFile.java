@@ -71,11 +71,13 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
             try (Stream<Path> statFiles = Files.walk(statsFolder)) {
                 return statFiles.filter(Files::isRegularFile)
                         .filter(this::isFileNameUuid)
-                        .peek(e -> logger.fine("Found player stats file: " + e.getFileName().toString()))
+                        .peek(path -> logger.fine("Found player stats file: " + path.getFileName().toString()))
                         .collect(Collectors.toMap(this::fileNameToUuid, path -> {
                             try {
                                 return getPlayersStats(path);
                             } catch (Exception e) {
+                                String msg = String.format("Could not read player stats from JSON at '%s'", path);
+                                logger.log(Level.FINE, msg, e);
                                 return new HashMap<>();
                             }
                         }));
@@ -99,21 +101,17 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
 
     private boolean isFileNameUuid(Path path) {
         try {
-            UUID uuid = fileNameToUuid(path);
-            return uuid.hashCode() != 0;
-        } catch (IllegalArgumentException e) {
-            if (e.getMessage().contains("Invalid UUID string")) {
-                logger.fine("File '" + path.getFileName().toString()
-                        + "' found in stats folder, but UUID was invalid - ignoring");
-                return false;
-            } else {
-                throw e;
-            }
+            fileNameToUuid(path);
+        } catch (Exception e) {
+            String msg = String.format("Could not extract valid player UUID from player stats file '%s'", path);
+            logger.log(Level.FINE, msg, e);
+            return false;
         }
+        return true;
     }
 
     private UUID fileNameToUuid(Path path) {
-        String x = path.getFileName().toString().split("\\.")[0];
-        return UUID.fromString(x);
+        String uuidPart = path.getFileName().toString().split("\\.")[0];
+        return UUID.fromString(uuidPart);
     }
 }
