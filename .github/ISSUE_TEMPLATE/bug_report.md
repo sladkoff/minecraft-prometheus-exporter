@@ -4,9 +4,8 @@ about: Create a report to help us improve
 title: "[Bug Report]"
 labels: ''
 assignees: ''
-
 ---
-
+<!--
 # Read before opening a bug report!
 
 First, please ensure that you have done the following things on your own.
@@ -21,3 +20,4 @@ These steps are out of the scope of this issue tracker. If you have problems wit
 - [Prometheus Docs](https://prometheus.io/docs/prometheus/latest/getting_started/)
 - [Prometheus Docs - Querying Basics](https://prometheus.io/docs/prometheus/latest/querying/basics/#querying-prometheus)
 - [Grafana Docs](https://grafana.com/docs/grafana/latest/features/datasources/prometheus/)
+-->
