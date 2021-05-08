@@ -39,7 +39,7 @@ public class PlayerStatisticLoaderFromBukkit implements PlayerStatisticLoader {
         final Player player = offlinePlayer.getPlayer();
 
         if (player == null) {
-            logger.warning(String.format(
+            logger.fine(String.format(
                     "Can not load player statistics for '%s' from Bukkit API. The player has probably not been online" +
                             " since reboot.", offlinePlayer.getUniqueId()));
             return null;
