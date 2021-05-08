@@ -20,7 +20,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
 
 /**
- * Fetches player stats stored in <code>data/world/stats/&lt;UUID&gt;.json</code> files.
+ * Fetches player stats stored in
+ * <code>data/world/stats/&lt;UUID&gt;.json</code> files.
  */
 public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
 
@@ -29,12 +30,9 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
 
     private final Map<UUID, Map<Enum<?>, Integer>> fileData;
 
-    private static final Map<String, Enum<?>> mapStatNameToStat =
-            Arrays.stream(PlayerStatisticLoaderFromBukkit.STATISTICS)
-                    .collect(Collectors.toMap(
-                            e -> e.getKey().toString(),
-                            e -> e
-                    ));
+    private static final Map<String, Enum<?>> mapStatNameToStat = Arrays
+            .stream(PlayerStatisticLoaderFromBukkit.STATISTICS)
+            .collect(Collectors.toMap(e -> e.getKey().toString(), e -> e));
 
     public PlayerStatisticLoaderFromFile(Plugin plugin) {
         this.plugin = plugin;
@@ -56,7 +54,8 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
     }
 
     /**
-     * Reads all valid files in the <code>stats</code> folder and maps them to a player.
+     * Reads all valid files in the <code>stats</code> folder and maps them to a
+     * player.
      */
     private Map<UUID, Map<Enum<?>, Integer>> readPlayerStatsFiles() {
         try {
@@ -70,22 +69,19 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
             logger.info("Reading player stats from folder  " + statsFolder.toString());
 
             Stream<Path> statFiles = Files.walk(statsFolder);
-            return statFiles
-                    .filter(Files::isRegularFile)
-                    .filter(this::isFileNameUuid)
-                    .peek(e -> logger.info("Found player stats file: " + e.getFileName().toString()))
-                    .collect(
-                            Collectors.toMap(
-                                    this::fileNameToUuid,
-                                    path -> {
-                                        try {
-                                            return getPlayersStats(path);
-                                        } catch (IOException e) {
-                                            return new HashMap<>();
-                                        }
-                                    }
-                            )
-                    );
+            try {
+                return statFiles.filter(Files::isRegularFile).filter(this::isFileNameUuid)
+                        .peek(e -> logger.info("Found player stats file: " + e.getFileName().toString()))
+                        .collect(Collectors.toMap(this::fileNameToUuid, path -> {
+                            try {
+                                return getPlayersStats(path);
+                            } catch (IOException e) {
+                                return new HashMap<>();
+                            }
+                        }));
+            } finally {
+                statFiles.close();
+            }
         } catch (IOException e) {
             logger.info("Error - abandoning file reading");
             e.printStackTrace();
@@ -99,13 +95,9 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
     private Map<Enum<?>, Integer> getPlayersStats(Path path) throws IOException {
         DocumentContext ctx = JsonPath.parse(path.toFile());
         Map<String, Object> fileStats = ctx.read(JsonPath.compile("$.stats.minecraft:custom"));
-        return fileStats.keySet().stream()
-                .filter(mapStatNameToStat::containsKey)
+        return fileStats.keySet().stream().filter(mapStatNameToStat::containsKey)
                 .filter(e -> fileStats.get(e) instanceof Integer)
-                .collect(Collectors.toMap(
-                        mapStatNameToStat::get,
-                        e -> (Integer) fileStats.get(e)
-                ));
+                .collect(Collectors.toMap(mapStatNameToStat::get, e -> (Integer) fileStats.get(e)));
     }
 
     private boolean isFileNameUuid(Path path) {
