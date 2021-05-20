@@ -19,6 +19,10 @@ jobs:
     - name: Extract version string
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+    - name: Print version
+      run: |
+        VERSION=${steps.get_version.outputs.VERSION}
+        echo $VERSION
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Upload artifact
