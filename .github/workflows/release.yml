@@ -16,13 +16,11 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '11'
-    - name: Extract version string
-      id: get_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+    - name: Set RELEASE_VERSION from tag
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
     - name: Print version
       run: |
-        VERSION=${steps.get_version.outputs.VERSION}
-        echo $VERSION
+        echo $RELEASE_VERSION
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Upload artifact
@@ -32,8 +30,7 @@ jobs:
         path: ${{ github.workspace }}/target/**/*
     - name: Extract changelog content
       run: |
-        VERSION=${steps.get_version.outputs.VERSION}
-        sed -n "/^## \[$VERSION]/,/^## /p" CHANGELOG.md | sed '1d;$d' > changelog_body.md
+        sed -n "/^## \[$RELEASE_VERSION]/,/^## /p" CHANGELOG.md | sed '1d;$d' > changelog_body.md
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
