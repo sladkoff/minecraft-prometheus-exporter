@@ -17,6 +17,7 @@ jobs:
         distribution: 'adopt'
         java-version: '11'
     - name: Extract version string
+      id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
     - name: Build with Maven
       run: mvn -B package --file pom.xml
