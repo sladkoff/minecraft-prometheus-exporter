@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import io.prometheus.client.CollectorRegistry;
@@ -21,7 +23,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.File;
 import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -95,6 +96,12 @@ class PlayerStatisticsTest {
 		assertPlayerStatistic(playerName, playerUuid, "TIME_SINCE_REST").isEqualTo(676);
 		assertPlayerStatistic(playerName, playerUuid, "WALK_ONE_CM").isEqualTo(65);
 		assertPlayerStatistic(playerName, playerUuid, "LEAVE_GAME").isEqualTo(1);
+	}
+
+	@Test
+	void constructor_does_not_load_statistics_from_file() {
+		new PlayerStatistics(plugin);
+		verify(server, never()).getWorldContainer();
 	}
 
 	AbstractDoubleAssert<?> assertPlayerStatistic(String playerName, UUID playerUuid, String statisticName) {
