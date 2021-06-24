@@ -1,5 +1,6 @@
 package de.sldk.mc.metrics.player;
 
+import com.google.common.base.Suppliers;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import org.bukkit.OfflinePlayer;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -27,8 +29,8 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
 
     private final Plugin plugin;
     private final Logger logger;
-
-    private final Map<UUID, Map<Enum<?>, Integer>> fileData;
+    private final Supplier<Map<UUID, Map<Enum<?>, Integer>>> statsFileLoader =
+            Suppliers.memoize(this::readPlayerStatsFiles);
 
     private static final Map<String, Enum<?>> mapStatNameToStat = Arrays
             .stream(PlayerStatisticLoaderFromBukkit.STATISTICS)
@@ -37,8 +39,6 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
     public PlayerStatisticLoaderFromFile(Plugin plugin) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
-
-        fileData = readPlayerStatsFiles();
     }
 
     @Override
@@ -46,11 +46,9 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
 
         final UUID uuid = offlinePlayer.getUniqueId();
 
-        if (fileData.containsKey(uuid)) {
-            return fileData.get(uuid);
-        } else {
-            return new HashMap<>();
-        }
+        final Map<UUID, Map<Enum<?>, Integer>> fileData = statsFileLoader.get();
+
+        return fileData.getOrDefault(uuid, new HashMap<>());
     }
 
     /**

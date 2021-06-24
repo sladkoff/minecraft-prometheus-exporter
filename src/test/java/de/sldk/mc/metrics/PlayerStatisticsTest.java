@@ -39,20 +39,16 @@ class PlayerStatisticsTest {
 	@Mock
 	private Server server;
 
-	private PlayerStatistics playerStatistics;
-
 	@BeforeEach
 	void setup() {
 		CollectorRegistry.defaultRegistry.clear();
-
-		mockBukkitDataDirectory();
-
-		playerStatistics = new PlayerStatistics(plugin);
-		playerStatistics.enable();
 	}
 
 	@Test
 	void bukkit_api_statistics_should_be_loaded_if_available() {
+		PlayerStatistics playerStatistics = new PlayerStatistics(plugin);
+		playerStatistics.enable();
+
 		final String playerName = "unique_player_name";
 		final UUID playerUuid = UUID.fromString("eab53112-b93f-11ea-b3de-0242ac130004");
 
@@ -80,6 +76,11 @@ class PlayerStatisticsTest {
 
 	@Test
 	void file_statistics_should_be_used_as_fallback() {
+
+		mockBukkitDataDirectory();
+
+		PlayerStatistics playerStatistics = new PlayerStatistics(plugin);
+		playerStatistics.enable();
 
 		final String playerName = "unique_player_name";
 		final UUID playerUuid = UUID.fromString("eab53112-b93f-11ea-b3de-0242ac130004");
