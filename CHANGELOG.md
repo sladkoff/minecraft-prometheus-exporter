@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.4.2] - 2021-06-25
+
+### Fixed
+
+- [#97](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/97): 
+  Player stats files are loaded even if 'player_statistic' is disabled
+- [#91](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/91): Update Jetty
+- [#87](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/87): Update json-path
+- [#86](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/86): Update prometheus-client
+
 ## [v2.4.1] - 2021-05-20
 
 Special thanks to all new and old contributors :star:
@@ -114,6 +124,7 @@ Special thanks to all new and old contributors :star:
 ### Added
 - Initial exporter
 
+[v2.4.2]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.4.1...v2.4.2
 [v2.4.1]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.4.0...v2.4.1
 [v2.4.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.3.0...v2.4.0
 [v2.3.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.2.0...v2.3.0
