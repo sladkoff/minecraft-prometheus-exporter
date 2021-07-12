@@ -14,6 +14,8 @@ public class PrometheusExporterConfig {
 
     public static final PluginConfig<String> HOST = new PluginConfig<>("host", "localhost");
     public static final PluginConfig<Integer> PORT = new PluginConfig<>("port", 9225);
+    public static final PluginConfig<boolean> LOG_PLAYER_STATISIC_ERRORS = new PluginConfig<>("log_player_statistic_errors", true);
+
     public static final List<MetricConfig> METRICS = Arrays.asList(
             metricConfig("entities_total", true, Entities::new),
             metricConfig("villagers_total", true, Villagers::new),

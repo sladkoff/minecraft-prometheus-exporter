@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import de.sldk.mc.config.PrometheusExporterConfig;
+
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Statistic;
@@ -59,7 +61,9 @@ public class PlayerStatisticLoaderFromBukkit implements PlayerStatisticLoader {
         try {
             return player.getStatistic(statistic);
         } catch (IllegalArgumentException e) {
-            logger.log(Level.WARNING, "Exception fetching statistic " + statistic + " from player", e);
+            if(PrometheusExporterConfig.LOG_PLAYER_STATISIC_ERRORS) {
+                logger.log(Level.WARNING, "Exception fetching statistic " + statistic + " from player", e);
+            }
             return 0;
         }
     }
@@ -84,7 +88,9 @@ public class PlayerStatisticLoaderFromBukkit implements PlayerStatisticLoader {
                 return 0;
             }
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Exception fetching statistic " + statistic + " from player", e);
+            if(PrometheusExporterConfig.LOG_PLAYER_STATISIC_ERRORS) {
+                logger.log(Level.WARNING, "Exception fetching statistic " + statistic + " from player", e);
+            }
             return 0;
         }
     }
