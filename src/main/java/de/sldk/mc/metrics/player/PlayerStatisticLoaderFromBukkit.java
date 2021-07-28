@@ -84,7 +84,8 @@ public class PlayerStatisticLoaderFromBukkit implements PlayerStatisticLoader {
                 return 0;
             }
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Exception fetching statistic " + statistic + " from player", e);
+            logger.warning(String.format("Exception fetching statistic %s (type=%s) for player", statistic, statType));
+            logger.throwing(getClass().getSimpleName(), "getTypedStatistic", e);
             return 0;
         }
     }
