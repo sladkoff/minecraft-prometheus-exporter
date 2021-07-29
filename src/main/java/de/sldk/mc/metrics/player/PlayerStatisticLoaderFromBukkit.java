@@ -59,7 +59,8 @@ public class PlayerStatisticLoaderFromBukkit implements PlayerStatisticLoader {
         try {
             return player.getStatistic(statistic);
         } catch (IllegalArgumentException e) {
-            logger.log(Level.WARNING, "Exception fetching statistic " + statistic + " from player", e);
+            logger.warning(String.format("Exception fetching statistic %s for player", statistic));
+            logger.throwing(getClass().getSimpleName(), "getUntypedStatistic", e);
             return 0;
         }
     }
