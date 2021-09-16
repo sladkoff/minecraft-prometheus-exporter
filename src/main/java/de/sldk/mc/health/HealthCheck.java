@@ -15,21 +15,21 @@ public interface HealthCheck {
     /**
      * Creates a health compound check from the provided ones reporting healthy status iff all the checks report it.
      *
-     * @param healthChecks merged health checks
+     * @param checks merged health checks
      * @return compound health check
      */
-    static HealthCheck allOf(final HealthCheck... healthChecks) {
-        return new AllOf(healthChecks);
+    static HealthCheck allOf(final HealthCheck... checks) {
+        return new AllOf(checks);
     }
 
     /**
      * Creates a compound health check from the provided ones reporting healthy status iff any check reports it.
      *
-     * @param healthChecks merged health checks
+     * @param checks merged health checks
      * @return compound health check
      */
-    static HealthCheck anyOf(final HealthCheck... healthChecks) {
-        return new AnyOf(healthChecks);
+    static HealthCheck anyOf(final HealthCheck... checks) {
+        return new AnyOf(checks);
     }
 
     final class AllOf implements HealthCheck {
