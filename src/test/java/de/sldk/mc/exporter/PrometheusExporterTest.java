@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import de.sldk.mc.MetricsServer;
 import de.sldk.mc.PrometheusExporter;
+import de.sldk.mc.health.ConcurrentHealthChecks;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
 import io.prometheus.client.exporter.common.TextFormat;
@@ -34,7 +35,9 @@ public class PrometheusExporterTest {
 	void setup() throws Exception {
 		CollectorRegistry.defaultRegistry.clear();
 		metricsServerPort = getRandomFreePort();
-		metricsServer = new MetricsServer("localhost", metricsServerPort, exporterMock);
+		metricsServer = new MetricsServer(
+                "localhost", metricsServerPort, exporterMock, ConcurrentHealthChecks.create()
+        );
 		metricsServer.start();
 	}
 
