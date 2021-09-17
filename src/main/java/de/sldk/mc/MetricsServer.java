@@ -24,15 +24,15 @@ public class MetricsServer {
 	}
 
 	public void start() throws Exception {
-		GzipHandler gzipHandler = new GzipHandler();
-		gzipHandler.setHandler(new HandlerList(
-				MetricsController.create(prometheusExporter),
-				HealthController.create(healthChecks)
-		));
+		GzipHandler metricsHandler = new GzipHandler();
+		metricsHandler.setHandler(MetricsController.create(prometheusExporter));
 
 		InetSocketAddress address = new InetSocketAddress(host, port);
 		server = new Server(address);
-		server.setHandler(gzipHandler);
+		server.setHandler(new HandlerList(
+				metricsHandler,
+				HealthController.create(healthChecks)
+		));
 
 		server.start();
 	}
