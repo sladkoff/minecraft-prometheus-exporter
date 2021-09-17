@@ -1,6 +1,9 @@
 package de.sldk.mc;
 
 import de.sldk.mc.config.PrometheusExporterConfig;
+import de.sldk.mc.health.ConcurrentHealthChecks;
+import de.sldk.mc.health.HealthChecks;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
@@ -17,14 +20,17 @@ public class PrometheusExporter extends JavaPlugin {
 
         config.enableConfiguredMetrics();
 
-        startMetricsServer();
+        HealthChecks healthChecks = ConcurrentHealthChecks.create();
+        getServer().getServicesManager().register(HealthChecks.class, healthChecks, this, ServicePriority.Normal);
+
+        startMetricsServer(healthChecks);
     }
 
-    private void startMetricsServer() {
+    private void startMetricsServer(HealthChecks healthChecks) {
         String host = config.get(PrometheusExporterConfig.HOST);
         Integer port = config.get(PrometheusExporterConfig.PORT);
 
-		server = new MetricsServer(host, port, this);
+		server = new MetricsServer(host, port, this, healthChecks);
 
         try {
             server.start();

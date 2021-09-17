@@ -5,6 +5,7 @@ import io.prometheus.client.exporter.common.TextFormat;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.jetty.http.HttpStatus;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
@@ -18,18 +19,20 @@ public class MetricsController extends AbstractHandler {
     private final MetricRegistry metricRegistry = MetricRegistry.getInstance();
     private final PrometheusExporter exporter;
 
-    public MetricsController(PrometheusExporter exporter) {
+    private MetricsController(PrometheusExporter exporter) {
         this.exporter = exporter;
     }
 
-    @Override
-    public void handle(String target, Request request, HttpServletRequest httpServletRequest,
-            HttpServletResponse response) throws IOException {
+    public static Handler create(final PrometheusExporter exporter) {
+        return new MetricsController(exporter);
+    }
 
-        if (!target.equals("/metrics")) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
-            return;
-        }
+    @Override
+    public void handle(final String target,
+                       final Request request,
+                       final HttpServletRequest httpServletRequest,
+                       final HttpServletResponse response) throws IOException{
+        if (!target.equals("/metrics")) return;
 
         /*
          * Bukkit API calls have to be made from the main thread.
