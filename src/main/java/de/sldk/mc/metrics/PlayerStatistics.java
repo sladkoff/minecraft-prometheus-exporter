@@ -70,7 +70,7 @@ public class PlayerStatistics extends PlayerMetric {
 			String message =
 					String.format("%s: Could not load statistics for player '%s'", loader.getClass().getSimpleName(),
 							player.getUniqueId());
-			logger.log(Level.WARNING, message, e);
+			logger.log(Level.FINE, message, e);
 			return false;
 		}
 	}
