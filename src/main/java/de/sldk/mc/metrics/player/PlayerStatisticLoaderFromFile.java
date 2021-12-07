@@ -6,7 +6,9 @@ import com.jayway.jsonpath.JsonPath;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,7 +25,7 @@ import java.util.stream.Stream;
 
 /**
  * Fetches player stats stored in
- * <code>data/world/stats/&lt;UUID&gt;.json</code> files.
+ * <code>data/<default-world>/stats/&lt;UUID&gt;.json</code> files.
  */
 public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
 
@@ -59,7 +61,7 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
         try {
             File minecraftDataFolder = plugin.getServer().getWorldContainer().getCanonicalFile();
 
-            Path statsFolder = Paths.get(minecraftDataFolder.getAbsolutePath(), "world", "stats");
+            Path statsFolder = Paths.get(minecraftDataFolder.getAbsolutePath(), getDefaultWorld(), "stats");
             if (!Files.exists(statsFolder)) {
                 return new HashMap<>();
             }
@@ -84,6 +86,22 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
             logger.log(Level.FINE, "Failed to read player stats from file. ", e);
             return new HashMap<>();
         }
+    }
+
+    private String getDefaultWorld() {
+        try(BufferedReader read = new BufferedReader(new FileReader(new File("server.properties")))) {
+            String line;
+            String prefix = "level-name=";
+            while ((line = read.readLine()) != null) {
+                if (line.startsWith(prefix)) {
+                    return line.replace(prefix, "");
+                }
+            }
+        } catch (IOException e) {
+            logger.log(Level.FINE, "Failed to read level name from server properties file. ", e);
+        }
+
+        return "world";
     }
 
     /**
