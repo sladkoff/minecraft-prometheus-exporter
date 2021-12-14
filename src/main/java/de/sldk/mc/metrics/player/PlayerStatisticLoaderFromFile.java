@@ -28,6 +28,8 @@ import java.util.stream.Stream;
  * <code>data/<default-world>/stats/&lt;UUID&gt;.json</code> files.
  */
 public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
+    public final String SERVER_PROPERTIES = "server.properties";
+    public final String DEFAULT_WORLD = "world";
 
     private final Plugin plugin;
     private final Logger logger;
@@ -61,12 +63,13 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
         try {
             File minecraftDataFolder = plugin.getServer().getWorldContainer().getCanonicalFile();
 
-            Path statsFolder = Paths.get(minecraftDataFolder.getAbsolutePath(), getDefaultWorld(), "stats");
+            Path statsFolder =
+                    Paths.get(minecraftDataFolder.getAbsolutePath(), getDefaultWorld(SERVER_PROPERTIES), "stats");
             if (!Files.exists(statsFolder)) {
                 return new HashMap<>();
             }
 
-            logger.fine("Reading player stats from folder " + statsFolder.toString());
+            logger.fine("Reading player stats from folder " + statsFolder);
 
             try (Stream<Path> statFiles = Files.walk(statsFolder)) {
                 return statFiles.filter(Files::isRegularFile)
@@ -88,8 +91,8 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
         }
     }
 
-    private String getDefaultWorld() {
-        try(BufferedReader read = new BufferedReader(new FileReader(new File("server.properties")))) {
+    public String getDefaultWorld(String fileName) {
+        try (BufferedReader read = new BufferedReader(new FileReader(fileName))) {
             String line;
             String prefix = "level-name=";
             while ((line = read.readLine()) != null) {
@@ -101,7 +104,7 @@ public class PlayerStatisticLoaderFromFile implements PlayerStatisticLoader {
             logger.log(Level.FINE, "Failed to read level name from server properties file. ", e);
         }
 
-        return "world";
+        return DEFAULT_WORLD;
     }
 
     /**
