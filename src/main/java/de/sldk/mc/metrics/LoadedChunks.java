@@ -18,6 +18,7 @@ public class LoadedChunks extends WorldMetric {
 
     @Override
     protected void clear() {
+		LOADED_CHUNKS.clear();
     }
 
     @Override
