@@ -99,6 +99,7 @@ mc_loaded_chunks_total | Chunks loaded per world
 mc_players_online_total | Online players per world
 mc_entities_total | Entities loaded per world (living + non-living)
 mc_villagers_total | Villagers
+mc_world_size | World size in bytes
 mc_jvm_memory | JVM memory usage
 mc_jvm_threads | JVM threads info
 mc_tps | Server tickrate (TPS)
