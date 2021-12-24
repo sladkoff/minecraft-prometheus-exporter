@@ -1,7 +1,7 @@
 package de.sldk.mc.metrics;
 
+import de.sldk.mc.utils.PathUtils;
 import io.prometheus.client.Gauge;
-import java.io.File;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
@@ -24,20 +24,13 @@ public class WorldSize extends WorldMetric {
 
     @Override
     public void collect(World world) {
-        File worldFolder = world.getWorldFolder();
-        long size = getFolderSize(worldFolder);
-        WORLD_SIZE.labels(world.getName()).set(size);
-    }
-
-    private long getFolderSize(File folder) {
-        long size = 0;
-        for (File file : folder.listFiles()) {
-            if (file.isFile()) {
-                size += file.length();
-            } else {
-                size += getFolderSize(file);
-            }
+        try {
+            PathUtils pathUtils = new PathUtils(world.getWorldFolder().toPath());
+            long size = pathUtils.getSize();
+            String worldName = world.getName();
+            WORLD_SIZE.labels(worldName).set(size);
+        } catch (Throwable t) {
+            // ignore
         }
-        return size;
     }
 }
