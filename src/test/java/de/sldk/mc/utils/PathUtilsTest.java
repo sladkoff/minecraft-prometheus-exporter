@@ -8,8 +8,8 @@ import java.util.Random;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.*;
 
-public class FileInspectorTest {
-    FileInspector fileInspector;
+public class PathUtilsTest {
+    PathUtils PathUtils;
     Path path;
 
     @AfterEach
@@ -25,7 +25,7 @@ public class FileInspectorTest {
     public class WhenPathIsNull {
         @Test
         public void shouldThrowException() {
-            assertThrows(IllegalArgumentException.class, () -> new FileInspector(null));
+            assertThrows(IllegalArgumentException.class, () -> new PathUtils(null));
         }
     }
 
@@ -34,12 +34,12 @@ public class FileInspectorTest {
         @BeforeEach
         public void beforeEach() throws IOException {
             path = new File("./some/random/path/that/surely/does/not/exist.bf").toPath();
-            fileInspector = new FileInspector(path);
+            PathUtils = new PathUtils(path);
         }
 
         @Test
         public void returnsSizeZero() throws IOException {
-            assertEquals(0, fileInspector.getSize());
+            assertEquals(0, PathUtils.getSize());
         }
     }
 
@@ -47,13 +47,13 @@ public class FileInspectorTest {
     public class WhenPathIsFile {
         @BeforeEach
         public void beforeEach() throws IOException {
-            path = File.createTempFile("test", ".txt").toPath();
-            fileInspector = new FileInspector(path);
+            path = File.createTempFile("test", "txt").toPath();
+            PathUtils = new PathUtils(path);
         }
 
         @Test
         public void returnsZeroIfFileIsEmpty() throws IOException {
-            assertEquals(0, fileInspector.getSize());
+            assertEquals(0, PathUtils.getSize());
         }
 
         @Test
@@ -63,7 +63,7 @@ public class FileInspectorTest {
             FileWriter fileWriter = new FileWriter(path.toFile());
             fileWriter.write(new RandomString(length).nextString());
             fileWriter.close();
-            assertEquals(length, fileInspector.getSize());
+            assertEquals(length, PathUtils.getSize());
         }
     }
 
@@ -72,32 +72,32 @@ public class FileInspectorTest {
         @BeforeEach
         public void beforeEach() throws IOException {
             path = Files.createTempDirectory("test-");
-            fileInspector = new FileInspector(path);
+            PathUtils = new PathUtils(path);
         }
 
         @Test
         public void returnsZeroIfDirectoryIsEmpty() throws IOException {
-            assertEquals(0, fileInspector.getSize());
+            assertEquals(0, PathUtils.getSize());
         }
 
         @Test
         public void returnsSizeOfSingleFile() throws IOException {
             long length = createMultipleFilesInTmpDirectory(path, 1);
-            assertEquals(length, fileInspector.getSize());
+            assertEquals(length, PathUtils.getSize());
         }
 
         @Test
         public void returnsSizeOfMultipleFiles() throws IOException {
             int files = new Random().ints(2, 10).findFirst().getAsInt();
             long length = createMultipleFilesInTmpDirectory(path, files);
-            assertEquals(length, fileInspector.getSize());
+            assertEquals(length, PathUtils.getSize());
         }
 
         @Test
         public void returnSizeOfNestedDirectories() throws IOException {
             int directories = new Random().ints(2, 10).findFirst().getAsInt();
             long length = createMultiplePopulatedDirectories(path, directories);
-            assertEquals(length, fileInspector.getSize());
+            assertEquals(length, PathUtils.getSize());
         }
     }
 
@@ -115,7 +115,7 @@ public class FileInspectorTest {
         int totalLength = 0;
         for (int i = 0; i < files; i++) {
             int length = new Random().nextInt(10000);
-            createFileInTmpDirectory(path, "test" + i + ".txt", length);
+            createFileInTmpDirectory(path, "test" + i + "txt", length);
             totalLength += length;
         }
         return totalLength;

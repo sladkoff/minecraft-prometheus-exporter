@@ -5,10 +5,10 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class FileInspector {
+public class PathUtils {
     private Path path;
 
-    public FileInspector(Path path) {
+    public PathUtils(Path path) {
         if (path == null) {
             throw new IllegalArgumentException("Path must not be null!");
         }
