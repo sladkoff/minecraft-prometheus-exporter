@@ -67,8 +67,7 @@ public class PathFileSizeTest {
             assertEquals(0, pathFileSize.getSize());
         }
 
-        @Test
-        @RepeatedTest(10)
+        @RepeatedTest(5)
         public void returnsFileSize() throws IOException {
             int length = new Random().nextInt(10000);
             FileWriter fileWriter = new FileWriter(path.toFile());
