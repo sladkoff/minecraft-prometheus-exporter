@@ -70,9 +70,9 @@ public class PathFileSizeTest {
         @RepeatedTest(5)
         public void returnsFileSize() throws IOException {
             int length = new Random().nextInt(10000);
-            FileWriter fileWriter = new FileWriter(path.toFile());
-            fileWriter.write(new RandomString(length).nextString());
-            fileWriter.close();
+            try (FileWriter fileWriter = new FileWriter(path.toFile())) {
+                fileWriter.write(new RandomString(length).nextString());
+            }
             assertEquals(length, pathFileSize.getSize());
         }
     }
@@ -133,9 +133,9 @@ public class PathFileSizeTest {
 
     private static File createFileInTmpDirectory(Path path, String name, int length) throws IOException {
         File file = path.resolve(name).toFile();
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(new RandomString(length).nextString());
-        fileWriter.close();
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            fileWriter.write(new RandomString(length).nextString());
+        }
         return file;
     }
 }

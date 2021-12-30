@@ -106,9 +106,9 @@ public class WorldSizeTest {
         givenWorldFileExists(worldName);
         String filename = new RandomString(10).nextString();
         File f = path.resolve(filename).toFile();
-        FileWriter writer = new FileWriter(f);
-        writer.write(new RandomString(worldSize).nextString());
-        writer.close();
+        try (FileWriter writer = new FileWriter(f)) {
+            writer.write(new RandomString(worldSize).nextString());
+        }
     }
 
     private void givenWorldFileExists(String worldName) throws IOException {
