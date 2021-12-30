@@ -2,11 +2,13 @@ package de.sldk.mc.metrics;
 
 import de.sldk.mc.utils.PathFileSize;
 import io.prometheus.client.Gauge;
+import java.util.logging.Logger;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 
 public class WorldSize extends WorldMetric {
 
+    private final Logger log;
     private static final Gauge WORLD_SIZE = Gauge.build()
             .name(prefix("world_size"))
             .help("World size in bytes")
@@ -15,6 +17,7 @@ public class WorldSize extends WorldMetric {
 
     public WorldSize(Plugin plugin) {
         super(plugin, WORLD_SIZE);
+        this.log = plugin.getLogger();
     }
 
     @Override
@@ -30,7 +33,7 @@ public class WorldSize extends WorldMetric {
             String worldName = world.getName();
             WORLD_SIZE.labels(worldName).set(size);
         } catch (Throwable t) {
-            // ignore
+            log.throwing(this.getClass().getSimpleName(), "collect", t);
         }
     }
 }
