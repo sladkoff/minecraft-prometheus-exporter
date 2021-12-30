@@ -8,8 +8,8 @@ import java.util.Random;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.*;
 
-public class PathUtilsTest {
-    PathUtils PathUtils;
+public class PathFileSizeTest {
+    PathFileSize pathFileSize;
     Path path;
 
     @AfterEach
@@ -25,7 +25,7 @@ public class PathUtilsTest {
     public class WhenPathIsNull {
         @Test
         public void shouldThrowException() {
-            assertThrows(IllegalArgumentException.class, () -> new PathUtils(null));
+            assertThrows(IllegalArgumentException.class, () -> new PathFileSize(null));
         }
     }
 
@@ -34,12 +34,12 @@ public class PathUtilsTest {
         @BeforeEach
         public void beforeEach() throws IOException {
             path = new File("./some/random/path/that/surely/does/not/exist.bf").toPath();
-            PathUtils = new PathUtils(path);
+            pathFileSize = new PathFileSize(path);
         }
 
         @Test
         public void returnsSizeZero() throws IOException {
-            assertEquals(0, PathUtils.getSize());
+            assertEquals(0, pathFileSize.getSize());
         }
     }
 
@@ -48,12 +48,12 @@ public class PathUtilsTest {
         @BeforeEach
         public void beforeEach() throws IOException {
             path = File.createTempFile("test", "txt").toPath();
-            PathUtils = new PathUtils(path);
+            pathFileSize = new PathFileSize(path);
         }
 
         @Test
         public void returnsZeroIfFileIsEmpty() throws IOException {
-            assertEquals(0, PathUtils.getSize());
+            assertEquals(0, pathFileSize.getSize());
         }
 
         @Test
@@ -63,7 +63,7 @@ public class PathUtilsTest {
             FileWriter fileWriter = new FileWriter(path.toFile());
             fileWriter.write(new RandomString(length).nextString());
             fileWriter.close();
-            assertEquals(length, PathUtils.getSize());
+            assertEquals(length, pathFileSize.getSize());
         }
     }
 
@@ -72,32 +72,32 @@ public class PathUtilsTest {
         @BeforeEach
         public void beforeEach() throws IOException {
             path = Files.createTempDirectory("test-");
-            PathUtils = new PathUtils(path);
+            pathFileSize = new PathFileSize(path);
         }
 
         @Test
         public void returnsZeroIfDirectoryIsEmpty() throws IOException {
-            assertEquals(0, PathUtils.getSize());
+            assertEquals(0, pathFileSize.getSize());
         }
 
         @Test
         public void returnsSizeOfSingleFile() throws IOException {
             long length = createMultipleFilesInTmpDirectory(path, 1);
-            assertEquals(length, PathUtils.getSize());
+            assertEquals(length, pathFileSize.getSize());
         }
 
         @Test
         public void returnsSizeOfMultipleFiles() throws IOException {
             int files = new Random().ints(2, 10).findFirst().getAsInt();
             long length = createMultipleFilesInTmpDirectory(path, files);
-            assertEquals(length, PathUtils.getSize());
+            assertEquals(length, pathFileSize.getSize());
         }
 
         @Test
         public void returnSizeOfNestedDirectories() throws IOException {
             int directories = new Random().ints(2, 10).findFirst().getAsInt();
             long length = createMultiplePopulatedDirectories(path, directories);
-            assertEquals(length, PathUtils.getSize());
+            assertEquals(length, pathFileSize.getSize());
         }
     }
 

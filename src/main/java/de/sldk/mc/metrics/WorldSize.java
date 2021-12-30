@@ -1,6 +1,6 @@
 package de.sldk.mc.metrics;
 
-import de.sldk.mc.utils.PathUtils;
+import de.sldk.mc.utils.PathFileSize;
 import io.prometheus.client.Gauge;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
@@ -25,7 +25,7 @@ public class WorldSize extends WorldMetric {
     @Override
     public void collect(World world) {
         try {
-            PathUtils pathUtils = new PathUtils(world.getWorldFolder().toPath());
+            PathFileSize pathUtils = new PathFileSize(world.getWorldFolder().toPath());
             long size = pathUtils.getSize();
             String worldName = world.getName();
             WORLD_SIZE.labels(worldName).set(size);
