@@ -42,7 +42,7 @@ public class PathFileSizeTest {
     @Nested
     public class WhenPathDoesNotExist {
         @BeforeEach
-        public void beforeEach() throws IOException {
+        public void beforeEach() {
             path = new File("./some/random/path/that/surely/does/not/exist.bf").toPath();
             pathFileSize = new PathFileSize(path);
             shouldDeletePath = false;

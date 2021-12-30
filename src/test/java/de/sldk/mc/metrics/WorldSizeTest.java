@@ -49,13 +49,13 @@ public class WorldSizeTest {
     }
 
     @Test
-    public void doesNotThrowIfFileDoesNotExist() throws IOException {
+    public void doesNotThrowIfFileDoesNotExist() {
         givenWorldFileDoesNotExist();
         assertDoesNotThrow(() -> worldSizeMetric.collect(world));
     }
 
     @Test
-    public void doesNotPopulateMetricIfFileDoesNotExist() throws IOException {
+    public void doesNotPopulateMetricIfFileDoesNotExist() {
         givenWorldFileDoesNotExist();
         worldSizeMetric.collect(world);
         assertMetricIsEmpty();
@@ -91,7 +91,7 @@ public class WorldSizeTest {
         assertNull(CollectorRegistry.defaultRegistry.getSampleValue(METRIC_NAME));
     }
 
-    private void givenWorldFileDoesNotExist() throws IOException {
+    private void givenWorldFileDoesNotExist() {
         String worldName = "some_file_that_surely_does_not_exist_"  + new RandomString(10).nextString();
         path = mock(Path.class);
         file = mock(File.class);
@@ -102,6 +102,7 @@ public class WorldSizeTest {
         when(world.getWorldFolder()).thenReturn(file);
         when(world.getName()).thenReturn(worldName);
     }
+
     private void givenWorldFileExists(String worldName, int worldSize) throws IOException {
         givenWorldFileExists(worldName);
         String filename = new RandomString(10).nextString();
