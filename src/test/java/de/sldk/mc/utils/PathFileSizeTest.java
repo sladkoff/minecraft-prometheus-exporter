@@ -4,20 +4,30 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.*;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Random;
 import net.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.*;
 
 public class PathFileSizeTest {
-    PathFileSize pathFileSize;
-    Path path;
+    private PathFileSize pathFileSize;
+    private Path path;
+    private boolean shouldDeletePath = true;
 
     @AfterEach
-    public void afterEach() {
-        if (path != null) {
-            try {
-                Files.deleteIfExists(path);
-            } catch (IOException e) { }
+    public void afterEach() throws IOException {
+        if (path != null && shouldDeletePath) {
+            FileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+            };
+            Files.walkFileTree(path, visitor);
         }
     }
 
@@ -35,6 +45,7 @@ public class PathFileSizeTest {
         public void beforeEach() throws IOException {
             path = new File("./some/random/path/that/surely/does/not/exist.bf").toPath();
             pathFileSize = new PathFileSize(path);
+            shouldDeletePath = false;
         }
 
         @Test

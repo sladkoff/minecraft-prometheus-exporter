@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import io.prometheus.client.CollectorRegistry;
 import java.io.*;
 import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Random;
 import net.bytebuddy.utility.RandomString;
 import org.bukkit.World;
@@ -30,11 +31,21 @@ public class WorldSizeTest {
     }
 
     @AfterEach
-    public void afterEach() {
+    public void afterEach() throws IOException {
         CollectorRegistry.defaultRegistry.clear();
-        try {
-            Files.deleteIfExists(path);
-        } catch (Throwable t) { }
+        if (shouldDelete(path)) {
+            FileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
+                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file);
+                    return FileVisitResult.CONTINUE;
+                }
+                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    Files.delete(dir);
+                    return FileVisitResult.CONTINUE;
+                }
+            };
+            Files.walkFileTree(path, visitor);
+        }
     }
 
     @Test
@@ -70,10 +81,10 @@ public class WorldSizeTest {
 
     private Double getMetricValue(String worldName) {
         return CollectorRegistry.defaultRegistry.getSampleValue(
-            METRIC_NAME,
-            METRIC_LABELS,
-            new String[] { worldName }
-        );
+                METRIC_NAME,
+                METRIC_LABELS,
+                new String[] { worldName }
+                );
     }
 
     private void assertMetricIsEmpty() {
@@ -107,5 +118,11 @@ public class WorldSizeTest {
 
         when(world.getWorldFolder()).thenReturn(file);
         when(world.getName()).thenReturn(worldName);
+    }
+
+    private boolean shouldDelete(Path path) {
+        return path != null
+            && !mockingDetails(path).isMock()
+            && !mockingDetails(path).isSpy();
     }
 }
