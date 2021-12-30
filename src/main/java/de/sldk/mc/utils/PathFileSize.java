@@ -6,7 +6,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class PathFileSize {
-    private Path path;
+    final private Path path;
 
     public PathFileSize(Path path) {
         if (path == null) {
