@@ -6,12 +6,12 @@ import static org.mockito.Mockito.*;
 import io.prometheus.client.CollectorRegistry;
 import java.io.*;
 import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Random;
 import net.bytebuddy.utility.RandomString;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 public class WorldSizeTest {
 
@@ -20,32 +20,20 @@ public class WorldSizeTest {
 
     private WorldSize worldSizeMetric;
 
+    @TempDir
     private Path path;
     private File file;
     private World world;
 
     @BeforeEach
-    public void beforeEach() throws IOException{
+    public void beforeEach() {
         worldSizeMetric = new WorldSize(mock(Plugin.class));
         worldSizeMetric.enable();
     }
 
     @AfterEach
-    public void afterEach() throws IOException {
+    public void afterEach() {
         CollectorRegistry.defaultRegistry.clear();
-        if (shouldDelete(path)) {
-            FileVisitor<Path> visitor = new SimpleFileVisitor<Path>() {
-                public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                    Files.delete(file);
-                    return FileVisitResult.CONTINUE;
-                }
-                public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                    Files.delete(dir);
-                    return FileVisitResult.CONTINUE;
-                }
-            };
-            Files.walkFileTree(path, visitor);
-        }
     }
 
     @Test
@@ -62,7 +50,7 @@ public class WorldSizeTest {
     }
 
     @Test
-    public void setsMetricWithCorrectNameAndLabel() throws IOException {
+    public void setsMetricWithCorrectNameAndLabel() {
         String worldName = new RandomString(10).nextString();
         givenWorldFileExists(worldName);
         worldSizeMetric.collect(world);
@@ -93,11 +81,9 @@ public class WorldSizeTest {
 
     private void givenWorldFileDoesNotExist() {
         String worldName = "some_file_that_surely_does_not_exist_"  + new RandomString(10).nextString();
-        path = mock(Path.class);
         file = mock(File.class);
         world = mock(World.class);
 
-        when(path.toFile()).thenReturn(file);
         when(file.toPath()).thenReturn(path);
         when(world.getWorldFolder()).thenReturn(file);
         when(world.getName()).thenReturn(worldName);
@@ -112,18 +98,11 @@ public class WorldSizeTest {
         }
     }
 
-    private void givenWorldFileExists(String worldName) throws IOException {
-        path = Files.createTempDirectory("world");
+    private void givenWorldFileExists(String worldName) {
         file = path.toFile();
         world = mock(World.class);
 
         when(world.getWorldFolder()).thenReturn(file);
         when(world.getName()).thenReturn(worldName);
-    }
-
-    private boolean shouldDelete(Path path) {
-        return path != null
-            && !mockingDetails(path).isMock()
-            && !mockingDetails(path).isSpy();
     }
 }
