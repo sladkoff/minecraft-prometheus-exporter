@@ -77,7 +77,7 @@ public class PlayerStatisticLoaderFromBukkit implements PlayerStatisticLoader {
 		try {
 			if (statType.getClass() == Material.class) {
 				return player.getStatistic(statistic, (Material) statType);
-			} else if (statType.getClass() == EntityType.class) {
+			} else if (statType.getClass() == EntityType.class && statType != EntityType.UNKNOWN) {
 				return player.getStatistic(statistic, (EntityType) statType);
 			} else {
 				return 0;
