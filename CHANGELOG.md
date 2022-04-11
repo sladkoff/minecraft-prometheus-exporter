@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.4.3] - 2022-04-11
+
+### Fixed
+
+Special thanks to all new and old contributors :star:
+
+- [#125](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/125):
+  Fix accumulating unloaded worlds
+- [#139](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/139): Update json-path
+- [#140](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/140): Update prometheus-client
+- [#141](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/141): Update Jetty
+- [#143](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/143):
+  Fix warn logs due to collection of 'unknown' statistics
+
 ## [v2.4.2] - 2021-06-25
 
 ### Fixed
