@@ -1,5 +1,5 @@
 name: PrometheusExporter
-version: 2.5.0
+version: 2.5.1-SNAPSHOT
 author: sldk
 main: de.sldk.mc.PrometheusExporter
 website: sldk.de
