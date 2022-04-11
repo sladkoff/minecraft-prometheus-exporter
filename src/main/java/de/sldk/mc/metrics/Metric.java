@@ -43,8 +43,6 @@ public abstract class Metric {
         final Logger log = plugin.getLogger();
         final String className = getClass().getSimpleName();
 
-        log.warning(String.format("Failed to collect metric '%s' (see FINER log for stacktrace): %s",
-                className, e.toString()));
         log.throwing(className, "collect", e);
     }
 
