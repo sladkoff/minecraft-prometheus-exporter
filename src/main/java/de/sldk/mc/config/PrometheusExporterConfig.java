@@ -22,6 +22,7 @@ public class PrometheusExporterConfig {
             metricConfig("players_online_total", true, PlayersOnlineTotal::new),
             metricConfig("players_total", true, PlayersTotal::new),
             metricConfig("tps", true, Tps::new),
+            metricConfig("world_size", true, WorldSize::new),
 
             metricConfig("jvm_threads", true, ThreadsWrapper::new),
             metricConfig("jvm_gc", true, GarbageCollectorWrapper::new),
