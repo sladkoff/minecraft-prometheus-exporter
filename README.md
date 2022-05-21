@@ -16,7 +16,7 @@ If you're running multiple Minecraft servers behind a BungeeCord proxy, you migh
 
 Drop the prometheus-exporter.jar into your Bukkit plugins directory and start your Minecraft server.
 
-After startup, the Prometheus metrics endpoint should be available at ``localhost:9225/metrics`` (assuming localhost is the server hostname).
+After startup, the Prometheus metrics endpoint should be available at ``localhost:9940/metrics`` (assuming localhost is the server hostname).
 
 The metrics port can be customized in the plugin's config.yml (a default config will be created after the first use).
 
@@ -30,7 +30,7 @@ Here's a default config with annotations.
 # set this to any reachable IP or 0.0.0.0 to listen on all interfaces.
 host: localhost
 # The port can be changed in case it conflicts with any other application.
-port: 9225
+port: 9940
 # Metrics can be enabled individually. Metrics which are disabled
 # by default may have a performance impact on your server.
 # See the rest of the README for more information.
@@ -61,7 +61,7 @@ Add the following job to the ``scrape_configs`` section of your Prometheus confi
 ```yml
 - job_name: 'minecraft'
   static_configs:
-    - targets: ['localhost:9225']
+    - targets: ['localhost:9940']
       labels:
         server_name: 'my-awesome-server'
 ```
@@ -73,10 +73,10 @@ You can use labels in your Prometheus scrape configuration to distinguish betwee
 ```yml
 - job_name: 'minecraft'
   static_configs:
-    - targets: ['localhost:9225']
+    - targets: ['localhost:9940']
       labels:
         server_name: 'server1'
-    - targets: ['localhost:9226']
+    - targets: ['localhost:9939']
       labels:
         server_name: 'server2'
 ```
