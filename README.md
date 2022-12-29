@@ -177,3 +177,9 @@ public class MyPluginCommand extends PluginCommand {
 
 }
 ```
+### Supported Minecraft Versions
+#### Officially supported
+1.11 – 1.16
+
+#### Tested
+- 1.19.2
