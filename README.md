@@ -38,6 +38,7 @@ enable_metrics:
   jvm_threads: true
   jvm_gc: true
   players_total: true
+  whitelisted_players: true
   entities_total: true
   living_entities_total: true
   loaded_chunks_total: true
@@ -95,6 +96,7 @@ These are the stats that are currently exported by the plugin.
 Label | Description
 ------------ | -------------
 mc_players_total | Unique players on server (online + offline)
+mc_whitelisted_players | Players count on the white list
 mc_loaded_chunks_total | Chunks loaded per world
 mc_players_online_total | Online players per world
 mc_entities_total | Entities loaded per world (living + non-living)
