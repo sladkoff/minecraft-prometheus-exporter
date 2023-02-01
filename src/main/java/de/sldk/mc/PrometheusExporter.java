@@ -30,7 +30,8 @@ public class PrometheusExporter extends JavaPlugin {
             server.start();
             getLogger().info("Started Prometheus metrics endpoint at: " + host + ":" + port);
         } catch (Exception e) {
-            getLogger().severe("Could not start embedded Jetty server");
+            getLogger().severe("Could not start embedded Jetty server: " + e.getMessage());
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 
