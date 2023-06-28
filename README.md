@@ -30,7 +30,7 @@ Here's a default config with annotations.
 # set this to any reachable IP or 0.0.0.0 to listen on all interfaces.
 host: localhost
 # The port can be changed in case it conflicts with any other application.
-port: 9940
+port: 9225
 # Metrics can be enabled individually. Metrics which are disabled
 # by default may have a performance impact on your server.
 # See the rest of the README for more information.
@@ -62,7 +62,7 @@ Add the following job to the ``scrape_configs`` section of your Prometheus confi
 ```yml
 - job_name: 'minecraft'
   static_configs:
-    - targets: ['localhost:9940']
+    - targets: ['localhost:9225']
       labels:
         server_name: 'my-awesome-server'
 ```
@@ -74,10 +74,10 @@ You can use labels in your Prometheus scrape configuration to distinguish betwee
 ```yml
 - job_name: 'minecraft'
   static_configs:
-    - targets: ['localhost:9940']
+    - targets: ['localhost:9225']
       labels:
         server_name: 'server1'
-    - targets: ['localhost:9939']
+    - targets: ['localhost:9226']
       labels:
         server_name: 'server2'
 ```
@@ -139,6 +139,10 @@ mc_player_online | Online state by player name
 There's a sample [dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json)
 available to get you started.
 
+You can find the full list [here](https://minecraft.fandom.com/wiki/Statistics#List_of_custom_statistic_names).
+Use the "Resource location" for the metrics label with removing the "minecraft:" part and converted to uppercase.
+This doesn't support all statistics in the list because they are provided by the upstream Spigot libraries.
+
 ## Collect metrics about your own plugin
 
 You can easily collect metrics about your own plugin.
@@ -184,4 +188,4 @@ public class MyPluginCommand extends PluginCommand {
 1.11 – 1.16
 
 #### Tested
-- 1.19.2
+- 1.20.1
