@@ -10,13 +10,13 @@
     <packaging>jar</packaging>
 
     <properties>
-        <spigot-api.version>1.16.5-R0.1-SNAPSHOT</spigot-api.version>
+        <spigot-api.version>1.20.1-R0.1-SNAPSHOT</spigot-api.version>
         <jetty.version>11.0.14</jetty.version>
         <prometheus-client.version>0.16.0</prometheus-client.version>
         <json-path.version>2.7.0</json-path.version>
-        <junit.jupiter.version>5.8.2</junit.jupiter.version>
-        <org.mockito.version>4.6.1</org.mockito.version>
-        <assertj.version>3.23.1</assertj.version>
+        <junit.jupiter.version>5.9.2</junit.jupiter.version>
+        <org.mockito.version>5.2.0</org.mockito.version>
+        <assertj.version>3.24.2</assertj.version>
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <maven-assembly-plugin.version>3.3.0</maven-assembly-plugin.version>
@@ -88,7 +88,7 @@
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
-            <version>5.1.1</version>
+            <version>5.3.0</version>
             <scope>test</scope>
         </dependency>
 
