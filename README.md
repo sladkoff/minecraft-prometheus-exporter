@@ -139,6 +139,10 @@ mc_player_online | Online state by player name
 There's a sample [dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json)
 available to get you started.
 
+You can find the full list [here](https://minecraft.fandom.com/wiki/Statistics#List_of_custom_statistic_names).
+Use the "Resource location" for the metrics label with removing the "minecraft:" part and converted to uppercase.
+This doesn't support all statistics in the list because they are provided by the upstream Spigot libraries.
+
 ## Collect metrics about your own plugin
 
 You can easily collect metrics about your own plugin.
@@ -184,4 +188,4 @@ public class MyPluginCommand extends PluginCommand {
 1.11 – 1.16
 
 #### Tested
-- 1.19.2
+- 1.20.1
