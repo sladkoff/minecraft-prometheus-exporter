@@ -1,4 +1,14 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -25,7 +35,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+        "uid": "${DS_PROMETHEUS}"
       },
       "description": "",
       "fieldConfig": {
@@ -94,7 +104,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -136,7 +146,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player bred two mobs. ",
           "fieldConfig": {
@@ -221,7 +231,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"ANIMALS_BRED\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -237,7 +247,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player bred two mobs. ",
           "fieldConfig": {
@@ -295,7 +305,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"ANIMALS_BRED\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -325,7 +335,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has opened a Barrel. ",
           "fieldConfig": {
@@ -410,7 +420,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"OPEN_BARREL\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -426,7 +436,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has opened a Barrel. ",
           "fieldConfig": {
@@ -484,7 +494,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"OPEN_BARREL\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -514,7 +524,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has rung a Bell. ",
           "fieldConfig": {
@@ -599,7 +609,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"BELL_RING\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -615,7 +625,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has rung a Bell. ",
           "fieldConfig": {
@@ -673,7 +683,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"BELL_RING\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -703,7 +713,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The amount of damage the player has blocked with a shield in tenths of 1♥. ",
           "fieldConfig": {
@@ -788,7 +798,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"DAMAGE_BLOCKED_BY_SHIELD\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -804,7 +814,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The amount of damage the player has blocked with a shield in tenths of 1♥. ",
           "fieldConfig": {
@@ -862,7 +872,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"DAMAGE_BLOCKED_BY_SHIELD\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -892,7 +902,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The amount of damage the player has dealt in tenths of 1♥. Includes only melee attacks. ",
           "fieldConfig": {
@@ -977,7 +987,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"DAMAGE_DEALT\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -993,7 +1003,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The amount of damage the player has dealt in tenths of 1♥. Includes only melee attacks. ",
           "fieldConfig": {
@@ -1051,7 +1061,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"DAMAGE_DEALT\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1081,7 +1091,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The amount of damage the player has resisted in tenths of 1♥. ",
           "fieldConfig": {
@@ -1166,7 +1176,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"DAMAGE_RESISTED\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1182,7 +1192,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The amount of damage the player has resisted in tenths of 1♥. ",
           "fieldConfig": {
@@ -1240,7 +1250,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"DAMAGE_RESISTED\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1270,7 +1280,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The amount of damage the player has taken in tenths of 1♥. ",
           "fieldConfig": {
@@ -1355,7 +1365,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"DAMAGE_TAKEN\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1371,7 +1381,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The amount of damage the player has taken in tenths of 1♥. ",
           "fieldConfig": {
@@ -1429,7 +1439,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"DAMAGE_TAKEN\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1459,7 +1469,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by boats. ",
           "fieldConfig": {
@@ -1544,7 +1554,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"BOAT_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1560,7 +1570,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by boats. ",
           "fieldConfig": {
@@ -1618,7 +1628,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"BOAT_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1648,7 +1658,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by elytra. ",
           "fieldConfig": {
@@ -1733,7 +1743,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"AVIATE_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1749,7 +1759,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by elytra. ",
           "fieldConfig": {
@@ -1807,7 +1817,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"AVIATE_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1837,7 +1847,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by horses. ",
           "fieldConfig": {
@@ -1922,7 +1932,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"HORSE_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -1938,7 +1948,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by horses. ",
           "fieldConfig": {
@@ -1996,7 +2006,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"HORSE_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2026,7 +2036,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by minecarts. ",
           "fieldConfig": {
@@ -2111,7 +2121,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"MINECART_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2127,7 +2137,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by minecarts. ",
           "fieldConfig": {
@@ -2185,7 +2195,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"MINECART_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2215,7 +2225,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled up ladders or vines.",
           "fieldConfig": {
@@ -2300,7 +2310,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"CLIMB_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2316,7 +2326,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled up ladders or vines.",
           "fieldConfig": {
@@ -2374,7 +2384,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"CLIMB_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2404,7 +2414,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance walked while sneaking. ",
           "fieldConfig": {
@@ -2489,7 +2499,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"CROUCH_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2505,7 +2515,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance walked while sneaking. ",
           "fieldConfig": {
@@ -2563,7 +2573,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"CROUCH_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2593,7 +2603,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance fallen, excluding jumping. If the player falls more than one block, the entire jump is counted. ",
           "fieldConfig": {
@@ -2678,7 +2688,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"FALL_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2694,7 +2704,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance fallen, excluding jumping. If the player falls more than one block, the entire jump is counted. ",
           "fieldConfig": {
@@ -2752,7 +2762,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"FALL_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2782,7 +2792,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "Distance traveled upward and forward at the same time, while more than one block above the ground. ",
           "fieldConfig": {
@@ -2867,7 +2877,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"FLY_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2883,7 +2893,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "Distance traveled upward and forward at the same time, while more than one block above the ground. ",
           "fieldConfig": {
@@ -2941,7 +2951,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"FLY_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -2971,7 +2981,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of fish caught. ",
           "fieldConfig": {
@@ -3056,7 +3066,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"FISH_CAUGHT\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3072,7 +3082,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of fish caught. ",
           "fieldConfig": {
@@ -3130,7 +3140,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"FISH_CAUGHT\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3160,7 +3170,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times \"Save and quit to title\" has been clicked. ",
           "fieldConfig": {
@@ -3245,7 +3255,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"LEAVE_GAME\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3261,7 +3271,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times \"Save and quit to title\" has been clicked. ",
           "fieldConfig": {
@@ -3319,7 +3329,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"LEAVE_GAME\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3349,7 +3359,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with anvils. ",
           "fieldConfig": {
@@ -3434,7 +3444,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"INTERACT_WITH_ANVIL\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3450,7 +3460,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with anvils. ",
           "fieldConfig": {
@@ -3508,7 +3518,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"INTERACT_WITH_ANVIL\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3538,7 +3548,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Blast Furnaces. ",
           "fieldConfig": {
@@ -3623,7 +3633,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"INTERACT_WITH_BLAST_FURNACE\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3639,7 +3649,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Blast Furnaces. ",
           "fieldConfig": {
@@ -3697,7 +3707,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"INTERACT_WITH_BLAST_FURNACE\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3727,7 +3737,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Cartography Tables. ",
           "fieldConfig": {
@@ -3812,7 +3822,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"INTERACT_WITH_CARTOGRAPHY_TABLE\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3828,7 +3838,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Cartography Tables. ",
           "fieldConfig": {
@@ -3886,7 +3896,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"INTERACT_WITH_CARTOGRAPHY_TABLE\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -3916,7 +3926,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Grindstones. ",
           "fieldConfig": {
@@ -4001,7 +4011,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"INTERACT_WITH_GRINDSTONE\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4017,7 +4027,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Grindstones. ",
           "fieldConfig": {
@@ -4075,7 +4085,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"INTERACT_WITH_GRINDSTONE\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4105,7 +4115,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Looms. ",
           "fieldConfig": {
@@ -4190,7 +4200,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"INTERACT_WITH_LOOM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4206,7 +4216,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Looms. ",
           "fieldConfig": {
@@ -4264,7 +4274,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"INTERACT_WITH_LOOM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4294,7 +4304,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Smithing Tables. ",
           "fieldConfig": {
@@ -4379,7 +4389,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"INTERACT_WITH_SMITHING_TABLE\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4395,7 +4405,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Smithing Tables. ",
           "fieldConfig": {
@@ -4453,7 +4463,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"INTERACT_WITH_SMITHING_TABLE\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4483,7 +4493,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Smokers. ",
           "fieldConfig": {
@@ -4568,7 +4578,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"INTERACT_WITH_SMOKER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4584,7 +4594,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Smokers. ",
           "fieldConfig": {
@@ -4642,7 +4652,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"INTERACT_WITH_SMOKER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4672,7 +4682,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Stonecutters. ",
           "fieldConfig": {
@@ -4757,7 +4767,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"INTERACT_WITH_STONECUTTER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4773,7 +4783,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with Stonecutters. ",
           "fieldConfig": {
@@ -4831,7 +4841,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"INTERACT_WITH_STONECUTTER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4861,7 +4871,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of items dropped. This does not include items dropped upon death. If a group of items are dropped together, eg a stack of 64, it only counts as 1. ",
           "fieldConfig": {
@@ -4946,7 +4956,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"DROP\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -4962,7 +4972,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of items dropped. This does not include items dropped upon death. If a group of items are dropped together, eg a stack of 64, it only counts as 1. ",
           "fieldConfig": {
@@ -5020,7 +5030,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"DROP\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5050,7 +5060,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total number of jumps performed. ",
           "fieldConfig": {
@@ -5135,7 +5145,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"JUMP\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5151,7 +5161,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total number of jumps performed. ",
           "fieldConfig": {
@@ -5209,7 +5219,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"JUMP\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5239,7 +5249,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of mobs the player killed. ",
           "fieldConfig": {
@@ -5324,7 +5334,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"MOB_KILLS\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5340,7 +5350,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of mobs the player killed. ",
           "fieldConfig": {
@@ -5398,7 +5408,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"MOB_KILLS\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5428,7 +5438,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player died.",
           "fieldConfig": {
@@ -5513,7 +5523,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"DEATHS\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5529,7 +5539,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player died.",
           "fieldConfig": {
@@ -5587,7 +5597,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"DEATHS\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5617,7 +5627,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of players the player killed (on PvP servers). Indirect kills do not count. ",
           "fieldConfig": {
@@ -5702,7 +5712,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"PLAYER_KILLS\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5718,7 +5728,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of players the player killed (on PvP servers). Indirect kills do not count. ",
           "fieldConfig": {
@@ -5776,7 +5786,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"PLAYER_KILLS\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5806,7 +5816,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has triggered a Raid. ",
           "fieldConfig": {
@@ -5891,7 +5901,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"RAID_TRIGGER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5907,7 +5917,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has triggered a Raid. ",
           "fieldConfig": {
@@ -5965,7 +5975,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"RAID_TRIGGER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -5995,7 +6005,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has won a Raid.",
           "fieldConfig": {
@@ -6080,7 +6090,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"RAID_WIN\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6096,7 +6106,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has won a Raid.",
           "fieldConfig": {
@@ -6154,7 +6164,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"RAID_WIN\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6184,7 +6194,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has slept in a bed. ",
           "fieldConfig": {
@@ -6269,7 +6279,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"SLEEP_IN_BED\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6285,7 +6295,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has slept in a bed. ",
           "fieldConfig": {
@@ -6343,7 +6353,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"SLEEP_IN_BED\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6373,7 +6383,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The time the player has held down the sneak button (tracked in ticks). ",
           "fieldConfig": {
@@ -6458,7 +6468,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"SNEAK_TIME\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6474,7 +6484,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The time the player has held down the sneak button (tracked in ticks). ",
           "fieldConfig": {
@@ -6532,7 +6542,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"SNEAK_TIME\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6562,7 +6572,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance sprinted. ",
           "fieldConfig": {
@@ -6647,7 +6657,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"SPRINT_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6663,7 +6673,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance sprinted. ",
           "fieldConfig": {
@@ -6721,7 +6731,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"SPRINT_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6751,7 +6761,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by striders via saddles. ",
           "fieldConfig": {
@@ -6836,7 +6846,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"STRIDER_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6852,7 +6862,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance traveled by striders via saddles. ",
           "fieldConfig": {
@@ -6910,7 +6920,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"STRIDER_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -6940,7 +6950,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance covered with sprint-swimming. ",
           "fieldConfig": {
@@ -7025,7 +7035,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"SWIM_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7041,7 +7051,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance covered with sprint-swimming. ",
           "fieldConfig": {
@@ -7099,7 +7109,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"SWIM_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7129,7 +7139,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance walked. ",
           "fieldConfig": {
@@ -7214,7 +7224,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"WALK_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7230,7 +7240,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance walked. ",
           "fieldConfig": {
@@ -7288,7 +7298,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"WALK_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7318,7 +7328,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The distance covered while bobbing up and down over water. ",
           "fieldConfig": {
@@ -7403,7 +7413,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"WALK_ON_WATER_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7419,7 +7429,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The distance covered while bobbing up and down over water. ",
           "fieldConfig": {
@@ -7477,7 +7487,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"WALK_ON_WATER_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7507,7 +7517,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance you have walked underwater.",
           "fieldConfig": {
@@ -7592,7 +7602,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"WALK_UNDER_WATER_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7608,7 +7618,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total distance you have walked underwater.",
           "fieldConfig": {
@@ -7666,7 +7676,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"WALK_UNDER_WATER_ONE_CM\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7696,7 +7706,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with villagers (opened the trading GUI). ",
           "fieldConfig": {
@@ -7781,7 +7791,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"TALKED_TO_VILLAGER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7797,7 +7807,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times interacted with villagers (opened the trading GUI). ",
           "fieldConfig": {
@@ -7855,7 +7865,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"TALKED_TO_VILLAGER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7885,7 +7895,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has shot a target block. ",
           "fieldConfig": {
@@ -7970,7 +7980,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"TARGET_HIT\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -7986,7 +7996,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times the player has shot a target block. ",
           "fieldConfig": {
@@ -8044,7 +8054,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"TARGET_HIT\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -8074,7 +8084,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The time since the player's last death (tracked in ticks). ",
           "fieldConfig": {
@@ -8159,7 +8169,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"TIME_SINCE_DEATH\", server_name=~\"$server_name\"}) without (player_uid)/$ticks_per_second",
@@ -8177,7 +8187,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The time since the player's last death (tracked in ticks). ",
           "fieldConfig": {
@@ -8235,7 +8245,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"TIME_SINCE_DEATH\", server_name=~\"$server_name\"}) without (player_uid)/$ticks_per_second",
@@ -8266,7 +8276,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The time since the player's last rest (tracked in ticks). If this value is greater than 1.00 h, phantoms can spawn. ",
           "fieldConfig": {
@@ -8351,7 +8361,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"TIME_SINCE_REST\", server_name=~\"$server_name\"}) without (player_uid)/$ticks_per_second",
@@ -8369,7 +8379,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The time since the player's last rest (tracked in ticks). If this value is greater than 1.00 h, phantoms can spawn. ",
           "fieldConfig": {
@@ -8427,7 +8437,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"TIME_SINCE_REST\", server_name=~\"$server_name\"}) without (player_uid)/$ticks_per_second",
@@ -8458,7 +8468,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total amount of time the world was opened (tracked in ticks). Unlike Play Time, if the game is paused this number continues to increase, but it does not change visually while the statistics menu is open. ",
           "fieldConfig": {
@@ -8543,7 +8553,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"TOTAL_WORLD_TIME\", server_name=~\"$server_name\"}) without (player_uid)/$ticks_per_second",
@@ -8561,7 +8571,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The total amount of time the world was opened (tracked in ticks). Unlike Play Time, if the game is paused this number continues to increase, but it does not change visually while the statistics menu is open. ",
           "fieldConfig": {
@@ -8619,7 +8629,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"TOTAL_WORLD_TIME\", server_name=~\"$server_name\"}) without (player_uid)/$ticks_per_second",
@@ -8650,7 +8660,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times traded with villagers. ",
           "fieldConfig": {
@@ -8735,7 +8745,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=~\"TRADED_WITH_VILLAGER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -8751,7 +8761,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+            "uid": "${DS_PROMETHEUS}"
           },
           "description": "The number of times traded with villagers. ",
           "fieldConfig": {
@@ -8809,7 +8819,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+                "uid": "${DS_PROMETHEUS}"
               },
               "expr": "sum(mc_player_statistic{player_name=~\"$player\", statistic=\"TRADED_WITH_VILLAGER\", server_name=~\"$server_name\"}) without (player_uid)",
               "format": "time_series",
@@ -8842,7 +8852,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "",
         "hide": 0,
@@ -8870,7 +8880,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "c890e0d1-c550-4dfb-8fbd-6fd3e6773a3d"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "",
         "hide": 0,
