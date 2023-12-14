@@ -21,7 +21,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:	
         name: target
         path: ${{ github.workspace }}/target/**/*
