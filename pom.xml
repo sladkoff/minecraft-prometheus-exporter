@@ -17,7 +17,7 @@
         <junit.jupiter.version>5.9.3</junit.jupiter.version>
         <org.mockito.version>5.4.0</org.mockito.version>
         <assertj.version>3.24.2</assertj.version>
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.12.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
         <maven-assembly-plugin.version>3.6.0</maven-assembly-plugin.version>
         <maven-jgitflow-plugin.version>1.20.0</maven-jgitflow-plugin.version>
