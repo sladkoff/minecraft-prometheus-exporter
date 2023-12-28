@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  mc:
+    image: itzg/minecraft-server:2023.12.2
+    environment:
+      EULA: "true"
+      TYPE: "PAPER"
+      VERSION: "1.20.4"
+      PLUGINS: |
+        https://github.com/sladkoff/minecraft-prometheus-exporter/releases/download/v2.5.0/minecraft-prometheus-exporter-2.5.0.jar
+
+    ports:
+      - "25565:25565"
+      - "9225:9225"
+    volumes:
+      - data:/data
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+volumes:
+  data: {}
