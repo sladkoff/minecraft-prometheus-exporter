@@ -183,10 +183,20 @@ public class MyPluginCommand extends PluginCommand {
 
 }
 ```
-### Supported Minecraft Versions
+
+### Compatibility
+
+#### Minecraft Server
+
 #### Officially supported
-1.11 – 1.20
+
+> 1.11.x – 1.20.x
 
 #### Tested
 - 1.20.1
 - 1.20.4
+
+#### Java
+
+- Java 11 or higher is required (Java 8 is not supported due to [this issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/161))
+- There is a known [issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/197) with Azul JVM
