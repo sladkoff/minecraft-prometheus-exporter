@@ -61,16 +61,22 @@ public class PrometheusExporterConfig {
     public void enableConfiguredMetrics() {
         PrometheusExporterConfig.METRICS
                 .forEach(metricConfig -> {
-                    Metric metric = metricConfig.getMetric(prometheusExporter);
-                    Boolean enabled = get(metricConfig);
+                    String metricName = metricConfig.getClass().getSimpleName();
+                    try {
+                        Metric metric = metricConfig.getMetric(prometheusExporter);
+                        Boolean enabled = get(metricConfig);
 
-                    if (Boolean.TRUE.equals(enabled)) {
-                        metric.enable();
+                        if (Boolean.TRUE.equals(enabled)) {
+                            metric.enable();
+                        }
+
+                        prometheusExporter.getLogger().fine("Metric " + metricName + " enabled: " + enabled);
+
+                        MetricRegistry.getInstance().register(metric);
+                    } catch (Exception e) {
+                        prometheusExporter.getLogger().warning("Failed to enable metric " + metricName + ": " + e.getMessage());
+                        prometheusExporter.getLogger().log(java.util.logging.Level.FINE, "Failed to enable metric " + metricName, e);
                     }
-
-                    prometheusExporter.getLogger().fine("Metric " + metric.getClass().getSimpleName() + " enabled: " + enabled);
-
-                    MetricRegistry.getInstance().register(metric);
                 });
     }
 
