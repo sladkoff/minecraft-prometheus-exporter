@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <spigot-api.version>1.20.4-R0.1-SNAPSHOT</spigot-api.version>
+        <paper-api.version>1.20.4-R0.1-SNAPSHOT</paper-api.version>
         <jetty.version>11.0.20</jetty.version>
         <prometheus-client.version>0.16.0</prometheus-client.version>
         <json-path.version>2.9.0</json-path.version>
@@ -28,16 +28,16 @@
 
     <repositories>
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>${spigot-api.version}</version>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>${paper-api.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
