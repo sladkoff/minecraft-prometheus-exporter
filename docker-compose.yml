@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mc:
-    image: itzg/minecraft-server:2024.1.0
+    image: itzg/minecraft-server:2024.2.0
     environment:
       EULA: "true"
       TYPE: "PAPER"
