@@ -1,5 +1,5 @@
 package de.sldk.mc.metrics.tickDuration;
 
-public interface ITickDurationCollector {
+public interface TickDurationStrategy {
     long[] getTickDurations();
 }

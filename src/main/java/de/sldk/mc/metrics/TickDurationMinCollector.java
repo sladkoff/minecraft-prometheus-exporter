@@ -1,13 +1,12 @@
 package de.sldk.mc.metrics;
 
-import de.sldk.mc.metrics.tickDuration.ITickDurationCollector;
 import de.sldk.mc.metrics.tickDuration.TickDurationCollector;
 import io.prometheus.client.Gauge;
 import org.bukkit.plugin.Plugin;
 
 public class TickDurationMinCollector extends Metric {
     private static final String NAME = "tick_duration_min";
-    private final ITickDurationCollector collector = new TickDurationCollector(this.getPlugin());
+    private final TickDurationCollector collector = TickDurationCollector.forServerImplementation(this.getPlugin());
 
     private static final Gauge TD = Gauge.build()
             .name(prefix(NAME))
