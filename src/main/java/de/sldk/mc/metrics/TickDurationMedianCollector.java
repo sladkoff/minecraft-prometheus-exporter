@@ -1,13 +1,15 @@
 package de.sldk.mc.metrics;
 
-import java.util.Arrays;
-
+import de.sldk.mc.metrics.tickDuration.ITickDurationCollector;
+import de.sldk.mc.metrics.tickDuration.TickDurationCollector;
+import io.prometheus.client.Gauge;
 import org.bukkit.plugin.Plugin;
 
-import io.prometheus.client.Gauge;
+import java.util.Arrays;
 
-public class TickDurationMedianCollector extends TickDurationCollector {
+public class TickDurationMedianCollector extends Metric {
     private static final String NAME = "tick_duration_median";
+    private final ITickDurationCollector collector = new TickDurationCollector(this.getPlugin());
 
     private static final Gauge TD = Gauge.build()
             .name(prefix(NAME))
@@ -15,12 +17,12 @@ public class TickDurationMedianCollector extends TickDurationCollector {
             .create();
 
     public TickDurationMedianCollector(Plugin plugin) {
-        super(plugin, TD, NAME);
+        super(plugin, TD);
     }
 
     private long getTickDurationMedian() {
         /* Copy the original array - don't want to sort it! */
-        long[] tickTimes = getTickDurations().clone();
+        long[] tickTimes = collector.getTickDurations().clone();
         Arrays.sort(tickTimes);
         return tickTimes[tickTimes.length / 2];
     }

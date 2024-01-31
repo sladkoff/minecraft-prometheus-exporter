@@ -1,16 +1,17 @@
-package de.sldk.mc.metrics;
+package de.sldk.mc.metrics.tickDuration;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 
+import de.sldk.mc.metrics.Metric;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.plugin.Plugin;
 
 import io.prometheus.client.Gauge;
 
-public abstract class TickDurationCollector extends Metric {
+public class TickDurationCollector implements ITickDurationCollector {
     /*
      * If reflection is successful, this will hold a reference directly to the
      * MinecraftServer internal tick duration tracker
@@ -23,9 +24,7 @@ public abstract class TickDurationCollector extends Metric {
      */
     private static boolean usePaperMethod = false;
 
-    public TickDurationCollector(Plugin plugin, Gauge gauge, String name) {
-        super(plugin, gauge);
-
+    public TickDurationCollector(Plugin plugin) {
         /*
          * If there is not yet a handle to the internal tick duration buffer, try
          * to acquire one using reflection.
@@ -98,8 +97,7 @@ public abstract class TickDurationCollector extends Metric {
             }
 
             return (long[]) tickTimes;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -109,7 +107,7 @@ public abstract class TickDurationCollector extends Metric {
      * or a long array containing just one element of value -1 if reflection
      * was unable to locate the minecraft tick times buffer
      */
-    protected static long[] getTickDurations() {
+    public long[] getTickDurations() {
         if (usePaperMethod) {
             return getPaperTickTimes();
         }
