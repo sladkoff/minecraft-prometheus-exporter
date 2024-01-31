@@ -20,8 +20,7 @@ public class TickDurationMedianCollector extends Metric {
     }
 
     private long getTickDurationMedian() {
-        /* Copy the original array - don't want to sort it! */
-        long[] tickTimes = collector.getTickDurations().clone();
+        long[] tickTimes = collector.getTickDurations();
         Arrays.sort(tickTimes);
         return tickTimes[tickTimes.length / 2];
     }

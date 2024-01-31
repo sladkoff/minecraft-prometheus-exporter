@@ -67,6 +67,7 @@ public class DefaultTickDurationStrategy implements TickDurationStrategy {
      * was unable to locate the minecraft tick times buffer
      */
     public long[] getTickDurations() {
-        return tickDurationReference;
+        // Return a copy of the array to prevent modification
+        return tickDurationReference.clone();
     }
 }
