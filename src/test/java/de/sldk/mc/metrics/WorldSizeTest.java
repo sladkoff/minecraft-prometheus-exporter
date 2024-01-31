@@ -50,21 +50,19 @@ public class WorldSizeTest {
     }
 
     @Test
-    public void setsMetricWithCorrectNameAndLabel() throws InterruptedException {
+    public void setsMetricWithCorrectNameAndLabel() {
         String worldName = new RandomString(10).nextString();
         givenWorldFileExists(worldName);
         worldSizeMetric.collect(world);
-        Thread.sleep(500);
         assertNotNull(getMetricValue(worldName));
     }
 
     @Test
-    public void setsCorrectWorldSizeValue() throws IOException, InterruptedException {
+    public void setsCorrectWorldSizeValue() throws IOException {
         String worldName = new RandomString(10).nextString();
         int worldSize = new Random().ints(128, 1024).findFirst().getAsInt();
         givenWorldFileExists(worldName, worldSize);
         worldSizeMetric.collect(world);
-        Thread.sleep(500);
         Double value = getMetricValue(worldName);
         assertEquals(worldSize, value.longValue());
     }
