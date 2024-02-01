@@ -36,4 +36,9 @@ public class WorldSize extends WorldMetric {
             log.throwing(this.getClass().getSimpleName(), "collect", t);
         }
     }
+
+    @Override
+    protected boolean isAsyncCapable() {
+        return true;
+    }
 }

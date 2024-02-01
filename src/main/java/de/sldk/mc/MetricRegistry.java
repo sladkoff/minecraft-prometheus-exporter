@@ -4,6 +4,7 @@ import de.sldk.mc.metrics.Metric;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class MetricRegistry {
 
@@ -23,8 +24,11 @@ public class MetricRegistry {
         this.metrics.add(metric);
     }
 
-    void collectMetrics() {
-        this.metrics.forEach(Metric::collect);
+    CompletableFuture<Void> collectMetrics() {
+        /* Combine all Completable futures into a single one */
+        return CompletableFuture.allOf(this.metrics.stream()
+                .map(Metric::collect)
+                .toArray(CompletableFuture[]::new));
     }
 
 }

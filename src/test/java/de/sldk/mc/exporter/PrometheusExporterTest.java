@@ -2,8 +2,6 @@ package de.sldk.mc.exporter;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 import de.sldk.mc.MetricsServer;
 import de.sldk.mc.PrometheusExporter;
@@ -11,8 +9,6 @@ import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.Counter;
 import io.prometheus.client.exporter.common.TextFormat;
 import io.restassured.RestAssured;
-import org.bukkit.Server;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.eclipse.jetty.http.HttpStatus;
 import org.eclipse.jetty.util.URIUtil;
 import org.junit.jupiter.api.AfterEach;
@@ -24,17 +20,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.util.concurrent.CompletableFuture;
 
 @ExtendWith(MockitoExtension.class)
 public class PrometheusExporterTest {
 
 	@Mock
 	private PrometheusExporter exporterMock;
-	@Mock
-	private Server mockServer;
-	@Mock
-	private BukkitScheduler mockScheduler;
 
 	private int metricsServerPort;
 	private MetricsServer metricsServer;
@@ -60,7 +51,6 @@ public class PrometheusExporterTest {
 
 	@Test
 	void metrics_server_should_return_valid_prometheus_response() {
-		mockBukkitApis();
 		mockPrometheusCounter("mc_mock_metric", "This is a mock metric", 419);
 
 		String requestPath = URIUtil.newURI("http", "localhost", metricsServerPort, "/metrics", null);
@@ -76,12 +66,6 @@ public class PrometheusExporterTest {
 		assertThat(lines[0]).isEqualTo("# HELP mc_mock_metric_total This is a mock metric");
 		assertThat(lines[1]).isEqualTo("# TYPE mc_mock_metric_total counter");
 		assertThat(lines[2]).isEqualTo("mc_mock_metric_total 419.0");
-	}
-
-	private void mockBukkitApis() {
-		when(exporterMock.getServer()).thenReturn(mockServer);
-		when(mockServer.getScheduler()).thenReturn(mockScheduler);
-		when(mockScheduler.callSyncMethod(any(), any())).thenReturn(CompletableFuture.completedFuture(null));
 	}
 
 	private void mockPrometheusCounter(String name, String help, int value) {

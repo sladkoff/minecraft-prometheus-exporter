@@ -10,7 +10,6 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.logging.Level;
 
 public class MetricsController extends AbstractHandler {
@@ -31,17 +30,8 @@ public class MetricsController extends AbstractHandler {
             return;
         }
 
-        /*
-         * Bukkit API calls have to be made from the main thread.
-         * That's why we use the BukkitScheduler to retrieve the server stats.
-         * */
-        Future<Object> future = exporter.getServer().getScheduler().callSyncMethod(exporter, () -> {
-            metricRegistry.collectMetrics();
-            return null;
-        });
-
         try {
-            future.get();
+            metricRegistry.collectMetrics().get();
 
             response.setStatus(HttpStatus.OK_200);
             response.setContentType(TextFormat.CONTENT_TYPE_004);
