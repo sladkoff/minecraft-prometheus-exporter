@@ -28,25 +28,27 @@ public abstract class Metric {
     }
 
     public CompletableFuture<Void> collect() {
+        return CompletableFuture.runAsync(() -> {
+            if (!enabled) {
+                return;
+            }
 
-        if (!enabled) {
-            return CompletableFuture.completedFuture(null);
-        }
+            /* If metric is capable of async execution run it on a thread pool */
+            if (isAsyncCapable()) {
 
-        if (isAsyncCapable()) {
-            /* If metric is capable of async execution, do it */
-            return CompletableFuture.runAsync(() -> {
                 try {
                     doCollect();
                 }
                 catch (Exception e) {
                     logException(e);
                 }
-            });
-        }
+                return;
+            }
 
-        /* Otherwise run the metric on the main thread and create a future for this */
-        return CompletableFuture.runAsync(() -> {
+            /*
+            * Otherwise run the metric on the main thread and make the
+            * thread on thread pool wait for completion
+            */
             try {
                 Bukkit.getScheduler().callSyncMethod(plugin, () -> {
                     try {
