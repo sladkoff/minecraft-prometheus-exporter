@@ -1,31 +1,21 @@
-package de.sldk.mc.metrics;
+package de.sldk.mc.metrics.tick_duration;
+
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Server;
-import org.bukkit.plugin.Plugin;
-
-import io.prometheus.client.Gauge;
-
-public abstract class TickDurationCollector extends Metric {
+public class DefaultTickDurationStrategy implements TickDurationStrategy {
     /*
      * If reflection is successful, this will hold a reference directly to the
      * MinecraftServer internal tick duration tracker
      */
     private static long[] tickDurationReference = null;
 
-    /*
-     * If this server is Paper and has a shorthand method
-     * this will be set to true to use the method instead
-     */
-    private static boolean usePaperMethod = false;
-
-    public TickDurationCollector(Plugin plugin, Gauge gauge, String name) {
-        super(plugin, gauge);
-
+    public DefaultTickDurationStrategy(Logger logger) {
         /*
          * If there is not yet a handle to the internal tick duration buffer, try
          * to acquire one using reflection.
@@ -33,16 +23,9 @@ public abstract class TickDurationCollector extends Metric {
          * This searches for any long[] array in the MinecraftServer class. It should
          * work across many versions of Spigot/Paper and various obfuscation mappings
          */
-        if (tickDurationReference == null && !usePaperMethod) {
+        if (tickDurationReference == null) {
 
-            /* Check if this server is Paper and has a handy method */
-            if (getPaperTickTimes() != null) {
-                usePaperMethod = true;
-                plugin.getLogger().log(Level.FINE, "Managed to get Paper tick times method.");
-                return;
-            }
-
-            plugin.getLogger().log(Level.FINE, "Could not get Paper tick times method.");
+            logger.log(Level.FINE, "Could not get Paper tick times method.");
 
             long[] longestArray = null;
 
@@ -63,7 +46,7 @@ public abstract class TickDurationCollector extends Metric {
                     }
                 }
             } catch (Exception e) {
-                plugin.getLogger().log(Level.FINE, "Caught exception looking for tick times array: ", e);
+                logger.log(Level.FINE, "Caught exception looking for tick times array: ", e);
             }
 
             if (longestArray != null) {
@@ -73,34 +56,8 @@ public abstract class TickDurationCollector extends Metric {
                 tickDurationReference = new long[1];
                 tickDurationReference[0] = -1;
 
-                plugin.getLogger().log(Level.WARNING, "Failed to find tick times buffer via reflection. Tick duration metrics will not be available.");
+                logger.log(Level.WARNING, "Failed to find tick times buffer via reflection. Tick duration metrics will not be available.");
             }
-        }
-    }
-
-    /**
-     * Attempts to get tick times from Paper
-     * returns null if fails
-     */
-    private static long[] getPaperTickTimes() {
-        try {
-            /* Get the actual minecraft server class */
-            Server server = Bukkit.getServer();
-
-            /* Attempt to get Paper tick times method */
-            Method paperGetTickTimesMethod = server.getClass().getMethod("getTickTimes");
-
-            Object tickTimes = paperGetTickTimesMethod.invoke(server);
-
-            /* Check the method actual return type */
-            if (!(tickTimes instanceof long[])) {
-                return null;
-            }
-
-            return (long[]) tickTimes;
-        }
-        catch (Exception e) {
-            return null;
         }
     }
 
@@ -109,11 +66,8 @@ public abstract class TickDurationCollector extends Metric {
      * or a long array containing just one element of value -1 if reflection
      * was unable to locate the minecraft tick times buffer
      */
-    protected static long[] getTickDurations() {
-        if (usePaperMethod) {
-            return getPaperTickTimes();
-        }
-
-        return tickDurationReference;
+    public long[] getTickDurations() {
+        // Return a copy of the array to prevent modification
+        return tickDurationReference.clone();
     }
 }

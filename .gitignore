@@ -5,3 +5,4 @@
 .classpath
 .project
 .vscode
+/docker/data
