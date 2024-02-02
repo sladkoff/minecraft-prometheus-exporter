@@ -1,4 +1,4 @@
-package de.sldk.mc.metrics.tickDuration;
+package de.sldk.mc.metrics.tick_duration;
 
 public interface TickDurationStrategy {
     long[] getTickDurations();

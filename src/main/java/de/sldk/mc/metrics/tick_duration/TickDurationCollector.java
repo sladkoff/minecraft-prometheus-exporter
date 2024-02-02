@@ -1,4 +1,4 @@
-package de.sldk.mc.metrics.tickDuration;
+package de.sldk.mc.metrics.tick_duration;
 
 import org.bukkit.plugin.Plugin;
 

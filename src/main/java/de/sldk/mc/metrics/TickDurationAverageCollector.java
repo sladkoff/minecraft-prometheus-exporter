@@ -1,6 +1,6 @@
 package de.sldk.mc.metrics;
 
-import de.sldk.mc.metrics.tickDuration.TickDurationCollector;
+import de.sldk.mc.metrics.tick_duration.TickDurationCollector;
 import io.prometheus.client.Gauge;
 import org.bukkit.plugin.Plugin;
 
