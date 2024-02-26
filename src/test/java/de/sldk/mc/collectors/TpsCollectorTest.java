@@ -1,4 +1,4 @@
-package de.sldk.mc.tps;
+package de.sldk.mc.collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;

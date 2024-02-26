@@ -19,4 +19,9 @@ public class PlayersTotal extends Metric {
     public void doCollect() {
         PLAYERS.set(Bukkit.getOfflinePlayers().length);
     }
+
+    @Override
+    public boolean isAsyncCapable() {
+        return true;
+    }
 }
