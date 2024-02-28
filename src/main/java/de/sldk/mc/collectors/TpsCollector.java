@@ -1,4 +1,4 @@
-package de.sldk.mc.tps;
+package de.sldk.mc.collectors;
 
 import java.util.LinkedList;
 import java.util.function.Supplier;

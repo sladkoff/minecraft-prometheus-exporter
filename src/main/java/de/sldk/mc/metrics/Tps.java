@@ -1,6 +1,6 @@
 package de.sldk.mc.metrics;
 
-import de.sldk.mc.tps.TpsCollector;
+import de.sldk.mc.collectors.TpsCollector;
 import io.prometheus.client.Gauge;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
