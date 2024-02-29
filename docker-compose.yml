@@ -5,14 +5,16 @@ services:
     image: itzg/minecraft-server:2024.2.0
     environment:
       EULA: "true"
-      TYPE: "PAPER"
+      TYPE: "FOLIA"
       VERSION: "1.20.4"
-      PLUGINS: |
-        https://github.com/sladkoff/minecraft-prometheus-exporter/releases/download/v2.6.0/minecraft-prometheus-exporter-2.6.0.jar
+#      PLUGINS: |
+#        https://github.com/sladkoff/minecraft-prometheus-exporter/releases/download/v2.5.0/minecraft-prometheus-exporter-2.5.0.jar
 
     ports:
       - "25565:25565"
       - "9940:9940"
+    expose:
+      - 9940
     volumes:
       - ./docker/data:/data
     stdin_open: true
