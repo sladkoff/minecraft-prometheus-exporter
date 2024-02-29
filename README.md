@@ -158,7 +158,7 @@ This doesn't support all statistics in the list because they are provided by the
 
 #### Notes
 
-– Java 17 is required for the latest version of the plugin.
+- Java 17 is required for the latest version of the plugin.
 - There is a known [issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/197) with Azul JVM.
 - There is currently rudimentary support for Folia servers. Only selected metrics are supported.
 - The plugin has been tested recently on
