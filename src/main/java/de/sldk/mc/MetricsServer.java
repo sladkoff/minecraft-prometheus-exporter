@@ -1,40 +1,46 @@
 package de.sldk.mc;
 
+import org.eclipse.jetty.http.pathmap.PathSpec;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.PathMappingsHandler;
 import org.eclipse.jetty.server.handler.gzip.GzipHandler;
 
 import java.net.InetSocketAddress;
 
 public class MetricsServer {
 
-	private final String host;
-	private final int port;
-	private final PrometheusExporter prometheusExporter;
+    private final String host;
+    private final int port;
+    private final PrometheusExporter prometheusExporter;
 
-	private Server server;
+    private Server server;
 
-	public MetricsServer(String host, int port, PrometheusExporter prometheusExporter) {
-		this.host = host;
-		this.port = port;
-		this.prometheusExporter = prometheusExporter;
-	}
+    public MetricsServer(String host, int port, PrometheusExporter prometheusExporter) {
+        this.host = host;
+        this.port = port;
+        this.prometheusExporter = prometheusExporter;
+    }
 
-	public void start() throws Exception {
-		GzipHandler gzipHandler = new GzipHandler();
-		gzipHandler.setHandler(new MetricsController(prometheusExporter));
+    public void start() throws Exception {
+        GzipHandler gzipHandler = new GzipHandler();
 
-		InetSocketAddress address = new InetSocketAddress(host, port);
-		server = new Server(address);
-		server.setHandler(gzipHandler);
+        var pathMappings = new PathMappingsHandler();
+        pathMappings.addMapping(PathSpec.from("/metrics"), new MetricsController(prometheusExporter));
 
-		server.start();
-	}
+        gzipHandler.setHandler(pathMappings);
 
-	public void stop() throws Exception {
-		if (server == null) {
-			return;
-		}
+        InetSocketAddress address = new InetSocketAddress(host, port);
+        server = new Server(address);
+        server.setHandler(gzipHandler);
 
-		server.stop();
-	}
+        server.start();
+    }
+
+    public void stop() throws Exception {
+        if (server == null) {
+            return;
+        }
+
+        server.stop();
+    }
 }
