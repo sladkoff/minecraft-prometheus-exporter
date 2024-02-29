@@ -8,21 +8,25 @@
 
 # Minecraft Prometheus Exporter
 
-A **Bukkit plugin** which exports Minecraft server stats for Prometheus.
+A **Bukkit plugin** to exports Minecraft server metrics to Prometheus.
+
+Built for Paper, Spigot, Bukkit, Folia (experimental) and other forks.
 
 If you're running multiple Minecraft servers behind a BungeeCord proxy, you might also be interested in [Bungeecord Prometheus Exporter](https://github.com/weihao/bungeecord-prometheus-exporter) for additional metrics!
 
 ## Quick Start
 
-Drop the prometheus-exporter.jar into your Bukkit plugins directory and start your Minecraft server.
+Copy the prometheus-exporter.jar into your Bukkit plugins directory and start your Minecraft server.
 
 After startup, the Prometheus metrics endpoint should be available at ``localhost:9940/metrics`` (assuming localhost is the server hostname).
 
 The metrics port can be customized in the plugin's config.yml (a default config will be created after the first use).
 
-## Plugin config
+## Installation & Configuration
 
-Here's a default config with annotations.
+### Plugin config
+
+The default configuration file will be created after the first use of the plugin.
 
 ```yml
 # Note that the HTTP server binds to localhost by default.
@@ -53,11 +57,11 @@ enable_metrics:
   player_statistic: false
 ```
 
-## Prometheus config
+### Prometheus config
 
 Add the following job to the ``scrape_configs`` section of your Prometheus configuration:
 
-### Single server
+#### Single server
 
 ```yml
 - job_name: 'minecraft'
@@ -67,7 +71,7 @@ Add the following job to the ``scrape_configs`` section of your Prometheus confi
         server_name: 'my-awesome-server'
 ```
 
-### Multiple servers
+#### Multiple servers
 
 You can use labels in your Prometheus scrape configuration to distinguish between multiple servers:
 
@@ -82,16 +86,18 @@ You can use labels in your Prometheus scrape configuration to distinguish betwee
         server_name: 'server2'
 ```
 
-## Import Grafana Dashboard
+### Import Grafana Dashboard
 
 1. Navigate to Grafana -> Dashboards -> Import
 1. Paste in or upload [minecraft-server-dashboard.json](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-server-dashboard.json)
 1. Update "JVM Memory Used" to reflect your server max memory (Default 8G)
 1. Edit (bottom right widget) -> Options -> Gauage -> Max
 
-## Available metrics
+You can also build your own dashboards using the metrics exported by the plugin. See [available metrics](#available-metrics) for a list of all the metrics exported by the plugin.
 
-These are the stats that are currently exported by the plugin.
+### Available metrics
+
+The following metrics are exported by the plugin:
 
 | Label                    | Description                                        | Folia Support |
 |--------------------------|----------------------------------------------------|---------------|
@@ -110,7 +116,7 @@ These are the stats that are currently exported by the plugin.
 | mc_tick_duration_min     | Min Tick Duration (ns, usually last 100 ticks)     | ❌             |
 | mc_tick_duration_max     | Max Tick Duration (ns, usually last 100 ticks)     | ❌             |
 
-## Player metrics (experimental!)
+### Player metrics (experimental!)
 
 :warning: **The following feature is against Prometheus best-practices and is not recommended for production servers!**
 
@@ -136,18 +142,38 @@ This will enable the additional metrics.
 | mc_player_statistic | Player statistics           | ❌     |
 | mc_player_online    | Online state by player name | ❌     |
 
-There's a sample [dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json)
-available to get you started.
+There's an additional sample [Grafana dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json)
+with player statistics enabled to get you started.
 
 You can find the full list [here](https://minecraft.fandom.com/wiki/Statistics#List_of_custom_statistic_names).
 Use the "Resource location" for the metrics label with removing the "minecraft:" part and converted to uppercase.
 This doesn't support all statistics in the list because they are provided by the upstream Spigot libraries.
 
-## Collect metrics about your own plugin
+### Compatibility
+
+| Plugin version | Min Minecraft version | Min Java version |
+|----------------|-----------------------|------------------|
+| 3.x.x          | 1.17.1                | 17               |
+| 1.0.0 - 2.x.x  | 1.11.x                | 11               |
+
+#### Notes
+
+– Java 17 is required for the latest version of the plugin.
+- There is a known [issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/197) with Azul JVM.
+- There is currently rudimentary support for Folia servers. Only selected metrics are supported.
+- The plugin has been tested recently on
+  - Minecraft 1.20.1 
+  - Minecraft 1.20.4
+
+## Plugin Integration
+
+By integrating your own plugin with the Minecraft Prometheus Exporter, you can **monitor your plugin**: Collect metrics about your plugin's performance or usage.
+
+### Collect metrics about your own plugin
 
 You can easily collect metrics about your own plugin.
 
-### Include the Prometheus dependency
+#### Include the Prometheus dependency
 
 ```xml
 <dependency>
@@ -157,9 +183,9 @@ You can easily collect metrics about your own plugin.
 </dependency>
 ```
 
-### Collect metrics
+#### Collect metrics
 
-This pseudo code shows how you would count invocations of a plugin command.
+This pseudocode shows how you would count invocations of a plugin command.
 
 ```java
 public class MyPluginCommand extends PluginCommand {
@@ -171,7 +197,7 @@ public class MyPluginCommand extends PluginCommand {
             .register();
 
   @Override
-  public boolean execute​(CommandSender sender, String commandLabel, String[] args) {
+  public boolean execute(CommandSender sender, String commandLabel, String[] args) {
 
     // Increment your counter;
     commandCounter.inc();
@@ -183,24 +209,3 @@ public class MyPluginCommand extends PluginCommand {
 
 }
 ```
-
-### Compatibility
-
-#### Minecraft Server
-
-##### Officially supported
-
-> 1.11.x – 1.20.x
-
-##### Tested
-- 1.20.1
-- 1.20.4
-
-#### Java
-
-- Java 11 or higher is required (Java 8 is not supported due to [this issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/161))
-- There is a known [issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/197) with Azul JVM
-
-#### Folia
-
-There is currently rudimentary support for Folia servers. Only selected metrics are supported.
