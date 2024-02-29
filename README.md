@@ -188,11 +188,11 @@ public class MyPluginCommand extends PluginCommand {
 
 #### Minecraft Server
 
-#### Officially supported
+##### Officially supported
 
 > 1.11.x – 1.20.x
 
-#### Tested
+##### Tested
 - 1.20.1
 - 1.20.4
 
