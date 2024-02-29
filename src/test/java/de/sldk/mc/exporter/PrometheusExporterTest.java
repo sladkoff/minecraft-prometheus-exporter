@@ -1,8 +1,6 @@
 package de.sldk.mc.exporter;
 
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import de.sldk.mc.MetricsServer;
 import de.sldk.mc.PrometheusExporter;
 import de.sldk.mc.health.ConcurrentHealthChecks;
@@ -21,6 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 public class PrometheusExporterTest {
@@ -84,6 +84,16 @@ public class PrometheusExporterTest {
 				.get(requestPath)
 				.then()
 				.statusCode(HttpStatus.NOT_FOUND_404);
+	}
+
+	@Test
+	void metrics_server_should_return_200_on_health_check() {
+		String requestPath = URIUtil.newURI("http", "localhost", metricsServerPort, "/health", null);
+
+		RestAssured.when()
+				.get(requestPath)
+				.then()
+				.statusCode(HttpStatus.OK_200);
 	}
 
 }
