@@ -65,9 +65,9 @@ public class PrometheusExporterConfig {
     public void enableConfiguredMetrics() {
         PrometheusExporterConfig.METRICS
                 .forEach(metricConfig -> {
-                    String metricName = metricConfig.getClass().getSimpleName();
+                    Metric metric = metricConfig.getMetric(prometheusExporter);
+                    String metricName = metric.getClass().getSimpleName();
                     try {
-                        Metric metric = metricConfig.getMetric(prometheusExporter);
                         Boolean enabled = get(metricConfig);
 
                         if (Boolean.TRUE.equals(enabled)) {
