@@ -234,4 +234,37 @@ public class MyPluginCommand extends PluginCommand {
 
 You can easily collect metrics about your own plugin.
 
-[//]: # (TODO: Add a section about how to provide a health check from your own plugin.)
+#### Add compile-time dependency to your plugin
+
+1. Get the latest `minecraft-prometheus-exporter-3.0.0.jar` from the [releases](https://github.com/sladkoff/minecraft-prometheus-exporter/releases) page.
+2. Add the jar to your project's classpath.
+
+#### Create a health check
+
+Create your custom health check by extending the `HealthCheck` class.
+
+```java
+public class CustomHealthCheck implements HealthCheck {
+    @Override
+    public boolean isHealthy() {
+        return true; // Your custom health check logic
+    }
+}
+```
+
+#### Create a health check
+
+Register your health check in your plugin's `onEnable` method or similar. 
+
+This will add your health check to the list of health checks that are aggregated and exposed by the Minecraft Prometheus Exporter
+
+```java
+public class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+      // Register your health check
+      getServer().servicesManager.load(HealthChecks.class).add(new CustomHealthCheck());
+    }
+}
+```
