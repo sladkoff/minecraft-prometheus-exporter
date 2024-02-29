@@ -2,9 +2,10 @@ package de.sldk.mc.metrics;
 
 import de.sldk.mc.utils.PathFileSize;
 import io.prometheus.client.Gauge;
-import java.util.logging.Logger;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
+
+import java.util.logging.Logger;
 
 public class WorldSize extends WorldMetric {
 
@@ -39,6 +40,11 @@ public class WorldSize extends WorldMetric {
 
     @Override
     protected boolean isAsyncCapable() {
+        return true;
+    }
+
+    @Override
+    public boolean isFoliaCapable() {
         return true;
     }
 }

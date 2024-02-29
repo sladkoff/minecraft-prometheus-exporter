@@ -93,22 +93,22 @@ You can use labels in your Prometheus scrape configuration to distinguish betwee
 
 These are the stats that are currently exported by the plugin.
 
-Label | Description
------------- | -------------
-mc_players_total | Unique players on server (online + offline)
-mc_whitelisted_players | Players count on the white list
-mc_loaded_chunks_total | Chunks loaded per world
-mc_players_online_total | Online players per world
-mc_entities_total | Entities loaded per world (living + non-living)
-mc_villagers_total | Villagers
-mc_world_size | World size in bytes
-mc_jvm_memory | JVM memory usage
-mc_jvm_threads | JVM threads info
-mc_tps | Server tickrate (TPS)
-mc_tick_duration_median | Median Tick Duration (ns, usually last 100 ticks)
-mc_tick_duration_average | Average Tick Duration (ns, usually last 100 ticks)
-mc_tick_duration_min | Min Tick Duration (ns, usually last 100 ticks)
-mc_tick_duration_max | Max Tick Duration (ns, usually last 100 ticks)
+| Label                    | Description                                        | Folia Support |
+|--------------------------|----------------------------------------------------|---------------|
+| mc_players_total         | Unique players on server (online + offline)        | ✅             |
+| mc_whitelisted_players   | Players count on the white list                    | ❌             |
+| mc_loaded_chunks_total   | Chunks loaded per world                            | ❌             |
+| mc_players_online_total  | Online players per world                           | ✅             |
+| mc_entities_total        | Entities loaded per world (living + non-living)    | ❌             |
+| mc_villagers_total       | Villagers                                          | ❌             |
+| mc_world_size            | World size in bytes                                | ✅             |
+| mc_jvm_memory            | JVM memory usage                                   | ✅             |
+| mc_jvm_threads           | JVM threads info                                   | ✅             |
+| mc_tps                   | Server tickrate (TPS)                              | ❌             |
+| mc_tick_duration_median  | Median Tick Duration (ns, usually last 100 ticks)  | ❌             |
+| mc_tick_duration_average | Average Tick Duration (ns, usually last 100 ticks) | ❌             |
+| mc_tick_duration_min     | Min Tick Duration (ns, usually last 100 ticks)     | ❌             |
+| mc_tick_duration_max     | Max Tick Duration (ns, usually last 100 ticks)     | ❌             |
 
 ## Player metrics (experimental!)
 
@@ -131,10 +131,10 @@ enable_metrics:
 
 This will enable the additional metrics.
 
-Label | Description
------------- | -------------
-mc_player_statistic | Player statistics
-mc_player_online | Online state by player name
+| Label               | Description                 | Folia |
+|---------------------|-----------------------------|-------|
+| mc_player_statistic | Player statistics           | ❌     |
+| mc_player_online    | Online state by player name | ❌     |
 
 There's a sample [dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json)
 available to get you started.
@@ -188,11 +188,11 @@ public class MyPluginCommand extends PluginCommand {
 
 #### Minecraft Server
 
-#### Officially supported
+##### Officially supported
 
 > 1.11.x – 1.20.x
 
-#### Tested
+##### Tested
 - 1.20.1
 - 1.20.4
 
@@ -200,3 +200,7 @@ public class MyPluginCommand extends PluginCommand {
 
 - Java 11 or higher is required (Java 8 is not supported due to [this issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/161))
 - There is a known [issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/197) with Azul JVM
+
+#### Folia
+
+There is currently rudimentary support for Folia servers. Only selected metrics are supported.

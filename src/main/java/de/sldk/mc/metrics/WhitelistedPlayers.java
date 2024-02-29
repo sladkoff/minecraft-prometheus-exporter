@@ -19,4 +19,5 @@ public class WhitelistedPlayers extends Metric {
     public void doCollect() {
         PLAYERS.set(Bukkit.getWhitelistedPlayers().size());
     }
+
 }

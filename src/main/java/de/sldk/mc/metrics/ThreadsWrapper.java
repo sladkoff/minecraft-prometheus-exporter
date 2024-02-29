@@ -23,4 +23,14 @@ public class ThreadsWrapper extends Metric {
             return HotspotPrefixer.prefixFromCollector(threadExports);
         }
     }
+
+    @Override
+    public boolean isFoliaCapable() {
+        return true;
+    }
+
+    @Override
+    public boolean isAsyncCapable() {
+        return true;
+    }
 }

@@ -3,10 +3,6 @@ package de.sldk.mc.config;
 import de.sldk.mc.MetricRegistry;
 import de.sldk.mc.PrometheusExporter;
 import de.sldk.mc.metrics.*;
-import de.sldk.mc.metrics.TickDurationAverageCollector;
-import de.sldk.mc.metrics.TickDurationMaxCollector;
-import de.sldk.mc.metrics.TickDurationMedianCollector;
-import de.sldk.mc.metrics.TickDurationMinCollector;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
@@ -65,12 +61,18 @@ public class PrometheusExporterConfig {
     public void enableConfiguredMetrics() {
         PrometheusExporterConfig.METRICS
                 .forEach(metricConfig -> {
-                    String metricName = metricConfig.getClass().getSimpleName();
+                    Metric metric = metricConfig.getMetric(prometheusExporter);
+                    String metricName = metric.getClass().getSimpleName();
                     try {
-                        Metric metric = metricConfig.getMetric(prometheusExporter);
                         Boolean enabled = get(metricConfig);
 
+                        var foliaSupported = metric.isFoliaCapable();
+
                         if (Boolean.TRUE.equals(enabled)) {
+                            if (isFolia() && !foliaSupported) {
+                                prometheusExporter.getLogger().warning("Metric " + metricName + " is not supported in Folia and will not be enabled");
+                                return;
+                            }
                             metric.enable();
                         }
 
@@ -86,5 +88,18 @@ public class PrometheusExporterConfig {
 
     public <T> T get(PluginConfig<T> config) {
         return config.get(prometheusExporter.getConfig());
+    }
+
+    /**
+     * @return true if the server is running Folia
+     * @see <a href="https://docs.papermc.io/paper/dev/folia-support">Folia Support</a>
+     */
+    private static boolean isFolia() {
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 }
