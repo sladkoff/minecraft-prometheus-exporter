@@ -3,12 +3,8 @@
 package de.sldk.mc
 
 import de.sldk.mc.config.PrometheusExporterConfig
-import de.sldk.mc.health.ConcurrentHealthChecks
-import de.sldk.mc.health.HealthChecks
-import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.logging.Level
-
 
 class PrometheusExporter : JavaPlugin() {
     private val config: PrometheusExporterConfig = PrometheusExporterConfig(this)
@@ -18,18 +14,14 @@ class PrometheusExporter : JavaPlugin() {
     override fun onEnable() {
         config.loadDefaultsAndSave()
         config.enableConfiguredMetrics()
-
-        val healthChecks = ConcurrentHealthChecks.create()
-        getServer().servicesManager.register(HealthChecks::class.java, healthChecks, this, ServicePriority.Normal)
-
-        startMetricsServer(healthChecks)
+        startMetricsServer()
     }
 
-    private fun startMetricsServer(healthChecks: HealthChecks) {
+    private fun startMetricsServer() {
         val host = config[PrometheusExporterConfig.HOST]
         val port = config[PrometheusExporterConfig.PORT]
 
-        server = MetricsServer(host, port, this, healthChecks)
+        server = MetricsServer(host, port, this)
 
         try {
             server?.start()
