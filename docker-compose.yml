@@ -5,8 +5,9 @@ services:
     image: itzg/minecraft-server:2024.2.0
     environment:
       EULA: "true"
-      TYPE: "FOLIA"
       VERSION: "1.20.4"
+      TYPE: "FOLIA"
+#      TYPE: "PAPER"
 #      PLUGINS: |
 #        https://github.com/sladkoff/minecraft-prometheus-exporter/releases/download/v2.5.0/minecraft-prometheus-exporter-2.5.0.jar
 

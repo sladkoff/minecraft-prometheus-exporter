@@ -41,7 +41,7 @@ public class MetricsController extends AbstractHandler {
             request.setHandled(true);
         } catch (InterruptedException | ExecutionException e) {
             exporter.getLogger().log(Level.WARNING, "Failed to read server statistic: " + e.getMessage());
-            exporter.getLogger().log(Level.INFO, "Failed to read server statistic: ", e);
+            exporter.getLogger().log(Level.FINE, "Failed to read server statistic: ", e);
             response.sendError(HttpStatus.INTERNAL_SERVER_ERROR_500);
         }
     }
