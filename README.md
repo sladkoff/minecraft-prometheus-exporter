@@ -252,7 +252,7 @@ public class CustomHealthCheck implements HealthCheck {
 }
 ```
 
-#### Create a health check
+#### Register the health check
 
 Register your health check in your plugin's `onEnable` method or similar. 
 
