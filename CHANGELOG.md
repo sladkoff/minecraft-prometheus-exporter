@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v3.0.0] - 2024-02-29
+
+### Added
+- [#198](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/198): Add rudimentary support for Folia (see README.md for limitations)
+
+### Changed
+- [#228](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/228): [Breaking] Update minimum Java version to 17
+
+### Fixed
+- [#155](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/155): World size metric lags server with big world
+- [#208](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/208): Failed to find tick times buffer via reflection in 1.20.4
+- [#226](https://github.com/sladkoff/minecraft-prometheus-exporter/pull/226): Server lags when exporting chunk and player metrics
+
 ## [v2.6.0] - 2024-01-02
 
 Special thanks to all new and old contributors :star:
@@ -158,6 +171,7 @@ Special thanks to all new and old contributors :star:
 ### Added
 - Initial exporter
 
+[v3.0.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.6.0...v3.0.0
 [v2.6.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.5.0...v2.6.0
 [v2.5.0]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.4.2...v2.5.0
 [v2.4.2]: https://github.com/sladkoff/minecraft-prometheus-exporter/compare/v2.4.1...v2.4.2
