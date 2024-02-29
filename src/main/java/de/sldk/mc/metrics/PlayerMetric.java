@@ -32,9 +32,4 @@ public abstract class PlayerMetric extends Metric {
         return player.getName() != null ? player.getName() : player.getUniqueId().toString();
     }
 
-    @Override
-    public boolean isFoliaCapable() {
-        return true;
-    }
-
 }

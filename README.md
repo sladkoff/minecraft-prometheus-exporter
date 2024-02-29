@@ -96,7 +96,7 @@ These are the stats that are currently exported by the plugin.
 | Label                    | Description                                        | Folia Support |
 |--------------------------|----------------------------------------------------|---------------|
 | mc_players_total         | Unique players on server (online + offline)        | ✅             |
-| mc_whitelisted_players   | Players count on the white list                    | ✅             |
+| mc_whitelisted_players   | Players count on the white list                    | ❌             |
 | mc_loaded_chunks_total   | Chunks loaded per world                            | ❌             |
 | mc_players_online_total  | Online players per world                           | ✅             |
 | mc_entities_total        | Entities loaded per world (living + non-living)    | ❌             |
@@ -133,8 +133,8 @@ This will enable the additional metrics.
 
 | Label               | Description                 | Folia |
 |---------------------|-----------------------------|-------|
-| mc_player_statistic | Player statistics           | ✅     |
-| mc_player_online    | Online state by player name | ✅     |
+| mc_player_statistic | Player statistics           | ❌     |
+| mc_player_online    | Online state by player name | ❌     |
 
 There's a sample [dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json)
 available to get you started.
