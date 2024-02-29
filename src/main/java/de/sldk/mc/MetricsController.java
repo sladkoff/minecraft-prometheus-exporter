@@ -10,6 +10,7 @@ import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.util.Callback;
 
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
@@ -25,7 +26,7 @@ public class MetricsController extends Handler.Abstract {
 
 
     @Override
-    public boolean handle(Request request, Response response, Callback callback) throws Exception {
+    public boolean handle(Request request, Response response, Callback callback) {
         try {
             metricRegistry.collectMetrics().get();
 
@@ -44,9 +45,9 @@ public class MetricsController extends Handler.Abstract {
         return true;
     }
 
-    private void writeMetricsToResponse(Request request, Response response) throws Exception {
-        try (var out = Response.asBufferedOutputStream(request, response);
-             var writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
+    private void writeMetricsToResponse(Request request, Response response) throws IOException {
+        var out = Response.asBufferedOutputStream(request, response);
+        try (var writer = new OutputStreamWriter(out, StandardCharsets.UTF_8)) {
             TextFormat.write004(writer, CollectorRegistry.defaultRegistry.metricFamilySamples());
             writer.flush();
         }
