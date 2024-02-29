@@ -13,7 +13,7 @@ public interface HealthCheck {
     boolean isHealthy();
 
     /**
-     * Creates a health compound check from the provided ones reporting healthy status if all the checks report it.
+     * Creates a compound health check from the provided ones reporting healthy status if all the checks report it.
      *
      * @param checks merged health checks
      * @return compound health check

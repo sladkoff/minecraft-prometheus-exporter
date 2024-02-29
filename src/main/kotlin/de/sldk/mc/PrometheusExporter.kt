@@ -12,7 +12,7 @@ import java.util.logging.Level
 
 class PrometheusExporter : JavaPlugin() {
     private val config: PrometheusExporterConfig = PrometheusExporterConfig(this)
-    private var server: MetricsServer? = null
+    private var metricsServer: MetricsServer? = null
 
     @Override
     override fun onEnable() {
@@ -20,7 +20,7 @@ class PrometheusExporter : JavaPlugin() {
         config.enableConfiguredMetrics()
 
         val healthChecks = ConcurrentHealthChecks.create()
-        getServer().servicesManager.register(HealthChecks::class.java, healthChecks, this, ServicePriority.Normal)
+        server.servicesManager.register(HealthChecks::class.java, healthChecks, this, ServicePriority.Normal)
 
         startMetricsServer(healthChecks)
     }
@@ -29,10 +29,10 @@ class PrometheusExporter : JavaPlugin() {
         val host = config[PrometheusExporterConfig.HOST]
         val port = config[PrometheusExporterConfig.PORT]
 
-        server = MetricsServer(host, port, this, healthChecks)
+        metricsServer = MetricsServer(host, port, this, healthChecks)
 
         try {
-            server?.start()
+            metricsServer?.start()
             getLogger().info("Started Prometheus metrics endpoint at: $host:$port")
         } catch (e: Exception) {
             getLogger().severe("Could not start embedded Jetty server: " + e.message)
@@ -43,7 +43,7 @@ class PrometheusExporter : JavaPlugin() {
     @Override
     override fun onDisable() {
         try {
-            server?.stop()
+            metricsServer?.stop()
         } catch (e: Exception) {
             getLogger().log(Level.WARNING, "Failed to stop metrics server gracefully: " + e.message)
             getLogger().log(Level.FINE, "Failed to stop metrics server gracefully", e)
