@@ -200,3 +200,7 @@ public class MyPluginCommand extends PluginCommand {
 
 - Java 11 or higher is required (Java 8 is not supported due to [this issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/161))
 - There is a known [issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/197) with Azul JVM
+
+#### Folia
+
+There is currently rudimentary support for Folia servers. Only selected metrics are supported.
