@@ -20,10 +20,13 @@ public class MetricsController extends Handler.Abstract {
     private final MetricRegistry metricRegistry = MetricRegistry.getInstance();
     private final PrometheusExporter exporter;
 
-    public MetricsController(PrometheusExporter exporter) {
+    private MetricsController(PrometheusExporter exporter) {
         this.exporter = exporter;
     }
 
+    public static Handler create(final PrometheusExporter exporter) {
+        return new MetricsController(exporter);
+    }
 
     @Override
     public boolean handle(Request request, Response response, Callback callback) {
