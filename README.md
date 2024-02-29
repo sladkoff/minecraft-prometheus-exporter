@@ -22,6 +22,22 @@ After startup, the Prometheus metrics endpoint should be available at ``localhos
 
 The metrics port can be customized in the plugin's config.yml (a default config will be created after the first use).
 
+## Feature Overview
+
+### Prometheus Exporter
+
+The plugin exports a variety of metrics about your Minecraft server to Prometheus. These metrics can be used to monitor the health and performance of your server.
+
+The metrics are exposed at ``localhost:9940/metrics`` by default. See the rest of the README for more information on how to configure Prometheus to scrape these metrics.
+
+### Custom Health Checks
+
+The plugin can be configured to perform custom health checks on your server. These checks can be used to monitor the health of your server and alert you if something goes wrong.
+
+The aggregated health checks are exposed at ``localhost:9940/health`` by default.
+
+See [Health Checks](#health-checks) for more information on how to build your own health checks in your plugins.
+
 ## Installation & Configuration
 
 ### Plugin config
@@ -167,7 +183,10 @@ This doesn't support all statistics in the list because they are provided by the
 
 ## Plugin Integration
 
-By integrating your own plugin with the Minecraft Prometheus Exporter, you can **monitor your plugin**: Collect metrics about your plugin's performance or usage.
+By integrating your own plugin with the Minecraft Prometheus Exporter, you can:
+
+1. **Monitor your plugin's performance**: Collect metrics about your plugin's performance and resource usage.
+2. **Provide custom health checks**: Monitor the health of your plugin and alert you if something goes wrong.
 
 ### Collect metrics about your own plugin
 
@@ -209,3 +228,10 @@ public class MyPluginCommand extends PluginCommand {
 
 }
 ```
+
+
+### Provide a health check from your own plugin
+
+You can easily collect metrics about your own plugin.
+
+[//]: # (TODO: Add a section about how to provide a health check from your own plugin.)
