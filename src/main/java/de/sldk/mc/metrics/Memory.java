@@ -21,4 +21,14 @@ public class Memory extends Metric {
         MEMORY.labels("free").set(Runtime.getRuntime().freeMemory());
         MEMORY.labels("allocated").set(Runtime.getRuntime().totalMemory());
     }
+
+    @Override
+    public boolean isFoliaCapable() {
+        return true;
+    }
+
+    @Override
+    public boolean isAsyncCapable() {
+        return true;
+    }
 }

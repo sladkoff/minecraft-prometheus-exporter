@@ -13,8 +13,6 @@ services:
     ports:
       - "25565:25565"
       - "9940:9940"
-    expose:
-      - 9940
     volumes:
       - ./docker/data:/data
     stdin_open: true

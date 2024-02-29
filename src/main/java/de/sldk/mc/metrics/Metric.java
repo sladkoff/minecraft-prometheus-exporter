@@ -59,7 +59,7 @@ public abstract class Metric {
                     }
                     return null;
                 }).get();
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (Exception e) {
                 logException(e);
             }
         });
@@ -77,11 +77,17 @@ public abstract class Metric {
         return false;
     }
 
+    public boolean isFoliaCapable() {
+        return false;
+    }
+
     private void logException(Exception e) {
         final Logger log = plugin.getLogger();
         final String className = getClass().getSimpleName();
 
         log.throwing(className, "collect", e);
+        log.info("Failed to collect " + className + ": ");
+        e.printStackTrace();
     }
 
     protected static String prefix(String name) {

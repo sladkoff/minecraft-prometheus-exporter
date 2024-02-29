@@ -24,4 +24,14 @@ public class PlayersOnlineTotal extends WorldMetric {
     protected void collect(World world) {
         PLAYERS_ONLINE.labels(world.getName()).set(world.getPlayers().size());
     }
+
+    @Override
+    public boolean isFoliaCapable() {
+        return true;
+    }
+
+    @Override
+    public boolean isAsyncCapable() {
+        return true;
+    }
 }

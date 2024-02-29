@@ -13,7 +13,7 @@ import static java.util.Collections.singletonMap;
 
 /**
  * Get current count of all entities.
- *
+ * <p>
  * Entities are labelled by
  * <ol>
  *     <li> world,
