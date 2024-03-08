@@ -32,7 +32,7 @@ jobs:
       run: |
         sed -n "/^## \[$RELEASE_VERSION]/,/^## /p" CHANGELOG.md | sed '1d;$d' > changelog_body.md
     - name: Release
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         body_path: changelog_body.md
         draft: true
