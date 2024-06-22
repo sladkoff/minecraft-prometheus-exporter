@@ -132,9 +132,10 @@ The following metrics are exported by the plugin:
 | mc_tick_duration_min     | Min Tick Duration (ns, usually last 100 ticks)     | ❌             |
 | mc_tick_duration_max     | Max Tick Duration (ns, usually last 100 ticks)     | ❌             |
 
-### Player metrics (experimental!)
+### Player metrics
 
-:warning: **The following feature is against Prometheus best-practices and is not recommended for production servers!**
+> [!WARNING]
+> The following feature is against Prometheus best-practices and is not recommended for production servers.
 
 There is an option to export per-player statistics like the number of blocks mined, mobs killed, items used, etc.
 The amount of data stored in Prometheus can dramatically increase when this is enabled as individual time-series
