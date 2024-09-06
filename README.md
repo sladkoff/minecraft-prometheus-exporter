@@ -162,7 +162,7 @@ This will enable the additional metrics.
 There's an additional sample [Grafana dashboard](https://raw.githubusercontent.com/sladkoff/minecraft-prometheus-exporter/master/dashboards/minecraft-players-dashboard.json)
 with player statistics enabled to get you started.
 
-You can find the full list [here](https://minecraft.fandom.com/wiki/Statistics#List_of_custom_statistic_names).
+You can find the full list [here](https://minecraft.wiki/w/Statistics#List_of_custom_statistic_names).
 Use the "Resource location" for the metrics label with removing the "minecraft:" part and converted to uppercase.
 This doesn't support all statistics in the list because they are provided by the upstream Spigot libraries.
 
