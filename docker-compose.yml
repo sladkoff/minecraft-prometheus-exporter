@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   mc:
-    image: itzg/minecraft-server:2024.12.0
+    image: itzg/minecraft-server:2024.12.1
     environment:
       EULA: "true"
       VERSION: "1.20.4"
