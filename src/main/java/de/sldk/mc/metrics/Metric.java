@@ -2,12 +2,11 @@ package de.sldk.mc.metrics;
 
 import io.prometheus.client.Collector;
 import io.prometheus.client.CollectorRegistry;
+import java.util.concurrent.CompletableFuture;
+import java.util.logging.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Logger;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class Metric {
 
@@ -27,42 +26,36 @@ public abstract class Metric {
         return plugin;
     }
 
+    @Nullable
     public CompletableFuture<Void> collect() {
-        return CompletableFuture.runAsync(() -> {
-            if (!enabled) {
-                return;
-            }
+        if (!isEnabled()) {
+            return null;
+        }
 
-            /* If metric is capable of async execution run it on a thread pool */
-            if (isAsyncCapable()) {
-
+        if (isAsyncCapable()) {
+            CompletableFuture.runAsync(() -> {
                 try {
                     doCollect();
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     logException(e);
                 }
-                return;
-            }
+            });
+        }
 
-            /*
-            * Otherwise run the metric on the main thread and make the
-            * thread on thread pool wait for completion
-            */
+        CompletableFuture<Void> future = new CompletableFuture<>();
+
+        // don't call .get() - this blocks the ForkJoinPool.commonPool and may deadlock the server in some cases
+        Bukkit.getScheduler().callSyncMethod(plugin, () -> {
             try {
-                Bukkit.getScheduler().callSyncMethod(plugin, () -> {
-                    try {
-                        doCollect();
-                    }
-                    catch (Exception e) {
-                        logException(e);
-                    }
-                    return null;
-                }).get();
+                doCollect();
             } catch (Exception e) {
                 logException(e);
             }
+            future.complete(null);
+            return null;
         });
+
+        return future;
     }
 
     protected abstract void doCollect();
