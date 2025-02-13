@@ -33,29 +33,29 @@ public abstract class Metric {
         }
 
         if (isAsyncCapable()) {
-            CompletableFuture.runAsync(() -> {
+            return CompletableFuture.runAsync(() -> {
                 try {
                     doCollect();
                 } catch (Exception e) {
                     logException(e);
                 }
             });
+        } else {
+            CompletableFuture<Void> future = new CompletableFuture<>();
+
+            // don't call .get() - this blocks the ForkJoinPool.commonPool and may deadlock the server in some cases
+            Bukkit.getScheduler().callSyncMethod(plugin, () -> {
+                try {
+                    doCollect();
+                } catch (Exception e) {
+                    logException(e);
+                }
+                future.complete(null);
+                return null;
+            });
+
+            return future;
         }
-
-        CompletableFuture<Void> future = new CompletableFuture<>();
-
-        // don't call .get() - this blocks the ForkJoinPool.commonPool and may deadlock the server in some cases
-        Bukkit.getScheduler().callSyncMethod(plugin, () -> {
-            try {
-                doCollect();
-            } catch (Exception e) {
-                logException(e);
-            }
-            future.complete(null);
-            return null;
-        });
-
-        return future;
     }
 
     protected abstract void doCollect();
