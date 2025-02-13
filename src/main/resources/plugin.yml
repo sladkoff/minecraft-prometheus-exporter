@@ -1,5 +1,5 @@
 name: PrometheusExporter
-version: 3.1.1
+version: 3.1.2
 author: sldk
 main: de.sldk.mc.PrometheusExporter
 website: https://github.com/sladkoff/minecraft-prometheus-exporter
