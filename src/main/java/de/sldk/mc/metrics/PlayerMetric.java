@@ -29,7 +29,17 @@ public abstract class PlayerMetric extends Metric {
     }
 
     protected String getNameOrUid(OfflinePlayer player) {
-        return player.getName() != null ? player.getName() : player.getUniqueId().toString();
+        // return player.getName() != null ? player.getName() : player.getUniqueId().toString();
+
+        //fix [Bug Report] Failed to read server statistic: null #314
+        try {
+            String name = player.getName();
+            if (name != null && !name.isEmpty()) {
+                return name;
+            }
+        } catch (Exception ignored) {
+        }
+        return player.getUniqueId().toString();
     }
 
 }
