@@ -1,6 +1,8 @@
 package de.sldk.mc.metrics;
 
 import de.sldk.mc.collectors.TpsCollector;
+import de.sldk.mc.metrics.folia.FoliaTickStatistics;
+import de.sldk.mc.utils.FoliaUtils;
 import io.prometheus.client.Gauge;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -16,20 +18,27 @@ public class Tps extends Metric {
 
     private TpsCollector tpsCollector = new TpsCollector();
 
+    private final FoliaTickStatistics foliaTickStatistics;
+
     public Tps(Plugin plugin) {
         super(plugin, TPS);
+        this.foliaTickStatistics = FoliaUtils.isFolia() ? new FoliaTickStatistics() : null;
     }
 
     @Override
     public void enable() {
         super.enable();
-        this.taskId = startTask(getPlugin());
+        if (!FoliaUtils.isFolia()) {
+            this.taskId = startTask(getPlugin());
+        }
     }
 
     @Override
     public void disable() {
         super.disable();
-        Bukkit.getScheduler().cancelTask(taskId);
+        if (!FoliaUtils.isFolia()) {
+            Bukkit.getScheduler().cancelTask(taskId);
+        }
     }
 
     private int startTask(Plugin plugin) {
@@ -40,6 +49,20 @@ public class Tps extends Metric {
 
     @Override
     public void doCollect() {
-        TPS.set(tpsCollector.getAverageTPS());
+        if (FoliaUtils.isFolia() && foliaTickStatistics != null) {
+            TPS.set(foliaTickStatistics.getTps());
+        } else {
+            TPS.set(tpsCollector.getAverageTPS());
+        }
+    }
+
+    @Override
+    public boolean isFoliaCapable() {
+        return true;
+    }
+
+    @Override
+    public boolean isAsyncCapable() {
+        return FoliaUtils.isFolia();
     }
 }
