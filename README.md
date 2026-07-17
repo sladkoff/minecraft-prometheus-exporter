@@ -153,11 +153,11 @@ The following metrics are exported by the plugin:
 | mc_world_size            | World size in bytes                                | ✅             |
 | mc_jvm_memory            | JVM memory usage                                   | ✅             |
 | mc_jvm_threads           | JVM threads info                                   | ✅             |
-| mc_tps                   | Server tickrate (TPS)                              | ❌             |
-| mc_tick_duration_median  | Median Tick Duration (ns, usually last 100 ticks)  | ❌             |
-| mc_tick_duration_average | Average Tick Duration (ns, usually last 100 ticks) | ❌             |
-| mc_tick_duration_min     | Min Tick Duration (ns, usually last 100 ticks)     | ❌             |
-| mc_tick_duration_max     | Max Tick Duration (ns, usually last 100 ticks)     | ❌             |
+| mc_tps                   | Server tickrate (TPS)                              | ✅             |
+| mc_tick_duration_median  | Median Tick Duration (ns, usually last 100 ticks)  | ✅             |
+| mc_tick_duration_average | Average Tick Duration (ns, usually last 100 ticks) | ✅             |
+| mc_tick_duration_min     | Min Tick Duration (ns, usually last 100 ticks)     | ✅             |
+| mc_tick_duration_max     | Max Tick Duration (ns, usually last 100 ticks)     | ✅             |
 
 ### Player metrics
 
@@ -204,7 +204,7 @@ This doesn't support all statistics in the list because they are provided by the
 
 - Java 17 is required for the latest version of the plugin.
 - There is a known [issue](https://github.com/sladkoff/minecraft-prometheus-exporter/issues/197) with Azul JVM.
-- There is currently rudimentary support for Folia servers. Only selected metrics are supported.
+- Folia support is available for most metrics. TPS and tick duration metrics are supported using Folia's threaded regions API.
 - The plugin has been tested recently on
   - Minecraft 1.20.1 
   - Minecraft 1.20.4
