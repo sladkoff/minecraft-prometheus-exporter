@@ -17,13 +17,16 @@ public class TickDurationAverageCollector extends Metric {
         super(plugin, TD);
     }
 
-    private long getTickDurationAverage() {
-        long sum = 0;
+    double getTickDurationAverage() {
         long[] durations = collector.getTickDurations();
-        for (Long val : durations) {
+        if (durations == null || durations.length == 0) {
+            return Double.NaN;
+        }
+        long sum = 0;
+        for (long val : durations) {
             sum += val;
         }
-        return sum / durations.length;
+        return (double) sum / durations.length;
     }
 
     @Override

@@ -17,9 +17,13 @@ public class TickDurationMaxCollector extends Metric {
         super(plugin, TD);
     }
 
-    private long getTickDurationMax() {
+    double getTickDurationMax() {
+        long[] durations = collector.getTickDurations();
+        if (durations == null || durations.length == 0) {
+            return Double.NaN;
+        }
         long max = Long.MIN_VALUE;
-        for (Long val : collector.getTickDurations()) {
+        for (long val : durations) {
             if (val > max) {
                 max = val;
             }
