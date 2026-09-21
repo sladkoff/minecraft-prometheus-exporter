@@ -19,8 +19,11 @@ public class TickDurationMedianCollector extends Metric {
         super(plugin, TD);
     }
 
-    private long getTickDurationMedian() {
+    double getTickDurationMedian() {
         long[] tickTimes = collector.getTickDurations();
+        if (tickTimes == null || tickTimes.length == 0) {
+            return Double.NaN;
+        }
         Arrays.sort(tickTimes);
         return tickTimes[tickTimes.length / 2];
     }
